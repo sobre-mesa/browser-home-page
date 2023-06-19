@@ -39,6 +39,7 @@
     "vitest": "^0.30.1"
   },
   "eslintConfig": {
+    "semicolon": "always",
     "extends": [
       "react-app",
       "react-app/jest"
