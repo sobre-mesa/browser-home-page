@@ -1,14 +1,22 @@
-import { Counter } from "../components/counter/Counter"
-import "../styles/App.css"
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { selectData, initData } from '../store/slices/dataSlice';
+import '../styles/App.css';
+import React from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Counter />
-      </header>
-    </div>
-  )
+    const data = useAppSelector(selectData);
+    const dispatch = useAppDispatch();
+    React.useEffect(() => {
+        dispatch(initData());
+    }, []);
+  
+    return (
+        <div className="App">
+            <header className="App-header">
+                <p>{JSON.stringify(data)}</p>
+            </header>
+        </div>
+    );
 }
 
-export default App
+export default App;

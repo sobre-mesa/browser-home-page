@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "./",
   "scripts": {
     "dev": "vite",
     "start": "vite",
@@ -15,6 +16,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
+    "cors": "^2.8.5",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.1"
@@ -27,10 +30,13 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@types/testing-library__jest-dom": "^5.14.5",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
     "@vitejs/plugin-react": "^4.0.0",
     "eslint": "^8.0.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
     "jsdom": "^21.1.0",
     "prettier": "^2.7.1",
     "prettier-config-nick": "^1.0.2",

@@ -3,9 +3,10 @@ const morgan = require('morgan');
 var bodyParser = require('body-parser')
 const pagesRouter = require('./routes/pagesRoutes.js');
 const homepageRouter = require('./routes/homepageRoutes.js');
+const cors = require('cors');
 
 const app = express();
-
+app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: true,
   }));
