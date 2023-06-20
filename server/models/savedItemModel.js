@@ -3,11 +3,6 @@ const mongoose = require('mongoose');
 
 const schemaName = 'savedItem';
 const schema = new mongoose.Schema({
-    name: {
-        type: String,
-        ...rules.required(schemaName, 'name'),
-        ...rules.charMinMax(schemaName, 'name', 1, 40)
-    },
     url: {
         type: String,
         ...rules.required(schemaName, 'url'),
@@ -19,8 +14,8 @@ const schema = new mongoose.Schema({
     },
     category: {
         type: String,
-        ...rules.required(schemaName, 'name'),
-        ...rules.charMinMax(schemaName, 'name', 1, 40),
+        ...rules.required(schemaName, 'category'),
+        ...rules.charMinMax(schemaName, 'category', 1, 40),
         trim: true,
     },
     image: {

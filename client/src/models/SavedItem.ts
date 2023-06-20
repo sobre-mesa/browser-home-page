@@ -1,5 +1,5 @@
 export type SavedItem = {
-    id: string,
+    id?: string,
     url: string,
     description: string,
     category: string,

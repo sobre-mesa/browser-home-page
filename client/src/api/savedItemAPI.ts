@@ -1,23 +1,11 @@
 import { SavedItem } from '../models/SavedItem';
 import { APIResponse, APIResponseWithArray, EmptyResponse } from '../models/API';
-import { get } from './api';
+import { get, post } from './api';
 
 export const savedItemAPI = {
     getSavedItem: async (id: string) => await get(`/savedItems/${id}`),
     getAllSavedItems:   async () => await get('/savedItems'),
-    createSavedItem: async (savedItem: SavedItem) => {
-        try {
-            const response = await fetch('/savedItems', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(savedItem),
-            });
-            const data: APIResponse<SavedItem> = await response.json();
-            return data;
-        } catch (error) {
-            console.log(error);
-        }
-    },
+    createSavedItem: async (savedItem: SavedItem) => post('/savedItems', savedItem),
     updateSavedItem: async (id: string, savedItem: SavedItem) => {
         try {
             const response = await fetch(`/savedItems/${id}`, {

@@ -1,10 +1,8 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-
+import React, { useState } from 'react';
+import { Box, Typography, Modal, TextField, Button } from '@mui/material';
+import { SavedItem } from '../models/SavedItem';
 const style = {
-    position: 'absolute' as const,
+    position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
@@ -15,63 +13,63 @@ const style = {
     p: 4,
 };
 
-type BasicModalProps =  {
-    open: boolean,
-    setOpen: (isOpen: boolean) => any,
-    categoryId: string, handleSubmit: (name: string, categoryId: string,
-    url: string, image: string) => any
-}
+type BasicModalProps = {
+  open: boolean;
+  setOpen: (isOpen: boolean) => any;
+  category: string;
+  handleSubmit: (item: SavedItem) => any;
+};
 
-export default function BasicModal({open, setOpen, categoryId, handleSubmit} : BasicModalProps){
-    const [name, setName] = React.useState('');
-    const [url, setUrl] = React.useState('');
-    const [image, setImage] = React.useState('');
+export default function BasicModal({ open, setOpen, category, handleSubmit }: BasicModalProps) {
+    const [description, setDescription] = useState('');
+    const [url, setUrl] = useState('');
+    const [image, setImage] = useState('');
+
     const handleClose = () => setOpen(false);
+
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        handleSubmit(name, categoryId, url, image);
+        const item: SavedItem = {
+            description,
+            url,
+            image,
+            category
+        };
+        handleSubmit(item);
         handleClose();
     };
+
     return (
-        <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
+        <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add a new item to category
+          Add a new item to category
                 </Typography>
                 <form onSubmit={onSubmit}>
-                    <label>
-                        Name:
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        URL:
-                        <input
-                            type="text"
-                            value={url}
-                            onChange={(e) => setUrl(e.target.value)}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Image:
-                        <input
-                            type="text"
-                            value={image}
-                            onChange={(e) => setImage(e.target.value)}
-                        />
-                    </label>
-                    <br />
-                    <button type="submit">Submit</button>
+                    <TextField
+                        label="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        fullWidth
+                        margin="normal"
+                    />
+                    <TextField
+                        label="URL"
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                        fullWidth
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Image"
+                        value={image}
+                        onChange={(e) => setImage(e.target.value)}
+                        fullWidth
+                        margin="normal"
+                    />
+                    <Button type="submit" variant="contained" color="primary">
+            Submit
+                    </Button>
                 </form>
             </Box>
         </Modal>

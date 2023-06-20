@@ -6,14 +6,14 @@ import { SavedItem } from '../../models/SavedItem';
 import { savedItemAPI } from '../../api/savedItemAPI';
 import { noteAPI } from '../../api/noteAPI';
 import { categoryAPI } from '../../api/categoryAPI';
-import type { StoreCategory, DataState} from '../../models/Store';
+import type { StoreCategory, DataState, SystemCategory} from '../../models/Store';
 import type { APIResponseWithArray } from '../../models/API';
 
 const initialState: DataState = {
     status: 'idle', 
     categories: [],
-    channels: {name: '', items: []},
-    apps: {name: '', items: []},
+    channels: {name: '', id: '', items: []},
+    apps: {name: '', id: '', items: []},
     notes: [],
     modalsOpen: {
         note: false,
@@ -35,6 +35,7 @@ const reduceCategories = (categories: APIResponseWithArray<Category>, savedItems
                 } else {
                     // console.table(category.items);
                     result[category.name.toLowerCase()] =   {
+                        id: category.id,
                         name: category.name.toLowerCase(),
                         items : category.items || []
                     };
@@ -62,7 +63,9 @@ export const initData = createAsyncThunk('data/InitData', async () => {
 });
 
 export const addSavedItem = createAsyncThunk('data/AddSavedItem', async (savedItem: SavedItem) => {
+    console.table(savedItem);
     const response = await savedItemAPI.createSavedItem(savedItem);
+
     return response;
 });
 
@@ -95,8 +98,6 @@ export const dataSlice = createSlice({
 // export const { } = dataSlice.actions
 
 export const { toggleModal } = dataSlice.actions;
-export const selectModalsOpenNote = (state: RootState) => state.data.modalsOpen.note;
-export const selectModalsOpenCategory = (state: RootState) => state.data.modalsOpen.category;
-export const selectModalsOpenSavedItem = (state: RootState) => state.data.modalsOpen.savedItem;
+export const selectModalOpen = (state: RootState) => state.data.modalsOpen;
 export const selectData = (state: RootState) => state.data;
 export default dataSlice.reducer;

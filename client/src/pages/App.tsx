@@ -15,9 +15,9 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <Bar category={data.channels}/>
-                <BookmarkPanel categories={data.categories}/>
                 <Bar category={data.apps}/>
+                <BookmarkPanel categories={data.categories}/>
+                <Bar category={data.channels}/>
             </header>
         </div>
     );
