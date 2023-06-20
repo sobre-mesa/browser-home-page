@@ -12,8 +12,8 @@ import type { APIResponseWithArray } from '../../models/API';
 const initialState: DataState = {
     status: 'idle', 
     categories: [],
-    channels: [],
-    apps: [],
+    channels: {name: '', items: []},
+    apps: {name: '', items: []},
     notes: [],
     modalsOpen: {
         note: false,
@@ -34,9 +34,11 @@ const reduceCategories = (categories: APIResponseWithArray<Category>, savedItems
                     result.customCategories.push(category);
                 } else {
                     // console.table(category.items);
-                    result[category.name.toLowerCase()] = category.items || [];
+                    result[category.name.toLowerCase()] =   {
+                        name: category.name.toLowerCase(),
+                        items : category.items || []
+                    };
                 }
-                console.table(result.channels)
                 return result;
             },
             { customCategories: [] }
@@ -59,11 +61,18 @@ export const initData = createAsyncThunk('data/InitData', async () => {
     };
 });
 
+export const addSavedItem = createAsyncThunk('data/AddSavedItem', async (savedItem: SavedItem) => {
+    const response = await savedItemAPI.createSavedItem(savedItem);
+    return response;
+});
 
 export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
+        toggleModal(state, action) {
+            state.modalsOpen[action.payload] = !state.modalsOpen[action.payload];
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -85,5 +94,9 @@ export const dataSlice = createSlice({
 
 // export const { } = dataSlice.actions
 
+export const { toggleModal } = dataSlice.actions;
+export const selectModalsOpenNote = (state: RootState) => state.data.modalsOpen.note;
+export const selectModalsOpenCategory = (state: RootState) => state.data.modalsOpen.category;
+export const selectModalsOpenSavedItem = (state: RootState) => state.data.modalsOpen.savedItem;
 export const selectData = (state: RootState) => state.data;
 export default dataSlice.reducer;

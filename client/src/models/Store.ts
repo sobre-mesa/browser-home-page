@@ -5,8 +5,14 @@ import { Category } from './Category';
 export type StoreCategory = Category & { items: SavedItem[] };
 export type DataState ={
   status: 'idle' | 'loading' | 'failed',
-  apps: SavedItem[],
-  channels: SavedItem[],  
+  apps: { 
+    name: string,
+    items : SavedItem[] 
+  },
+  channels: { 
+    name: string,
+    items : SavedItem[] 
+  }, 
   categories: StoreCategory[],
   notes: Note[], 
   modalsOpen: {

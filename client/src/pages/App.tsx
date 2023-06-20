@@ -12,13 +12,12 @@ function App() {
     React.useEffect(() => {
         dispatch(initData());
     }, []);
-    console.table(data.channels);
     return (
         <div className="App">
             <header className="App-header">
-                <Bar items={data.channels}/>
+                <Bar category={data.channels}/>
                 <BookmarkPanel categories={data.categories}/>
-                <Bar items={data.apps}/>
+                <Bar category={data.apps}/>
             </header>
         </div>
     );
