@@ -1,5 +1,3 @@
-import { APIResponse, APIResponseWithArray, EmptyResponse } from '../models/API';
-
 export async function get(url: string){
     const host = 'http://localhost:8000';
     return fetch(host + url)

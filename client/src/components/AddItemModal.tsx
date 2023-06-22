@@ -12,6 +12,7 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
+import { useDispatch } from 'react-redux';
 
 type BasicModalProps = {
   open: boolean;
@@ -24,6 +25,7 @@ export default function BasicModal({ open, setOpen, category, handleSubmit }: Ba
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [image, setImage] = useState('');
+    const dispatch = useDispatch();
 
     const handleClose = () => setOpen(false);
 
@@ -35,7 +37,7 @@ export default function BasicModal({ open, setOpen, category, handleSubmit }: Ba
             image,
             category
         };
-        handleSubmit(item);
+        dispatch(handleSubmit(item));
         handleClose();
     };
 

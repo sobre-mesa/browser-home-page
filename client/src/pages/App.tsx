@@ -3,9 +3,7 @@ import { selectData, initData } from '../store/slices/dataSlice';
 import '../styles/App.css';
 import React from 'react';
 
-import {Bar} from '../components/Bar';
-import { BookmarkPanel } from '../components/BookmarkPanel';
-
+import { SavedItemsSettingsModal } from '../components/SavedItemsSettingsModal';
 function App() {
     const data = useAppSelector(selectData);
     const dispatch = useAppDispatch();
@@ -15,9 +13,10 @@ function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <Bar category={data.apps}/>
+                <SavedItemsSettingsModal category={data.channels}/>
+                {/* <Bar category={data.apps}/>
                 <BookmarkPanel categories={data.categories}/>
-                <Bar category={data.channels}/>
+                <Bar category={data.channels}/> */}
             </header>
         </div>
     );

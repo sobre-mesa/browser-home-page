@@ -7,6 +7,8 @@ exports.required =
     return { required: [true, text] };
  }
 
+
+
 exports.charMinMax = (object, attribute, min, max) => {
     const cantBe = `${aOrAn(object)}'s ${attribute} cant be` 
     let minlength = [min, `${cantBe} shorter than ${min} chars`];

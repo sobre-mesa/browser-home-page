@@ -62,11 +62,10 @@ export const initData = createAsyncThunk('data/InitData', async () => {
     };
 });
 
-export const addSavedItem = createAsyncThunk('data/AddSavedItem', async (savedItem: SavedItem) => {
+export const addSavedItem = createAsyncThunk('data/AddSavedItem', async (category: string , savedItem: SavedItem) => {
     console.table(savedItem);
     const response = await savedItemAPI.createSavedItem(savedItem);
-
-    return response;
+    return {category, savedItem};
 });
 
 export const dataSlice = createSlice({
@@ -90,6 +89,15 @@ export const dataSlice = createSlice({
                 state.channels = action.payload.channels as SavedItem[] || state;
             })
             .addCase(initData.rejected, (state) => {
+                state.status = 'failed';
+            }) 
+            .addCase(addSavedItem.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(addSavedItem.fulfilled, (state, action) => {
+                // state.
+            })
+            .addCase(addSavedItem.rejected, (state) => {
                 state.status = 'failed';
             });
     },

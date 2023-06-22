@@ -1,5 +1,5 @@
 import { Category } from '../models/Category';
-import { APIResponse, APIResponseWithArray, EmptyResponse } from '../models/API';
+import { APIResponse, EmptyResponse } from '../models/API';
 import { get, post } from './api';
 
 
