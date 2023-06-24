@@ -74,6 +74,12 @@ export const updateSavedItem = createAsyncThunk('data/UpdateSavedItem',
         return payload;
     });
 
+export const deleteSavedItem = createAsyncThunk('data/DeleteSavedItem',
+    async (payload: {category: string, id: string}) => {
+        const response = await savedItemAPI.deleteSavedItem(payload.id);
+        return payload;
+    });
+
 export const dataSlice = createSlice({
     name: 'data',
     initialState,
@@ -134,7 +140,35 @@ export const dataSlice = createSlice({
             })
             .addCase(updateSavedItem.rejected, (state) => {
                 state.status = 'failed';
-            });
+            }).addCase(deleteSavedItem.pending, (state) => {
+                state.status = 'loading';
+            }
+            ).addCase(deleteSavedItem.fulfilled, (state, action) => {
+                state.status = 'idle';
+                const category = action.payload.category;
+                console.log(action.payload);
+                if(category === 'apps' || category === 'channels') {
+                    const itemIndex = state[category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
+                
+                    if(itemIndex > 0) {
+                        console.log('deleting item');
+                        state[category].items.splice(itemIndex, 1);                 
+                    }
+
+                }
+                else if (category) {
+                    const itemIndex = state[category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
+                    if(itemIndex > 0) {
+                        state[category].items.splice(itemIndex, 1);                 
+                    }
+                }
+            }
+            ).addCase(deleteSavedItem.rejected, (state) => {
+                state.status = 'failed';
+            }
+            );
+            
+            
     },
 });
 

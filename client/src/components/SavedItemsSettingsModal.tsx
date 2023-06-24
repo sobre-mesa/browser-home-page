@@ -10,6 +10,7 @@ import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import { SavedItemsSettingsItem } from './SavedItemsSettingsItem';
 import AddItemModal from './AddItemModal';
 
+
 export const SavedItemsSettingsModal = ( { category } : {category: SystemCategory}) => {
     const modalOpen = useAppSelector(selectModalOpen) as Record<string, boolean>;
     const dispatch = useAppDispatch();
@@ -18,7 +19,6 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
     };
 
     const [items, setItems] = useState(category.items);
-
     useEffect(() => {
         setItems(category.items);
     }, [category]);
@@ -57,6 +57,7 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
                     >
                         {items.map((item) => (
                             <SavedItemsSettingsItem
+                                category={category.name}
                                 key={item.id}
                                 item={item}
                                 onEdit={setItemToEdit}

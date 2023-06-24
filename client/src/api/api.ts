@@ -83,7 +83,7 @@ export async function del(url: string){
         .then((response) => {
             if (response.ok) {
                 // Process the successful response
-                return response.json();
+                return true;
             } else {
                 // Handle non-200 status codes
                 throw new Error('Request failed with status ' + response.status);
