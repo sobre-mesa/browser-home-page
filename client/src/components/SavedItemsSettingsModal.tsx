@@ -17,60 +17,47 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
         dispatch(toggleModal('savedItem'));
     };
 
-    const [itemToEdit, setItemToEdit]= useState(null);
+    const [itemToEdit, setItemToEdit] = useState(null);
     return (
         <>
-            <Modal open={true}>
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: '100%',
-                        backdropFilter: 'blur(5px)',
-                        backgroundColor: 'rgba(0,0,30,0.2)',
-                    }}
-                >
+            <Modal className="saved-item-settings-modal" open={true} style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                backdropFilter: 'blur(5px)',
+            }}>
+                <Paper>
+                    <IconButton style={{marginLeft: '39%'}}aria-label="add" onClick={handleModalOpen} >
+                        <AddCircleOutline />
+                    </IconButton>
+                    <AddItemModal
+                        open={modalOpen['savedItem']}
+                        setOpen={handleModalOpen}
+                        category={category}
+                        itemToEdit={itemToEdit}
+                    />
                     <Paper
+                        elevation={1}
                         style={{
-                            backgroundColor: '#93B5C6',
-                            paddingLeft: '24px',
-                            paddingRight: '24px',
-                            paddingBottom: '36px',
-                            paddingTop: '0px',
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gridTemplateRows: 'repeat(4, 1fr)',
+
+                            height: 'calc(4 * 120px)', // Adjust the row limit as per your item's height
+                            overflowY: 'auto',
+                            backgroundColor: 'white',
                         }}
                     >
-                        <IconButton aria-label="delete" onClick={handleModalOpen} >
-                            <AddCircleOutline />
-                        </IconButton>
-                        <AddItemModal
-                            open={modalOpen['savedItem']}
-                            setOpen={handleModalOpen}
-                            category={category}
-                            itemToEdit={itemToEdit}
-                        />
-                        <Paper
-                            elevation={1}
-                            style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(3, 1fr)',
-                                gridTemplateRows: 'repeat(4, 1fr)',
-
-                                height: 'calc(4 * 100px)', // Adjust the row limit as per your item's height
-                                overflowY: 'auto',
-                                backgroundColor: 'white',
-                            }}
-                        >
-                            {category.items.map((item) => (
-                                <SavedItemsSettingsItem
-                                    key={item.id}
-                                    item={item}
-                                    onEdit={setItemToEdit}
-                                />
-                            ))}
-                        </Paper>
+                        {category.items.map((item) => (
+                            <SavedItemsSettingsItem
+                                key={item.id}
+                                item={item}
+                                onEdit={setItemToEdit}
+                            />
+                        ))}
                     </Paper>
-                </div>
+                </Paper>
             </Modal>
         </>
     );

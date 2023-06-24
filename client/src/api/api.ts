@@ -52,7 +52,7 @@ export async function put(url: string, body: any){
     formData.append('category', body.category);
     formData.append('image', body.image);
     return fetch(host + url, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },

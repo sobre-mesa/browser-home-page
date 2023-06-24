@@ -2,12 +2,11 @@ import React from 'react';
 import type { SavedItem } from '../models/SavedItem';
 import { Avatar, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import AddItemModal from './AddItemModal';
-import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { selectModalOpen, toggleModal } from '../store/slices/dataSlice';
+import { useAppDispatch } from '../store/hooks';
+import {  toggleModal } from '../store/slices/dataSlice';
 import { SystemCategory } from '../models/Store';
+import { DeleteSharp } from '@mui/icons-material';
 
 // Custom styled Avatar component with border
 const StyledAvatar = styled(Avatar)`
@@ -38,9 +37,13 @@ export const SavedItemsSettingsItem = ({
                 alt={item.description}
                 src={item.image}
                 sx={{ width: 40, height: 40 }}
+                style={{marginLeft:18}}
             />
             <IconButton aria-label="edit" size="small" onClick={handleModalOpen}>
                 <EditIcon className="MuiIconButton-sizeSmall" />
+            </IconButton>
+            <IconButton aria-label="edit" size="small">
+                <DeleteSharp className="MuiIconButton-sizeSmall" />
             </IconButton>
         </div>
     );

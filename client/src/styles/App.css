@@ -24,3 +24,6 @@
   }
   
 
+  .saved-item-settings-modal :focus {
+    outline: none;
+  }
