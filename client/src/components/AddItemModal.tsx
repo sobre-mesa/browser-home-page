@@ -20,7 +20,7 @@ type BasicModalProps = {
   open: boolean;
   setOpen: (isOpen: boolean) => any;
   category: SystemCategory;
-  itemToEdit?: SavedItem;
+  itemToEdit?: SavedItem | null;
 };
 
 export default function BasicModal({ open, setOpen, category, itemToEdit}: BasicModalProps) {
@@ -34,7 +34,6 @@ export default function BasicModal({ open, setOpen, category, itemToEdit}: Basic
         setImage(itemToEdit?.image || '');
     }, [itemToEdit]);
     const dispatch = useAppDispatch();
-    console.log(itemToEdit);
     const handleClose = () => setOpen(false);
    
     const payload = {category: category.name};

@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { SystemCategory } from '../models/Store';
 
 import { useAppSelector, useAppDispatch } from '../store/hooks';
@@ -16,6 +16,12 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
     const handleModalOpen = () => {
         dispatch(toggleModal('savedItem'));
     };
+
+    const [items, setItems] = useState(category.items);
+
+    useEffect(() => {
+        setItems(category.items);
+    }, [category]);
 
     const [itemToEdit, setItemToEdit] = useState(null);
     return (
@@ -49,7 +55,7 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
                             backgroundColor: 'white',
                         }}
                     >
-                        {category.items.map((item) => (
+                        {items.map((item) => (
                             <SavedItemsSettingsItem
                                 key={item.id}
                                 item={item}

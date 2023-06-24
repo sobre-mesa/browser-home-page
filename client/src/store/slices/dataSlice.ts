@@ -65,14 +65,12 @@ export const initData = createAsyncThunk('data/InitData', async () => {
 export const addSavedItem = createAsyncThunk('data/AddSavedItem',
     async (payload: {category: string, item: SavedItem}) => {
         const response = await savedItemAPI.createSavedItem(payload.item);
-        console.log(response);
         return payload;
     });
 
 export const updateSavedItem = createAsyncThunk('data/UpdateSavedItem',
     async (payload: {category: string, id: string, item: SavedItem}) => {
         const response = await savedItemAPI.updateSavedItem(payload.id, payload.item);
-        console.log(response);
         return payload;
     });
 
@@ -107,7 +105,6 @@ export const dataSlice = createSlice({
                 state.status = 'idle';
                 const category = state.categories.find((category: StoreCategory) => category.name === action.payload.category);
                 const name: string = action.payload.category?.toLowerCase() || '';
-                console.log(action.payload);
                 if(name === 'apps' || name === 'channels') {
                     state[name].items.push(action.payload.item);
                 }
@@ -123,10 +120,16 @@ export const dataSlice = createSlice({
             })
             .addCase(updateSavedItem.fulfilled, (state, action) => {
                 state.status = 'idle';
-                const category = state.categories.find((category: StoreCategory) => category.name === action.payload.category);
+                const category = action.payload.category;
+                if(action.payload.category === 'apps' || action.payload.category === 'channels') {
+                    const itemIndex = state[action.payload.category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
+                    if(itemIndex > 0) {
+                        state[action.payload.category].items[itemIndex] = action.payload.item;                 
+                    }
+
+                }
                 if (category) {
-                    const itemIndex = category.items.findIndex((item: SavedItem) => item.id === action.payload.id);
-                    category.items[itemIndex] = action.payload.item;
+                    state[action.payload.category].items.push(action.payload.item);
                 }
             })
             .addCase(updateSavedItem.rejected, (state) => {

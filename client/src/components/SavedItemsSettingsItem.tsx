@@ -5,9 +5,8 @@ import { styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppDispatch } from '../store/hooks';
 import {  toggleModal } from '../store/slices/dataSlice';
-import { SystemCategory } from '../models/Store';
 import { DeleteSharp } from '@mui/icons-material';
-
+import type { Dispatch, SetStateAction } from 'react';
 // Custom styled Avatar component with border
 const StyledAvatar = styled(Avatar)`
   margin: 10px;
@@ -16,13 +15,10 @@ const StyledAvatar = styled(Avatar)`
 
 export const SavedItemsSettingsItem = ({
     item,
-    key,
     onEdit
 }: {
   item: SavedItem;
-  key: string;
-  category: SystemCategory;
-  onEdit: (item: SavedItem) => void;
+  onEdit: Dispatch<SetStateAction<SavedItem>>;
 }) => {
     const dispatch = useAppDispatch();
     const handleModalOpen = () => {
@@ -32,7 +28,7 @@ export const SavedItemsSettingsItem = ({
     return (
         <div>
             <StyledAvatar
-                key={key}
+                key={item.id}
                 onClick={handleModalOpen}
                 alt={item.description}
                 src={item.image}
