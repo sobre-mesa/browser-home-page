@@ -1,26 +1,47 @@
 import React from 'react';
 import type { SavedItem } from '../models/SavedItem';
-import { Avatar } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import AddItemModal from './AddItemModal';
+import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { selectModalOpen, toggleModal } from '../store/slices/dataSlice';
+import { SystemCategory } from '../models/Store';
 
 // Custom styled Avatar component with border
 const StyledAvatar = styled(Avatar)`
-     margin: 10px;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a
+  margin: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a */
 `;
 
-export const SavedItemsSettingsItem = (
-    { item, onClick, key } : {item :SavedItem, onClick: () => any }
-) => {
-    const handleClick = () => {
-        onClick(item);
+export const SavedItemsSettingsItem = ({
+    item,
+    key,
+    onEdit
+}: {
+  item: SavedItem;
+  key: string;
+  category: SystemCategory;
+  onEdit: (item: SavedItem) => void;
+}) => {
+    const dispatch = useAppDispatch();
+    const handleModalOpen = () => {
+        dispatch(toggleModal('savedItem'));
+        onEdit(item);
     };
     return (
-        <StyledAvatar 
-            key={key}
-            onClick={handleClick}
-            alt={item.description} 
-            src={item.image}
-            sx={{ width: 56, height: 56 }} />
+        <div>
+            <StyledAvatar
+                key={key}
+                onClick={handleModalOpen}
+                alt={item.description}
+                src={item.image}
+                sx={{ width: 40, height: 40 }}
+            />
+            <IconButton aria-label="edit" size="small" onClick={handleModalOpen}>
+                <EditIcon className="MuiIconButton-sizeSmall" />
+            </IconButton>
+        </div>
     );
 };

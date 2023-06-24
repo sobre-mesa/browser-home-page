@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import { SystemCategory } from '../models/Store';
 
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { selectModalOpen, toggleModal, addSavedItem } from '../store/slices/dataSlice';
+import { selectModalOpen, toggleModal } from '../store/slices/dataSlice';
 
 import { Modal, Paper, IconButton } from '@mui/material';
 import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
@@ -17,6 +17,7 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
         dispatch(toggleModal('savedItem'));
     };
 
+    const [itemToEdit, setItemToEdit]= useState(null);
     return (
         <>
             <Modal open={true}>
@@ -46,7 +47,7 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
                             open={modalOpen['savedItem']}
                             setOpen={handleModalOpen}
                             category={category}
-                            handleSubmit={addSavedItem}
+                            itemToEdit={itemToEdit}
                         />
                         <Paper
                             elevation={1}
@@ -64,7 +65,7 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
                                 <SavedItemsSettingsItem
                                     key={item.id}
                                     item={item}
-                                    onClick={() => handleItemClick(item)}
+                                    onEdit={setItemToEdit}
                                 />
                             ))}
                         </Paper>

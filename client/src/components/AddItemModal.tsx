@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, Modal, TextField, Button } from '@mui/material';
 import { SavedItem } from '../models/SavedItem';
+import { useAppDispatch } from '../store/hooks';
+import {  addSavedItem, updateSavedItem } from '../store/slices/dataSlice';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -12,43 +14,50 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-import { useDispatch } from 'react-redux';
-import { Category } from '../models/Category';
+import { SystemCategory } from '../models/Store';
 
 type BasicModalProps = {
   open: boolean;
   setOpen: (isOpen: boolean) => any;
-  category: Category;
-  handleSubmit: (item: {category: string, item: SavedItem}) => any;
+  category: SystemCategory;
+  itemToEdit?: SavedItem;
 };
 
-export default function BasicModal({ open, setOpen, category, handleSubmit }: BasicModalProps) {
-    const [description, setDescription] = useState('');
-    const [url, setUrl] = useState('');
-    const [image, setImage] = useState('');
-    const dispatch = useDispatch();
+export default function BasicModal({ open, setOpen, category, itemToEdit}: BasicModalProps) {
+    const [description, setDescription] = useState(itemToEdit?.description || '');
+    const [url, setUrl] = useState(itemToEdit?.url || '');
+    const [image, setImage] = useState(itemToEdit?.image || '');
 
+    useEffect(() => {
+        setDescription(itemToEdit?.description || '');
+        setUrl(itemToEdit?.url || '');
+        setImage(itemToEdit?.image || '');
+    }, [itemToEdit]);
+    const dispatch = useAppDispatch();
+    console.log(itemToEdit);
     const handleClose = () => setOpen(false);
-
+   
+    const payload = {category: category.name};
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log("wasssaaa")
         const item: SavedItem = {
             description,
             url,
             image,
             category: category.id
         };
-        console.log(item);
-        dispatch(handleSubmit({category: category.name, item}));
+        const action =  itemToEdit ? 
+            updateSavedItem({...payload, item, id: itemToEdit.id as string}) :
+            addSavedItem({...payload, item});
+        e.preventDefault();
+        dispatch(action);
         handleClose();
     };
-
+    const title = (itemToEdit ? 'Editing ' + itemToEdit.description + 'in ' : 'Add a new item to ') + 'category ' + category.name;
     return (
         <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-          Add a new item to category
+                    {title}
                 </Typography>
                 <form onSubmit={onSubmit}>
                     <TextField
