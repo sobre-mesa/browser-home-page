@@ -8,15 +8,17 @@ export type SystemCategory = {
   name: string,
   items : SavedItem[]
 }
+
+type ModalsOpen = {
+  note: boolean,
+  category: boolean,
+  savedItem: boolean,
+}
 export type DataState ={
   status: 'idle' | 'loading' | 'failed',
   apps: SystemCategory,
   channels: SystemCategory, 
   categories: StoreCategory[],
   notes: Note[], 
-  modalsOpen: {
-    note: boolean,
-    category: boolean,
-    savedItem: boolean,
-  }
+  modalsOpen: Record<string, boolean>
 }

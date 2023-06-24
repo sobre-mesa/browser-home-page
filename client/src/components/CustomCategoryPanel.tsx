@@ -1,5 +1,5 @@
 import React from 'react';
-import { Category } from './Category';
+import { Category } from './CustomCategory';
 import { StoreCategory } from '../models/Store';
 
 export const BookmarkPanel = ({ categories }: { categories: StoreCategory[] } ) => {

@@ -13,12 +13,13 @@ const style = {
     p: 4,
 };
 import { useDispatch } from 'react-redux';
+import { Category } from '../models/Category';
 
 type BasicModalProps = {
   open: boolean;
   setOpen: (isOpen: boolean) => any;
-  category: string;
-  handleSubmit: (item: SavedItem) => any;
+  category: Category;
+  handleSubmit: (item: {category: string, item: SavedItem}) => any;
 };
 
 export default function BasicModal({ open, setOpen, category, handleSubmit }: BasicModalProps) {
@@ -31,13 +32,15 @@ export default function BasicModal({ open, setOpen, category, handleSubmit }: Ba
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log("wasssaaa")
         const item: SavedItem = {
             description,
             url,
             image,
-            category
+            category: category.id
         };
-        dispatch(handleSubmit(item));
+        console.log(item);
+        dispatch(handleSubmit({category: category.name, item}));
         handleClose();
     };
 

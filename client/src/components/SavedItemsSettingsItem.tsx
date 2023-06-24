@@ -10,13 +10,14 @@ const StyledAvatar = styled(Avatar)`
 `;
 
 export const SavedItemsSettingsItem = (
-    { item, onClick } : {item :SavedItem, onClick: () => any }
+    { item, onClick, key } : {item :SavedItem, onClick: () => any }
 ) => {
     const handleClick = () => {
         onClick(item);
     };
     return (
         <StyledAvatar 
+            key={key}
             onClick={handleClick}
             alt={item.description} 
             src={item.image}

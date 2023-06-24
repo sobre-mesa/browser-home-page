@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Category } from '../../models/Category';
 import { Note } from '../../models/Note';
 import { SavedItem } from '../../models/SavedItem';
 import { savedItemAPI } from '../../api/savedItemAPI';
 import { noteAPI } from '../../api/noteAPI';
 import { categoryAPI } from '../../api/categoryAPI';
-import type { StoreCategory, DataState, SystemCategory} from '../../models/Store';
+import type { StoreCategory, DataState} from '../../models/Store';
 import type { APIResponseWithArray } from '../../models/API';
+import type { Category } from '../../models/Category';
 
 const initialState: DataState = {
     status: 'idle', 
@@ -29,7 +29,7 @@ const reduceCategories = (categories: APIResponseWithArray<Category>, savedItems
             items: savedItems?.payload.filter((item: SavedItem) => item.category === category.id),
         }))
         .reduce(
-            (result: any, category: any) => {
+            (result: any, category) => {
                 if (category.name !== 'Apps' && category.name !== 'Channels') {
                     result.customCategories.push(category);
                 } else {
@@ -62,10 +62,10 @@ export const initData = createAsyncThunk('data/InitData', async () => {
     };
 });
 
-export const addSavedItem = createAsyncThunk('data/AddSavedItem', async (category: string , savedItem: SavedItem) => {
-    console.table(savedItem);
-    const response = await savedItemAPI.createSavedItem(savedItem);
-    return {category, savedItem};
+export const addSavedItem = createAsyncThunk('data/AddSavedItem', async (payload: {category: string, item: SavedItem}) => {
+    const response = await savedItemAPI.createSavedItem(payload.item);
+    console.log(response);
+    return {category: payload.category, item: payload.item};
 });
 
 export const dataSlice = createSlice({
@@ -73,7 +73,8 @@ export const dataSlice = createSlice({
     initialState,
     reducers: {
         toggleModal(state, action) {
-            state.modalsOpen[action.payload] = !state.modalsOpen[action.payload];
+            const modalName: string = action.payload;
+            state.modalsOpen[modalName] = !state.modalsOpen[modalName];
         }
     },
     extraReducers: (builder) => {
@@ -85,8 +86,8 @@ export const dataSlice = createSlice({
                 state.status = 'idle';
                 state.categories = action.payload.categories as StoreCategory[] || state;
                 state.notes = action.payload.notes as Note[] || state;
-                state.apps = action.payload.apps as SavedItem[] || state;
-                state.channels = action.payload.channels as SavedItem[] || state;
+                state.apps = action.payload.apps;
+                state.channels = action.payload.channels;
             })
             .addCase(initData.rejected, (state) => {
                 state.status = 'failed';
@@ -95,7 +96,16 @@ export const dataSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(addSavedItem.fulfilled, (state, action) => {
-                // state.
+                state.status = 'idle';
+                const category = state.categories.find((category: StoreCategory) => category.name === action.payload.category);
+                const name: string = action.payload.category?.toLowerCase() || '';
+                console.log(action.payload)
+                if(name === 'apps' || name === 'channels') {
+                    state[name].items.push(action.payload.item);
+                }
+                if (category) {
+                    category.items.push(action.payload.item);
+                }
             })
             .addCase(addSavedItem.rejected, (state) => {
                 state.status = 'failed';

@@ -1,6 +1,4 @@
 import React from 'react';
-
-import { SavedItem } from '../models/SavedItem';
 import { SystemCategory } from '../models/Store';
 
 import { useAppSelector, useAppDispatch } from '../store/hooks';
@@ -16,11 +14,7 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
     const modalOpen = useAppSelector(selectModalOpen) as Record<string, boolean>;
     const dispatch = useAppDispatch();
     const handleModalOpen = () => {
-        dispatch(toggleModal('savedItems'));
-    };
-
-    const handleItemClick = (item: SavedItem) => {
-        console.log('Item clicked', item);
+        dispatch(toggleModal('savedItem'));
     };
 
     return (
@@ -49,9 +43,9 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
                             <AddCircleOutline />
                         </IconButton>
                         <AddItemModal
-                            open={modalOpen['savedItems']}
+                            open={modalOpen['savedItem']}
                             setOpen={handleModalOpen}
-                            category={category.id}
+                            category={category}
                             handleSubmit={addSavedItem}
                         />
                         <Paper

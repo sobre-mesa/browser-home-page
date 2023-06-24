@@ -19,7 +19,7 @@ const getAll = (Model, enabledFeatures) => {
     return async (req, res) => {
         try {
             const features = new APIFeatures(Model, req);
-            enabledFeatures.forEach(feature => {
+            enabledFeatures?.forEach(feature => {
                 features[feature]();
             });
             const payload = await features.query;

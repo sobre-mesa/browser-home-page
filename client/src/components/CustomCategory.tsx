@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bookmark } from './Bookmark';
+import { Bookmark } from './SquareItem';
 import { SavedItem } from '../models/SavedItem';
 
 export const Category = ({ category, items }: { category: string; items: SavedItem[] }) => {

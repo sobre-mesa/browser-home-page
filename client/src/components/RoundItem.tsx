@@ -9,7 +9,7 @@ const StyledAvatar = styled(Avatar)`
      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a
 `;
 
-export const BarItem = ({item}: { item: SavedItem }) => {
+export const RoundItem = ({item}: { item: SavedItem }) => {
     return (
         <a href={item.url}>
             <StyledAvatar 
