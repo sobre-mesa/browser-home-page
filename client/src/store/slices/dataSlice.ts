@@ -128,7 +128,7 @@ export const dataSlice = createSlice({
                     }
 
                 }
-                if (category) {
+                else if (category) {
                     state[action.payload.category].items.push(action.payload.item);
                 }
             })
