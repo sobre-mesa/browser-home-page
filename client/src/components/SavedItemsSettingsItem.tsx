@@ -25,6 +25,9 @@ export const SavedItemsSettingsItem = ({
         dispatch(toggleModal('savedItem'));
         onEdit(item);
     };
+    const iconSx = { width: 15, height: 15 };
+
+    const buttonSx = { paddingTop: 0, marginTop: '-16px' };
     return (
         <div>
             <StyledAvatar
@@ -32,15 +35,18 @@ export const SavedItemsSettingsItem = ({
                 onClick={handleModalOpen}
                 alt={item.description}
                 src={item.image}
-                sx={{ width: 40, height: 40 }}
+                sx={{ width: 40, height: 40, marginTop: "0px" }}
                 style={{marginLeft:18}}
             />
-            <IconButton aria-label="edit" size="small" onClick={handleModalOpen}>
-                <EditIcon className="MuiIconButton-sizeSmall" />
-            </IconButton>
-            <IconButton aria-label="edit" size="small">
-                <DeleteSharp className="MuiIconButton-sizeSmall" />
-            </IconButton>
+            <div style={{marginLeft: 12}}>
+                <IconButton aria-label="edit" size="small" onClick={handleModalOpen}  sx={buttonSx}  >
+                    <EditIcon className="MuiIconButton-sizeSmall" sx={iconSx}/>
+                </IconButton>
+                <IconButton aria-label="edit" size="small"  sx={buttonSx} >
+                    <DeleteSharp className="MuiIconButton-sizeSmall" sx={iconSx}/>
+                </IconButton>
+            </div>
         </div>
     );
 };
+

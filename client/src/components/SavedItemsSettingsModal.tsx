@@ -47,10 +47,10 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
                         elevation={1}
                         style={{
                             display: 'grid',
-                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gridTemplateColumns: 'repeat(4, 1fr)',
                             gridTemplateRows: 'repeat(4, 1fr)',
-
-                            height: 'calc(4 * 120px)', // Adjust the row limit as per your item's height
+                            padding: '10px',
+                            height: 'calc(4 * 121px)', // Adjust the row limit as per your item's height
                             overflowY: 'auto',
                             backgroundColor: 'white',
                         }}
