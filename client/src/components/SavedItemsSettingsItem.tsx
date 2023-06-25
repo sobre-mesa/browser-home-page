@@ -4,7 +4,7 @@ import { Avatar, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppDispatch } from '../store/hooks';
-import {  toggleModal, deleteSavedItem } from '../store/slices/dataSlice';
+import {  deleteSavedItem } from '../store/slices/dataSlice';
 import { DeleteSharp } from '@mui/icons-material';
 import type { Dispatch, SetStateAction } from 'react';
 import { AreYouSureModal } from './AreYouSureModal';
@@ -18,15 +18,18 @@ type EditFunction = Dispatch<EditAction>;
 export const SavedItemsSettingsItem = ({
     category,
     item,
-    onEdit
+    onEdit,
+    handleOpen,
+
 }: {
   category: string;     
   item: SavedItem;
   onEdit: EditFunction;
+  handleOpen: () => void;
 }) => {
     const dispatch = useAppDispatch();
     const handleModalOpen = () => {
-        dispatch(toggleModal('savedItem'));
+        handleOpen();
         onEdit(item as EditAction);
     };
 
@@ -34,7 +37,7 @@ export const SavedItemsSettingsItem = ({
         dispatch(deleteSavedItem({category: category, id: item.id as string}));
     };
 
-    console.log(category)
+    console.log(category);
 
     const [open, setOpen] = useState(false);
     const iconSx = { width: 15, height: 15 };

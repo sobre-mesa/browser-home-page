@@ -18,12 +18,12 @@ import { SystemCategory } from '../models/Store';
 
 type BasicModalProps = {
   open: boolean;
-  setOpen: (isOpen: boolean) => any;
+  handleClose: () => any;
   category: SystemCategory;
   itemToEdit?: SavedItem | null;
 };
 
-export default function BasicModal({ open, setOpen, category, itemToEdit}: BasicModalProps) {
+export default function BasicModal({ open, handleClose, category, itemToEdit}: BasicModalProps) {
     const [description, setDescription] = useState(itemToEdit?.description || '');
     const [url, setUrl] = useState(itemToEdit?.url || '');
     const [image, setImage] = useState(itemToEdit?.image || '');
@@ -34,7 +34,6 @@ export default function BasicModal({ open, setOpen, category, itemToEdit}: Basic
         setImage(itemToEdit?.image || '');
     }, [itemToEdit]);
     const dispatch = useAppDispatch();
-    const handleClose = () => setOpen(false);
    
     const payload = {category: category.name};
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {

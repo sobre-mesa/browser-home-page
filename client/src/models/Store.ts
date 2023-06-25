@@ -9,11 +9,6 @@ export type SystemCategory = {
   items : SavedItem[]
 }
 
-type ModalsOpen = {
-  note: boolean,
-  category: boolean,
-  savedItem: boolean,
-}
 export type DataState ={
   status: 'idle' | 'loading' | 'failed',
   apps: SystemCategory,

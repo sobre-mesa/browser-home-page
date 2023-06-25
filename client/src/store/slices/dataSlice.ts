@@ -16,9 +16,11 @@ const initialState: DataState = {
     apps: {name: '', id: '', items: []},
     notes: [],
     modalsOpen: {
-        note: false,
-        category: false,
-        savedItem: false,
+        editSystemCategory: {
+            apps: false,
+            channels: false,
+        },
+        editCustomCategories: false,
     }
 };
 
@@ -84,9 +86,9 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
-        toggleModal(state, action) {
+        toggleSystemCategorySettings(state, action) {
             const modalName: string = action.payload;
-            state.modalsOpen[modalName] = !state.modalsOpen[modalName];
+            state.modalsOpen.editSystemCategory[modalName] = !state.modalsOpen.editSystemCategory[modalName];
         }
     },
     extraReducers: (builder) => {
@@ -146,12 +148,10 @@ export const dataSlice = createSlice({
             ).addCase(deleteSavedItem.fulfilled, (state, action) => {
                 state.status = 'idle';
                 const category = action.payload.category;
-                console.log(action.payload);
                 if(category === 'apps' || category === 'channels') {
                     const itemIndex = state[category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
                 
                     if(itemIndex > 0) {
-                        console.log('deleting item');
                         state[category].items.splice(itemIndex, 1);                 
                     }
 
@@ -174,7 +174,7 @@ export const dataSlice = createSlice({
 
 // export const { } = dataSlice.actions
 
-export const { toggleModal } = dataSlice.actions;
+export const { toggleSystemCategorySettings } = dataSlice.actions;
 export const selectModalOpen = (state: RootState) => state.data.modalsOpen;
 export const selectData = (state: RootState) => state.data;
 export default dataSlice.reducer;

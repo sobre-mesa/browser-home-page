@@ -1,45 +1,69 @@
-import React, { useEffect, useState }  from 'react';
+import React, { useEffect, useState } from 'react';
 import { SystemCategory } from '../models/Store';
 
-import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { selectModalOpen, toggleModal } from '../store/slices/dataSlice';
-
 import { Modal, Paper, IconButton } from '@mui/material';
-import AddCircleOutline from '@mui/icons-material/AddCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { SavedItemsSettingsItem } from './SavedItemsSettingsItem';
 import AddItemModal from './AddItemModal';
+import {toggleSystemCategorySettings, selectModalOpen} from '../store/slices/dataSlice';
+import {useDispatch, useSelector} from 'react-redux';
 
-
-export const SavedItemsSettingsModal = ( { category } : {category: SystemCategory}) => {
-    const modalOpen = useAppSelector(selectModalOpen) as Record<string, boolean>;
-    const dispatch = useAppDispatch();
-    const handleModalOpen = () => {
-        dispatch(toggleModal('savedItem'));
+export const SavedItemsSettingsModal = ({ category }: { category: SystemCategory }) => {
+    const [itemToEdit, setItemToEdit] = useState(null);
+    const [items, setItems] = useState(category.items);
+    const [modalOpen, setModalOpen] = useState(false);
+    const dispatch = useDispatch();
+    const modalsOpen = useSelector(selectModalOpen);
+    const handleCloseModal = () => {
+        setModalOpen(false);
+    };
+    const handleOpenEditModal = () => {
+        setModalOpen(true);
+    };
+    const handleOpenAddModal = () => {
+        setItemToEdit(null);
+        setModalOpen(true);
     };
 
-    const [items, setItems] = useState(category.items);
+    const handleCloseSelf = () => {
+        dispatch(toggleSystemCategorySettings(category.name));
+    };
+
     useEffect(() => {
         setItems(category.items);
     }, [category]);
 
-    const [itemToEdit, setItemToEdit] = useState(null);
     return (
         <>
-            <Modal className="saved-item-settings-modal" open={true} style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '100%',
-                backdropFilter: 'blur(5px)',
-            }}>
-                <Paper>
-                    <IconButton style={{marginLeft: '39%'}}aria-label="add" onClick={handleModalOpen} >
-                        <AddCircleOutline />
+            <Modal
+                className="saved-item-settings-modal"
+                open={modalsOpen.editSystemCategory[category.name]}
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: '100%',
+                    backdropFilter: 'blur(5px)',
+                }}
+            >
+                <Paper style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <IconButton
+                        style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }}
+                        aria-label="close"
+                        onClick={handleCloseSelf }
+                    >
+                        <CloseIcon />
                     </IconButton>
+                    <div style={{ marginTop: '20px' }}>
+                        <IconButton aria-label="add" onClick={handleOpenAddModal}>
+                            <AddCircleOutlineIcon />
+                        </IconButton>
+                    </div>
                     <AddItemModal
-                        open={modalOpen['savedItem']}
-                        setOpen={handleModalOpen}
+                        open={modalOpen}
+                        handleClose={handleCloseModal}
                         category={category}
                         itemToEdit={itemToEdit}
                     />
@@ -61,6 +85,7 @@ export const SavedItemsSettingsModal = ( { category } : {category: SystemCategor
                                 key={item.id}
                                 item={item}
                                 onEdit={setItemToEdit}
+                                handleOpen={handleOpenEditModal}
                             />
                         ))}
                     </Paper>

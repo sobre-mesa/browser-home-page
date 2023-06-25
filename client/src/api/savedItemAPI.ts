@@ -1,5 +1,4 @@
 import { SavedItem } from '../models/SavedItem';
-import {EmptyResponse } from '../models/API';
 import { get, post, put, del } from './api';
 
 export const savedItemAPI = {
