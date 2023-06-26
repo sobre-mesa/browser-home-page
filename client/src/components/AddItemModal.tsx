@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Modal, TextField, IconButton } from '@mui/material';
+import { Box, Typography, Modal, TextField, IconButton, Avatar } from '@mui/material';
 import { SavedItem } from '../models/SavedItem';
 import { useAppDispatch } from '../store/hooks';
 import { addSavedItem, updateSavedItem } from '../store/slices/dataSlice';
@@ -10,7 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 const style = {
     position: 'absolute',
     top: '50%',
-    left: '78%', 
+    left: '78%',
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'rgba(0, 0, 0, 0.8)',
@@ -42,12 +42,15 @@ export default function BasicModal({
     const [description, setDescription] = useState(itemToEdit?.description || '');
     const [url, setUrl] = useState(itemToEdit?.url || '');
     const [image, setImage] = useState(itemToEdit?.image || '');
+    const [imageError, setImageError] = useState(false);
 
     useEffect(() => {
         setDescription(itemToEdit?.description || '');
         setUrl(itemToEdit?.url || '');
         setImage(itemToEdit?.image || '');
+        setImageError(false);
     }, [itemToEdit]);
+
     const dispatch = useAppDispatch();
 
     const payload = { category: category.name };
@@ -66,6 +69,22 @@ export default function BasicModal({
         handleClose();
     };
 
+    const handleImageLoadError = () => {
+        setImageError(true);
+    };
+
+    const handleImagePaste = (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
+        const clipboardData = event.clipboardData;
+        if (clipboardData) {
+            const pastedImage = clipboardData.items[0];
+            if (pastedImage.type.indexOf('image') === 0) {
+                const imageURL = URL.createObjectURL(pastedImage.getAsFile());
+                setImage(imageURL);
+                setImageError(false);
+            }
+        }
+    };
+
     const isEditing = itemToEdit !== null;
     const title =
     (isEditing ? 'Editing ' + itemToEdit?.description + ' in ' : 'Add a new item to ') +
@@ -80,14 +99,28 @@ export default function BasicModal({
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <Typography
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                    sx={titleStyle} 
-                >
+                <Typography id="modal-modal-title" variant="h6" component="h2" sx={titleStyle}>
                     {title}
                 </Typography>
+                {image && !imageError ? (
+                    <Avatar
+                        src={image}
+                        alt="Preview"
+                        sx={{
+                            width: 100,
+                            height: 100,
+                            marginBottom: '10px',
+                            backgroundColor: 'transparent',
+                        }}
+                        onError={handleImageLoadError}
+                    />
+                ) : (
+                    imageError && (
+                        <Typography variant="body2" sx={{ color: 'white', marginBottom: '10px' }}>
+                Image not found
+                        </Typography>
+                    )
+                )}
                 <form onSubmit={onSubmit}>
                     <TextField
                         label="Description"
@@ -130,7 +163,10 @@ export default function BasicModal({
                     <TextField
                         label="Image"
                         value={image}
-                        onChange={(e) => setImage(e.target.value)}
+                        onChange={(e) => {
+                            setImage(e.target.value);
+                            setImageError(false);
+                        }}
                         fullWidth
                         margin="normal"
                         variant="standard"
@@ -145,9 +181,10 @@ export default function BasicModal({
                                 color: 'white',
                             },
                         }}
+                        onPaste={handleImagePaste}
                     />
-                    <div style={{display: 'flex'}}>
-                        <IconButton style={{marginLeft: 'auto'}} type="submit" color="error" aria-label="AddOrEdit">
+                    <div style={{ display: 'flex' }}>
+                        <IconButton style={{ marginLeft: 'auto' }} type="submit" color="error" aria-label="AddOrEdit">
                             {isEditing ? <EditIcon fontSize="large" /> : <AddCircleOutlineIcon fontSize="large" />}
                         </IconButton>
                     </div>
