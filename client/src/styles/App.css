@@ -6,6 +6,7 @@ body {
   background-image: url("https://wallpapers.com/images/featured/7sfd6znw2ry6hnlt.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+  font-family: 'Cutive Mono', monospace, 'Raleway', sans-serif;
 }
 
 .mac-dock {
@@ -16,6 +17,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a shadow to the dock */
   margin-top: 20px;
   backdrop-filter: blur(5px); /* Apply a blur effect to the background */
+    font-family: 'Cutive Mono', monospace, 'Raleway', sans-serif;
 }
   
   .dock-items {
@@ -42,4 +44,30 @@ body {
   padding: 4px;
   margin-left: auto;
   margin-right: -10px;
+}
+
+.round-item:hover {
+  transform: scale(1.3) translateY(-7px);
+  box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.5);
+  transition: transform 0.6s ease;
+}
+
+.round-item:not(:hover) {
+  transition: transform 0.3s ease;
+}
+
+.round-item:not(:hover):after {
+  content: "";
+  display: block;
+  height: 15px;
+  transform: translateY(15px);
+  transition: transform 0.3s ease;
+}
+
+.round-item:not(:hover):hover:after {
+  transform: translateY(0);
+}
+
+.white-input.Mui-focused .MuiInput-underline:before {
+  border-bottom-color: white !important;
 }

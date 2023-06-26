@@ -11,8 +11,8 @@ const StyledAvatar = styled(Avatar)`
 
 export const RoundItem = ({item}: { item: SavedItem }) => {
     return (
-        <a href={item.url}>
-            <StyledAvatar 
+        <a  href={item.url}>
+            <StyledAvatar className="round-item"
                 alt={item.description} 
                 src={item.image}
                 sx={{ width: 56, height: 56 }} />
