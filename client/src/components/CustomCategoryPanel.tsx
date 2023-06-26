@@ -4,7 +4,7 @@ import { StoreCategory } from '../models/Store';
 
 export const CustomCategoryPanel = ({ categories }: { categories: StoreCategory[] } ) => {
     return (
-        <div className="bar">
+        <div className="bar" style={{padding: 20}}>
             {categories.map((category) => (
                 <Category
                     key={category.id}

@@ -79,6 +79,7 @@ body {
   scroll-behavior: smooth;
   scrollbar-width: hide;
   padding: 10px;
+  max-width: 895px;
 }
 
 .scroll-button {
@@ -87,14 +88,7 @@ body {
   border: none;
   background: transparent;
   cursor: pointer;
+  color: rgba(255, 255, 255, 0.323);
 }
 
-.scroll-container {
-  display: flex;
-  width: 50px;
-}
 
-/* Optional styling for the bookmarks */
-.bookmark {
-  /* Add your styles for the bookmark component here */
-}
