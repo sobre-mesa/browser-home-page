@@ -172,8 +172,6 @@ export const dataSlice = createSlice({
     },
 });
 
-// export const { } = dataSlice.actions
-
 export const { toggleSystemCategorySettings } = dataSlice.actions;
 export const selectModalOpen = (state: RootState) => state.data.modalsOpen;
 export const selectData = (state: RootState) => state.data;

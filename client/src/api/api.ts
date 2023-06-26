@@ -3,10 +3,8 @@ export async function get(url: string){
     return fetch(host + url)
         .then((response) => {
             if (response.ok) {
-                // Process the successful response
                 return response.json();
             } else {
-                // Handle non-200 status codes
                 throw new Error('Request failed with status ' + response.status);
             }
         })
@@ -32,10 +30,8 @@ export async function post(url: string, body: any){
     })
         .then((response) => {
             if (response.ok) {
-                // Process the successful response
                 return response.json();
             } else {
-                // Handle non-200 status codes
                 throw new Error('Request failed with status ' + response.status);
             }
         })
@@ -60,10 +56,8 @@ export async function put(url: string, body: any){
     })
         .then((response) => {
             if (response.ok) {
-                // Process the successful response
                 return response.json();
             } else {
-                // Handle non-200 status codes
                 throw new Error('Request failed with status ' + response.status);
             }
         })
@@ -82,10 +76,8 @@ export async function del(url: string){
     })
         .then((response) => {
             if (response.ok) {
-                // Process the successful response
                 return true;
             } else {
-                // Handle non-200 status codes
                 throw new Error('Request failed with status ' + response.status);
             }
         })

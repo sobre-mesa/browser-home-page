@@ -10,10 +10,10 @@ import EditIcon from '@mui/icons-material/Edit';
 const style = {
     position: 'absolute',
     top: '50%',
-    left: '78%', // Adjust the left value as per your requirement
+    left: '78%', 
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: 'rgba(0, 0, 0, 0.8)', // 50% transparent black background
+    bgcolor: 'rgba(0, 0, 0, 0.8)',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
@@ -21,7 +21,7 @@ const style = {
 };
 
 const titleStyle = {
-    color: 'rgba(255, 255, 255, 0.7)', // 70% transparent white text
+    color: 'rgba(255, 255, 255, 0.7)',
     padding: '10px',
     marginBottom: '10px',
 };
@@ -84,7 +84,7 @@ export default function BasicModal({
                     id="modal-modal-title"
                     variant="h6"
                     component="h2"
-                    sx={titleStyle} // Apply title style
+                    sx={titleStyle} 
                 >
                     {title}
                 </Typography>
@@ -108,7 +108,6 @@ export default function BasicModal({
                             },
                         }}
                     />
-
                     <TextField
                         label="URL"
                         value={url}
@@ -128,7 +127,6 @@ export default function BasicModal({
                             },
                         }}
                     />
-
                     <TextField
                         label="Image"
                         value={image}
@@ -148,7 +146,6 @@ export default function BasicModal({
                             },
                         }}
                     />
-
                     <div style={{display: 'flex'}}>
                         <IconButton style={{marginLeft: 'auto'}} type="submit" color="error" aria-label="AddOrEdit">
                             {isEditing ? <EditIcon fontSize="large" /> : <AddCircleOutlineIcon fontSize="large" />}
