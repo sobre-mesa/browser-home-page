@@ -14,6 +14,9 @@ function App() {
         <div className="App">
             <header className="App-header">
                 <Bar category={data.apps}/>
+                <div style={{height: 450}}>
+
+                </div>
                 <Bar category={data.channels}/>
             </header>
         </div>

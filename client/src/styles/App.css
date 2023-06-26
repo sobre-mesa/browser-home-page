@@ -2,15 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-image: url("https://wallpapers.com/images/featured/7sfd6znw2ry6hnlt.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .mac-dock {
-    width: 600px;
-    background-color: #e4cdb7; /* Set the background color of the dock */
-    padding: 10px; /* Adjust the padding as needed */
-    border-radius: 10px; /* Adjust the border radius as needed */
-    margin: 0 auto; /* Center the dock */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a shadow to the dock */
-    margin-top: 20px;
-  }
+  width: 600px;
+  padding: 10px; /* Adjust the padding as needed */
+  border-radius: 10px; /* Adjust the border radius as needed */
+  margin: 0 auto; /* Center the dock */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a shadow to the dock */
+  margin-top: 20px;
+  backdrop-filter: blur(5px); /* Apply a blur effect to the background */
+}
   
   .dock-items {
     display: flex;
@@ -27,3 +33,13 @@
   .saved-item-settings-modal :focus {
     outline: none;
   }
+
+.vertical-text {
+  writing-mode: vertical-lr;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 9px;
+  padding: 4px;
+  margin-left: auto;
+  margin-right: -10px;
+}
