@@ -2,7 +2,7 @@ import React from 'react';
 import { Category } from './CustomCategory';
 import { StoreCategory } from '../models/Store';
 
-export const BookmarkPanel = ({ categories }: { categories: StoreCategory[] } ) => {
+export const CustomCategoryPanel = ({ categories }: { categories: StoreCategory[] } ) => {
     return (
         <div className="bar">
             {categories.map((category) => (

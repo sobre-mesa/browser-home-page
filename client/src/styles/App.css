@@ -71,3 +71,30 @@ body {
 .white-input.Mui-focused .MuiInput-underline:before {
   border-bottom-color: white !important;
 }
+
+.bar-section-items {
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: hide;
+  padding: 10px;
+}
+
+.scroll-button {
+  font-size: 1.5rem;
+  padding: 5px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.scroll-container {
+  display: flex;
+  width: 50px;
+}
+
+/* Optional styling for the bookmarks */
+.bookmark {
+  /* Add your styles for the bookmark component here */
+}

@@ -7,7 +7,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { toggleSystemCategorySettings } from '../store/slices/dataSlice';
 import { useDispatch } from 'react-redux';
 import { SavedItemsSettingsModal } from './SavedItemsSettingsModal';
-const iconSx = { width: 15, height: 15, marginLeft: "-10px", marginTop: "-10px", color: "rgba(255, 255, 255, 0.503)" };
+const iconSx = { width: 15, height: 15, marginLeft: '-10px', marginTop: '-10px', color: 'rgba(255, 255, 255, 0.503)' };
 
 
 export const Bar = ({ category }: { category: SystemCategory }) => {
@@ -16,14 +16,14 @@ export const Bar = ({ category }: { category: SystemCategory }) => {
         dispatch(toggleSystemCategorySettings(category.name));
     };
 
-    const appStyle = {backgroundColor: 'rgba(0, 0, 0, 0.503)'}
-    const channelStyle = {backgroundColor: 'rgba(164, 30, 30, 0.7)'}
+    const appStyle = {backgroundColor: 'rgba(0, 0, 0, 0.503)'};
+    const channelStyle = {backgroundColor: 'rgba(164, 30, 30, 0.7)'};
 
     return (
         <div style={{display: 'flex'}}>
             <SavedItemsSettingsModal category={category} />
 
-            <div className="mac-dock" style={category.name == "apps" ? appStyle : channelStyle}>
+            <div className="mac-dock" style={category.name == 'apps' ? appStyle : channelStyle}>
                
                 <ul className="dock-items">
                     <div>
@@ -35,10 +35,7 @@ export const Bar = ({ category }: { category: SystemCategory }) => {
                         <RoundItem key={item.id} item={item} />
                     ))}
                     <p className="vertical-text">{category.name.toUpperCase()}</p>
-                </ul>
-              
-                {/* Vertical Bar */}
-               
+                </ul>               
             </div>
         </div>
     );
