@@ -3,20 +3,22 @@
 @tailwind utilities;
 
 body {
+  margin: 0;
+  padding: 0;
   background-image: url("https://wallpapers.com/images/featured/7sfd6znw2ry6hnlt.jpg");
   background-size: cover;
-  background-repeat: no-repeat;
-  font-family: 'Cutive Mono', monospace, 'Raleway', sans-serif;
+  background-position: center;
+  background-repeat: repeat;
 }
 
 .mac-dock {
   width: 600px;
-  padding: 10px; /* Adjust the padding as needed */
-  border-radius: 10px; /* Adjust the border radius as needed */
-  margin: 0 auto; /* Center the dock */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a shadow to the dock */
+  padding: 10px;
+  border-radius: 10px; 
+  margin: 0 auto; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
   margin-top: 20px;
-  backdrop-filter: blur(5px); /* Apply a blur effect to the background */
+  backdrop-filter: blur(5px); 
     font-family: 'Cutive Mono', monospace, 'Raleway', sans-serif;
 }
   
@@ -28,7 +30,7 @@ body {
   }
   
   .dock-item {
-    margin-right: 10px; /* Adjust the spacing between dock items */
+    margin-right: 10px;
   }
   
 
@@ -68,6 +70,18 @@ body {
   transform: translateY(0);
 }
 
+.round-item:not(:hover):after {
+  content: "";
+  display: block;
+  transform: scale(1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.round-item:not(:hover):hover:after {
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
 .white-input.Mui-focused .MuiInput-underline:before {
   border-bottom-color: white !important;
 }
@@ -91,4 +105,36 @@ body {
   color: rgba(255, 255, 255, 0.323);
 }
 
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto; 
+  padding: 20px;
+}
+
+.custom-category-panel-container {
+  margin-top: 25px;
+  height: 460px;
+  width: 100%;
+  max-width: 964px;
+  background-color: rgba(0, 0, 0, 0.503);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .custom-category-panel-container {
+    height: 300px;
+  }
+}
 

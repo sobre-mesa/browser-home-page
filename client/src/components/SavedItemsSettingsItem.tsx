@@ -10,7 +10,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { AreYouSureModal } from './AreYouSureModal';
 const StyledAvatar = styled(Avatar)`
   margin: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 `;
 
 type EditAction = SetStateAction<SavedItem > | SetStateAction<null>
@@ -36,8 +36,6 @@ export const SavedItemsSettingsItem = ({
     const onDelete = () => {
         dispatch(deleteSavedItem({category: category, id: item.id as string}));
     };
-
-    console.log(category);
 
     const [open, setOpen] = useState(false);
     const iconSx = { width: 15, height: 15 };

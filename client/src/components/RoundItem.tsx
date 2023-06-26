@@ -5,8 +5,7 @@ import { styled } from '@mui/material/styles';
 
 const StyledAvatar = styled(Avatar)`
      margin: 10px;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a
-`;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); `;
 
 export const RoundItem = ({item}: { item: SavedItem }) => {
     return (

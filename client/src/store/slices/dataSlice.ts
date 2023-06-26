@@ -35,7 +35,6 @@ const reduceCategories = (categories: APIResponseWithArray<Category>, savedItems
                 if (category.name !== 'Apps' && category.name !== 'Channels') {
                     result.customCategories.push(category);
                 } else {
-                    // console.table(category.items);
                     result[category.name.toLowerCase()] =   {
                         id: category.id,
                         name: category.name.toLowerCase(),

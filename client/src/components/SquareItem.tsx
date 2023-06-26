@@ -7,11 +7,11 @@ import { SavedItem } from '../models/SavedItem';
 
 export const Bookmark = ({ item }: { item: SavedItem }) => {
     return (
-        <div className="bar-item">
+        <div className="square-item">
             <Card sx={{ width: 200, backgroundColor: 'rgba(0, 0, 0, 0.9)', borderRadius: 3, margin: '0 12px', color: 'white' }}>
-                <CardMedia sx={{ height: 80 }} image={item.image} />
-                <CardContent sx={{ height: 5 }}>
-                    <Typography variant="body2" color="white">
+                <CardMedia sx={{ height: 80, paddingBottom: 0, marginBottom: 0 }} image={item.image} />
+                <CardContent sx={{ height: 12, marginTop: "-10px", paddingBottom: 0 }}>
+                    <Typography variant="body2" color="white" sx={{fontSize: 12}}>
                         {item.description}
                     </Typography>
                 </CardContent>
