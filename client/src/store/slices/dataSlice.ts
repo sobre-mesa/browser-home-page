@@ -19,7 +19,7 @@ const initialState: DataState = {
         editSystemCategory: {
             apps: false,
             channels: false,
-            custom: true,
+            custom: false,
         },
     }
 };
