@@ -19,12 +19,14 @@ const initialState: DataState = {
         editSystemCategory: {
             apps: false,
             channels: false,
+            custom: true,
         },
-        editCustomCategories: false,
     }
 };
 
-const reduceCategories = (categories: APIResponseWithArray<Category>, savedItems: APIResponseWithArray<SavedItem>) => {
+const reduceCategories = (
+    categories: APIResponseWithArray<Category>,
+    savedItems: APIResponseWithArray<SavedItem>) => {
     return categories?.payload
         .map((category: Category) => ({
             ...category,

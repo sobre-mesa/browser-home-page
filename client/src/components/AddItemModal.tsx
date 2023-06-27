@@ -26,19 +26,19 @@ const titleStyle = {
     marginBottom: '10px',
 };
 
-type BasicModalProps = {
+type AddOrEditItemModalProps = {
   open: boolean;
   handleClose: () => any;
   category: SystemCategory;
   itemToEdit?: SavedItem | null;
 };
 
-export default function BasicModal({
+export default function AddOrEditItemModal({
     open,
     handleClose,
     category,
     itemToEdit,
-}: BasicModalProps) {
+}: AddOrEditItemModalProps) {
     const [description, setDescription] = useState(itemToEdit?.description || '');
     const [url, setUrl] = useState(itemToEdit?.url || '');
     const [image, setImage] = useState(itemToEdit?.image || '');
