@@ -61,7 +61,7 @@ export const SavedItemsSettingsModal = ({ category }: { category: SystemCategory
                         fontFamily: 'Cutive Mono'
                     }}
                 >
-                    {categoryName}
+                    {category.name.toUpperCase()}
                 </div>
                 <IconButton
                     style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }}

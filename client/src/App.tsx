@@ -17,12 +17,12 @@ function App() {
     return (
         <div className="App">
 
-            {/* <CustomCategoriesSettingsModal
+            <CustomCategoriesSettingsModal
                 open={true}
                 setOpen={() => {}}
                 onEdit={() => {}}
                 categories={data.categories}
-            /> */}
+            />
             <header className="App-header">
                 <div className="container">
                     <Bar category={data.apps} />

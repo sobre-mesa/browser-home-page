@@ -130,15 +130,20 @@ export const dataSlice = createSlice({
             .addCase(updateSavedItem.fulfilled, (state, action) => {
                 state.status = 'idle';
                 const category = action.payload.category;
-                if(action.payload.category === 'apps' || action.payload.category === 'channels') {
-                    const itemIndex = state[action.payload.category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
-                    if(itemIndex > 0) {
-                        state[action.payload.category].items[itemIndex] = action.payload.item;                 
+                if (action.payload.category === 'apps' || action.payload.category === 'channels') {
+                    const categoryItems = state[action.payload.category].items;
+                    const itemIndex = categoryItems.findIndex((item: SavedItem) => item.id === action.payload.id);
+                    if (itemIndex !== -1) {
+                        categoryItems[itemIndex] = action.payload.item;
                     }
-
-                }
-                else if (category) {
-                    state[action.payload.category].items.push(action.payload.item);
+                } else if (category) {
+                    const categoryItems = state.categories.find((c) => c.name === category)?.items;
+                    if (categoryItems) {
+                        const itemIndex = categoryItems.findIndex((item: SavedItem) => item.id === action.payload.id);
+                        if (itemIndex !== -1) {
+                            categoryItems[itemIndex] = action.payload.item;
+                        }
+                    }
                 }
             })
             .addCase(updateSavedItem.rejected, (state) => {
