@@ -83,11 +83,9 @@ export const deleteSavedItem = createAsyncThunk('data/DeleteSavedItem',
 
 export const addCategory = createAsyncThunk('data/AddCategory',
     async (payload: { name: string }) => {
-        console.log(payload);
         const category = { name: payload.name };
         const response = await categoryAPI.createCategory(category);
-        console.log(response)
-        return category; 
+        return response.payload; 
     });
 
 export const updateCategory = createAsyncThunk('data/UpdateCategory',
@@ -189,7 +187,8 @@ export const dataSlice = createSlice({
             }).addCase(addCategory.fulfilled, (state, action) => {
                 state.status = 'idle';
                 console.log('Fulfilled');
-                state.categories.push(action.payload.category);
+                console.log(action.payload);
+                state.categories.push(action.payload);
             }).addCase(addCategory.rejected, (state) => {
                 state.status = 'failed';
             }

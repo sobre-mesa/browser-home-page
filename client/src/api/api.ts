@@ -14,13 +14,8 @@ export async function get(url: string){
 
 }
 
-export async function post(url: string, body: any){
+export async function post(url: string, formData: any){
     const host = 'http://localhost:8000';
-    const formData = new URLSearchParams();
-    formData.append('url', body.url);
-    formData.append('description', body.description);
-    formData.append('category', body.category);
-    formData.append('image', body.image);
     return fetch(host + url, {
         method: 'POST',
         headers: {
@@ -40,13 +35,8 @@ export async function post(url: string, body: any){
         });
 }
 
-export async function put(url: string, body: any){
+export async function put(url: string, formData: any){
     const host = 'http://localhost:8000';
-    const formData = new URLSearchParams();
-    formData.append('url', body.url);
-    formData.append('description', body.description);
-    formData.append('category', body.category);
-    formData.append('image', body.image);
     return fetch(host + url, {
         method: 'PATCH',
         headers: {

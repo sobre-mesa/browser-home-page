@@ -29,7 +29,7 @@ export const Category = ({ category, items }: { category: string; items: SavedIt
                 &lt;
             </button>
             <div className="bar-section-items" ref={containerRef}>
-                {items.map((item) => (
+                {items?.map((item) => (
                     <Bookmark key={item.id} item={item} />
                 ))}
             </div>
