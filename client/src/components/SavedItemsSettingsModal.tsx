@@ -93,15 +93,19 @@ export const SavedItemsSettingsModal = ({ category }: { category: SystemCategory
                     }}
                 >
                        
-                    {items.map((item) => (
+                    {items.length > 0 ? items.map((item) => (
                         <SavedItemsSettingsItem
                             category={category.name}
                             key={item.id}
                             item={item}
                             onEdit={setItemToEdit}
-                            handleOpen={handleOpenEditModal}
+                            handleOpen={handleOpenEditModal} 
                         />
-                    ))}
+                    )) : 
+                        <div style={{width: 270, display: 'flex', justifyContent: 'center', alignItems: 'center', gridColumn: '1 / -1', gridRow: '1 / -1'}}>
+                            <div style={{color: 'rgba(0, 0, 0, 0.3)', fontSize: '16px'}}>No items saved</div>
+                        </div>
+                    }
                 </Paper>
             </Paper>
         </>

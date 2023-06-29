@@ -6,7 +6,9 @@ exports.deleteAllInCategory = (categoryId) => {
       if (err) {
         console.error('Error deleting SavedItems:', err);
       } else {
+        console.log(categoryId);
         console.log('SavedItems deleted successfully.');
+        return {status: 'Success'}
       }
     });
   };

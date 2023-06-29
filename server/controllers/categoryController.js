@@ -6,7 +6,7 @@ exports.getAllCategories = getAll(Category);
 exports.getCategory  = getOne(Category);
 exports.updateCategory = updateOne(Category);
 exports.deleteCategory = (req, res) => {
-    deleteOne(Category);
+    deleteOne(Category)(req, res);
     deleteAllInCategory(req.params.id);
 }
 exports.newCategory = createOne(Category);

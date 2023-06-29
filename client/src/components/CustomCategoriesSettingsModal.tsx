@@ -24,7 +24,6 @@ export const CustomCategoriesSettingsModal = ({
         setAnchorEl(event.currentTarget);
     };
 
-
     useEffect(() => {
         // Update the selected category if its items have changed
         if (selectedCategory) {
@@ -72,14 +71,19 @@ export const CustomCategoriesSettingsModal = ({
                         categoryToEdit={null}
                         anchorEl={anchorEl}
                         setAnchorEl={setAnchorEl} />
-                    {categories?.map((category) => (
-                        <CustomCategoriesSettingItem
-                            key={category.id}
-                            category={category}
-                            onClick={() => handleCategoryClick(category)}
-                            onDelete={(x) => dispatch(deleteCategory({id: x.id})) }
-                        />
-                    ))}
+                    {categories.length > 0 ? 
+                        categories?.map((category) => (
+                            <CustomCategoriesSettingItem
+                                key={category.id}
+                                category={category}
+                                onClick={() => handleCategoryClick(category)}
+                                onDelete={(x) => dispatch(deleteCategory({id: x.id})) }
+                            />
+                        )) :
+                        <div style={{marginLeft: '80px', marginTop: '20px', color: 'rgba(164, 30, 30, 0.7)'}}>
+                        No custom categories yet!
+                        </div>
+                    }
                 </div>
                 {selectedCategory && (
                     <SavedItemsSettingsModal
