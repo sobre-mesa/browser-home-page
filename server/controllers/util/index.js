@@ -73,6 +73,8 @@ const deleteOne = (Model) => {
     }
 }
 
+
+
 const createOne = (Model) => {
     return async (req, res) => {
         console.log(req.body);

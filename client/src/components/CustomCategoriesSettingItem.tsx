@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteCategoryPopOver from './DeleteCategoryPopOver';
-import { Delete } from '@mui/icons-material';
 import {Category} from '../models/Category';
 
 const styles = {
