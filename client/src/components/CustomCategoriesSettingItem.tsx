@@ -1,6 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteCategoryPopOver from './DeleteCategoryPopOver';
+import { Delete } from '@mui/icons-material';
+import {Category} from '../models/Category';
 
 const styles = {
     container: {
@@ -31,34 +34,43 @@ const styles = {
     },
 };
 
-export default function CustomCategoriesSettingItem({
-    label,
-    onClick,
-    onDelete,
+export default function CustomCategoriesSettingItem(
+    {category, onClick, onDelete} : 
+{
+    category: Category
+    onClick: () => void;
+    onDelete: (id: string) => void;
 }) {
 
+    const [anchorEl, setAnchorEl] = useState(null);
     const handleClick = () => {
         console.info('You clicked the Chip.');
         onClick();
     };
 
-    const handleDelete = () => {
-        console.info('You clicked the delete icon.');
-        onDelete();
+    const handleDelete = (event) => {
+        setAnchorEl(event.currentTarget);    
     };
 
     const handleEdit = () => {
         console.info('You clicked the edit icon.');
     };
-
+    // console.log(category.id)
     return (
         <div style={styles.container}>
             <span style={styles.label} onClick={handleClick}>
-                {label}
+                {category.name}
             </span>
             <div style={styles.icons}>
                 <EditIcon style={styles.icon} onClick={handleEdit} />
                 <DeleteIcon style={styles.icon} onClick={handleDelete} />
+                <DeleteCategoryPopOver
+                    onDelete={() => { 
+                        console.log(category.id)
+                        onDelete(category) }}
+                    anchorEl={anchorEl}
+                    onClose={()=> {setAnchorEl(null);}}
+                />
             </div>
         </div>
     );

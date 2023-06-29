@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SavedItemsSettingsModal } from './SavedItemsSettingsModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectModalOpen, selectData } from '../store/slices/dataSlice';
+import { selectModalOpen, selectData, deleteCategory } from '../store/slices/dataSlice';
 import { StoreCategory } from '../models/Store';
 import CustomCategoriesSettingItem from './CustomCategoriesSettingItem';
 import { Modal, IconButton } from '@mui/material';
@@ -49,10 +49,7 @@ export const CustomCategoriesSettingsModal = ({
         setSelectedCategory(category);
     };
 
-    const handleDeleteItem = (itemId: string) => {
-    // Dispatch an action to delete the item
-        dispatch(deleteSavedItem({ category: selectedCategory?.name || '', id: itemId }));
-    };
+
 
     return (
         <Modal
@@ -78,9 +75,9 @@ export const CustomCategoriesSettingsModal = ({
                     {categories?.map((category) => (
                         <CustomCategoriesSettingItem
                             key={category.id}
-                            label={category.name}
+                            category={category}
                             onClick={() => handleCategoryClick(category)}
-                            onDelete={handleDeleteItem}
+                            onDelete={(x) => dispatch(deleteCategory({id: x.id})) }
                         />
                     ))}
                 </div>

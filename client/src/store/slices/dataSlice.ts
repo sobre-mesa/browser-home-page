@@ -94,6 +94,13 @@ export const updateCategory = createAsyncThunk('data/UpdateCategory',
         return payload;
     });
 
+export const deleteCategory = createAsyncThunk('data/DeleteCategory',
+    async (payload: { id: string }) => {
+        console.log('PAYLOAD:', payload);
+        const response = await categoryAPI.deleteCategory(payload.id);
+        return payload;
+    });
+
 export const dataSlice = createSlice({
     name: 'data',
     initialState,
@@ -192,7 +199,21 @@ export const dataSlice = createSlice({
             }).addCase(addCategory.rejected, (state) => {
                 state.status = 'failed';
             }
-            );
+            )
+            .addCase(deleteCategory.pending, (state) => {
+                state.status = 'loading';
+            }
+            ).addCase(deleteCategory.fulfilled, (state, action) => {
+                state.status = 'idle';
+                const categoryIndex = state.categories.findIndex((category: StoreCategory) => category.id === action.payload.id);
+                if (categoryIndex > 0) {
+                    state.categories.splice(categoryIndex, 1);
+                }
+            }).addCase(deleteCategory.rejected, (state) => {
+                state.status = 'failed';
+            }
+            )
+        ;
 
 
     },
