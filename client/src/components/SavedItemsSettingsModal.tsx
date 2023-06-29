@@ -12,7 +12,6 @@ import { useDispatch } from 'react-redux';
 const closeIconSX = { width: 15, height: 15, marginRight: '-10px', marginTop: '-15px', color: 'rgba(255, 255, 255, 0.3)' };
 const addIconSX = { width: 20, height: 20, color: 'rgba(255, 255, 255, 0.3)', paddingBottom: '6px' };
 export const SavedItemsSettingsModal = ({ category }: { category: SystemCategory }) => {
-    console.log(category);
     const [itemToEdit, setItemToEdit] = useState(null);
     const [items, setItems] = useState(category.items);
     const [modalOpen, setModalOpen] = useState(false);

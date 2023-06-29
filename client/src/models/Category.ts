@@ -1,6 +1,6 @@
 
 export type Category = {
-  id: string;
+  id?: string;
   name: string;
-  isSystemCategory: boolean
+  isSystemCategor?: boolean
 }

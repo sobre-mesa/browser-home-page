@@ -9,12 +9,6 @@ const schema = new mongoose.Schema({
         ...rules.required(schemaName, 'title'),
         ...rules.charMinMax(schemaName, 'title', 1, 40)
     },
-    isSystemCategory: {
-        type: Boolean,
-        ...rules.required(schemaName, 'system status'),
-        default: false,
-        select: false
-    },
   },
     {
       toJSON: { virtuals: true }, 

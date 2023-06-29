@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectModalOpen, selectData } from '../store/slices/dataSlice';
 import { StoreCategory } from '../models/Store';
 import CustomCategoriesSettingItem from './CustomCategoriesSettingItem';
-import { Modal } from '@mui/material';
+import { Modal, IconButton } from '@mui/material';
+import AddCategoryPopOver  from './AddCategoryPopOver';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 export const CustomCategoriesSettingsModal = ({
     categories
@@ -12,9 +14,16 @@ export const CustomCategoriesSettingsModal = ({
   categories: StoreCategory[];
 }) => {
     const [selectedCategory, setSelectedCategory] = useState<StoreCategory | null>(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const data = useSelector(selectData);
     const modalsOpen = useSelector(selectModalOpen);
     const dispatch = useDispatch();
+
+
+    const handleButtonClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
 
     useEffect(() => {
         // Update the selected category if its items have changed
@@ -48,7 +57,7 @@ export const CustomCategoriesSettingsModal = ({
     return (
         <Modal
             className="saved-item-settings-modal"
-            open={modalsOpen.editSystemCategory['custom']}
+            open={modalsOpen['custom']}
             style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -59,6 +68,13 @@ export const CustomCategoriesSettingsModal = ({
         >
             <div className="custom-categories-settings-modal" style={{ display: 'flex' }}>
                 <div className="custom-categories-side-bar" style={{ marginRight: 60, marginLeft: '-220px' }}>
+                    <IconButton onClick={handleButtonClick} style={{marginLeft: '80px'}}>
+                        <AddCircleOutlineIcon sx={{color: 'rgba(164, 30, 30, 0.7)'}} />
+                    </IconButton>
+                    <AddCategoryPopOver
+                        categoryToEdit={null}
+                        anchorEl={anchorEl}
+                        setAnchorEl={setAnchorEl} />
                     {categories?.map((category) => (
                         <CustomCategoriesSettingItem
                             key={category.id}

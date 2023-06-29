@@ -28,16 +28,17 @@ export const Bar = ({ category }: { category: SystemCategory }) => {
         <div style={{display: 'flex'}}>
             <Modal
                 className="saved-item-settings-modal"
-                open={modalsOpen.editSystemCategory[category.name]}
+                open={modalsOpen[category.name] || false}
                 style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     height: '100%',
                     backdropFilter: 'blur(5px)',
-                }}
-            >
-                <SavedItemsSettingsModal category={category} />
+                }}>
+                <div>
+                    <SavedItemsSettingsModal category={category} />
+                </div>
             </Modal>
             <div className="mac-dock" style={category.name == 'apps' ? appStyle : channelStyle}>
                

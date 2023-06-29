@@ -5,22 +5,20 @@ import { SavedItem } from '../../models/SavedItem';
 import { savedItemAPI } from '../../api/savedItemAPI';
 import { noteAPI } from '../../api/noteAPI';
 import { categoryAPI } from '../../api/categoryAPI';
-import type { StoreCategory, DataState} from '../../models/Store';
+import type { StoreCategory, DataState } from '../../models/Store';
 import type { APIResponseWithArray } from '../../models/API';
 import type { Category } from '../../models/Category';
 
 const initialState: DataState = {
-    status: 'idle', 
+    status: 'idle',
     categories: [],
-    channels: {name: '', id: '', items: []},
-    apps: {name: '', id: '', items: []},
+    channels: { name: '', id: '', items: [] },
+    apps: { name: '', id: '', items: [] },
     notes: [],
     modalsOpen: {
-        editSystemCategory: {
-            apps: false,
-            channels: false,
-            custom: false,
-        },
+        apps: false,
+        channels: false,
+        custom: false,
     }
 };
 
@@ -37,10 +35,10 @@ const reduceCategories = (
                 if (category.name !== 'Apps' && category.name !== 'Channels') {
                     result.customCategories.push(category);
                 } else {
-                    result[category.name.toLowerCase()] =   {
+                    result[category.name.toLowerCase()] = {
                         id: category.id,
                         name: category.name.toLowerCase(),
-                        items : category.items || []
+                        items: category.items || []
                     };
                 }
                 return result;
@@ -48,7 +46,7 @@ const reduceCategories = (
             { customCategories: [] }
         ) || {};
 };
-    
+
 export const initData = createAsyncThunk('data/InitData', async () => {
     const [notes, categories, savedItems] = await Promise.all([
         noteAPI.getAllNotes(),
@@ -66,20 +64,35 @@ export const initData = createAsyncThunk('data/InitData', async () => {
 });
 
 export const addSavedItem = createAsyncThunk('data/AddSavedItem',
-    async (payload: {category: string, item: SavedItem}) => {
+    async (payload: { category: string, item: SavedItem }) => {
         const response = await savedItemAPI.createSavedItem(payload.item);
         return payload;
     });
 
 export const updateSavedItem = createAsyncThunk('data/UpdateSavedItem',
-    async (payload: {category: string, id: string, item: SavedItem}) => {
+    async (payload: { category: string, id: string, item: SavedItem }) => {
         const response = await savedItemAPI.updateSavedItem(payload.id, payload.item);
         return payload;
     });
 
 export const deleteSavedItem = createAsyncThunk('data/DeleteSavedItem',
-    async (payload: {category: string, id: string}) => {
+    async (payload: { category: string, id: string }) => {
         const response = await savedItemAPI.deleteSavedItem(payload.id);
+        return payload;
+    });
+
+export const addCategory = createAsyncThunk('data/AddCategory',
+    async (payload: { name: string }) => {
+        console.log(payload);
+        const category = { name: payload.name };
+        const response = await categoryAPI.createCategory(category);
+        console.log(response)
+        return category; 
+    });
+
+export const updateCategory = createAsyncThunk('data/UpdateCategory',
+    async (payload: { id: string, name: string }) => {
+        const response = await categoryAPI.updateCategory(payload.id, payload.category);
         return payload;
     });
 
@@ -89,7 +102,7 @@ export const dataSlice = createSlice({
     reducers: {
         toggleSystemCategorySettings(state, action) {
             const modalName: string = action.payload;
-            state.modalsOpen.editSystemCategory[modalName] = !state.modalsOpen.editSystemCategory[modalName];
+            state.modalsOpen[modalName] = !state.modalsOpen[modalName];
         }
     },
     extraReducers: (builder) => {
@@ -106,7 +119,7 @@ export const dataSlice = createSlice({
             })
             .addCase(initData.rejected, (state) => {
                 state.status = 'failed';
-            }) 
+            })
             .addCase(addSavedItem.pending, (state) => {
                 state.status = 'loading';
             })
@@ -114,7 +127,7 @@ export const dataSlice = createSlice({
                 state.status = 'idle';
                 const category = state.categories.find((category: StoreCategory) => category.name === action.payload.category);
                 const name: string = action.payload.category?.toLowerCase() || '';
-                if(name === 'apps' || name === 'channels') {
+                if (name === 'apps' || name === 'channels') {
                     state[name].items.push(action.payload.item);
                 }
                 if (category) {
@@ -154,27 +167,35 @@ export const dataSlice = createSlice({
             ).addCase(deleteSavedItem.fulfilled, (state, action) => {
                 state.status = 'idle';
                 const category = action.payload.category;
-                if(category === 'apps' || category === 'channels') {
+                if (category === 'apps' || category === 'channels') {
                     const itemIndex = state[category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
-                
-                    if(itemIndex > 0) {
-                        state[category].items.splice(itemIndex, 1);                 
+
+                    if (itemIndex > 0) {
+                        state[category].items.splice(itemIndex, 1);
                     }
 
                 }
                 else if (category) {
                     const itemIndex = state[category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
-                    if(itemIndex > 0) {
-                        state[category].items.splice(itemIndex, 1);                 
+                    if (itemIndex > 0) {
+                        state[category].items.splice(itemIndex, 1);
                     }
                 }
-            }
-            ).addCase(deleteSavedItem.rejected, (state) => {
+            }).addCase(deleteSavedItem.rejected, (state) => {
+                state.status = 'failed';
+            }).addCase(addCategory.pending, (state) => {
+                state.status = 'loading';
+                console.log('Started');
+            }).addCase(addCategory.fulfilled, (state, action) => {
+                state.status = 'idle';
+                console.log('Fulfilled');
+                state.categories.push(action.payload.category);
+            }).addCase(addCategory.rejected, (state) => {
                 state.status = 'failed';
             }
             );
-            
-            
+
+
     },
 });
 
