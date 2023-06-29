@@ -19,11 +19,9 @@ export const CustomCategoriesSettingsModal = ({
     const modalsOpen = useSelector(selectModalOpen);
     const dispatch = useDispatch();
 
-
     const handleButtonClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     useEffect(() => {
         // Update the selected category if its items have changed
         if (selectedCategory) {
@@ -68,7 +66,7 @@ export const CustomCategoriesSettingsModal = ({
                         <AddCircleOutlineIcon sx={{color: 'rgba(164, 30, 30, 0.7)'}} />
                     </IconButton>
                     <AddCategoryPopOver
-                        categoryToEdit={null}
+                        categoryToEdit={selectedCategory}
                         anchorEl={anchorEl}
                         setAnchorEl={setAnchorEl} />
                     {categories.length > 0 ? 
@@ -78,6 +76,10 @@ export const CustomCategoriesSettingsModal = ({
                                 category={category}
                                 onClick={() => handleCategoryClick(category)}
                                 onDelete={(x) => dispatch(deleteCategory({id: x.id})) }
+                                onEdit={(event) => {
+                                    setSelectedCategory(category);
+                                    setAnchorEl(event.currentTarget);
+                                }}
                             />
                         )) :
                         <div style={{marginLeft: '80px', marginTop: '20px', color: 'rgba(164, 30, 30, 0.7)'}}>

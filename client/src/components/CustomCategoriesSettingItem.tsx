@@ -34,27 +34,28 @@ const styles = {
 };
 
 export default function CustomCategoriesSettingItem(
-    {category, onClick, onDelete} : 
+    {category, onClick, onDelete, onEdit} : 
 {
     category: Category
     onClick: () => void;
     onDelete: (id: string) => void;
+    onEdit: (event: any) => void;
 }) {
 
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [deleteAnchorEl, setDeleteAnchorEl] = useState(null);
     const handleClick = () => {
         console.info('You clicked the Chip.');
         onClick();
     };
 
     const handleDelete = (event) => {
-        setAnchorEl(event.currentTarget);    
+        setDeleteAnchorEl(event.currentTarget);    
     };
 
-    const handleEdit = () => {
-        console.info('You clicked the edit icon.');
+    const handleEdit = (event) => {
+        onEdit(event);
     };
-    // console.log(category.id)
+
     return (
         <div style={styles.container}>
             <span style={styles.label} onClick={handleClick}>
@@ -67,8 +68,8 @@ export default function CustomCategoriesSettingItem(
                     onDelete={() => { 
                         console.log(category.id)
                         onDelete(category) }}
-                    anchorEl={anchorEl}
-                    onClose={()=> {setAnchorEl(null);}}
+                    anchorEl={deleteAnchorEl}
+                    onClose={()=> {setDeleteAnchorEl(null);}}
                 />
             </div>
         </div>

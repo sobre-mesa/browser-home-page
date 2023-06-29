@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Popover, TextField, IconButton } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import EditIcon from '@mui/icons-material/Edit';
 import { useAppDispatch } from '../store/hooks';
 import { addCategory, updateCategory } from '../store/slices/dataSlice';
 const AddCategoryPopOver = (
@@ -8,10 +9,10 @@ const AddCategoryPopOver = (
     : {categoryToEdit: any, anchorEl: any, setAnchorEl: any}
 ) => {
    
-    const [inputValue, setInputValue] = useState('');
     const open = Boolean(anchorEl);
     const isEditing = categoryToEdit !== null;
-    const label = isEditing? 'Edit category' : 'Add category';
+    const [inputValue, setInputValue] = useState(isEditing ? categoryToEdit.name : '');
+    const label = isEditing? 'Edit category: ' + categoryToEdit.name : 'Add category';
     const dispatch = useAppDispatch();
 
     const handleSubmit = () => {
@@ -71,7 +72,7 @@ const AddCategoryPopOver = (
                         }}
                     />
                     <IconButton style={{ marginLeft: 'auto' }} type="submit" color="error" aria-label="AddOrEdit" onClick={handleSubmit}>
-                        <AddCircleOutlineIcon fontSize="large"  sx={{widtH: 20, height: 20}}/>
+                        { !isEditing ? <AddCircleOutlineIcon fontSize="large"  sx={{widtH: 20, height: 20}}/> : <EditIcon fontSize="large" sx={{widtH: 20, height: 20}}/>}
                     </IconButton>
                 </div>
             </Popover>
