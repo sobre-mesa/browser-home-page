@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Button, Modal, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { Dispatch, SetStateAction } from 'react';
 
 const style = {

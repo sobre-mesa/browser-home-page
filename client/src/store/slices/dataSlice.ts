@@ -14,7 +14,7 @@ const initialState: DataState = {
     categories: [],
     channels: { name: '', id: '', items: [] },
     apps: { name: '', id: '', items: [] },
-    notes: [],
+    notes: [],  
     modalsOpen: {
         apps: false,
         channels: false,
@@ -65,19 +65,19 @@ export const initData = createAsyncThunk('data/InitData', async () => {
 
 export const addSavedItem = createAsyncThunk('data/AddSavedItem',
     async (payload: { category: string, item: SavedItem }) => {
-        const response = await savedItemAPI.createSavedItem(payload.item);
+        await savedItemAPI.createSavedItem(payload.item);
         return payload;
     });
 
 export const updateSavedItem = createAsyncThunk('data/UpdateSavedItem',
     async (payload: { category: string, id: string, item: SavedItem }) => {
-        const response = await savedItemAPI.updateSavedItem(payload.id, payload.item);
+        await savedItemAPI.updateSavedItem(payload.id, payload.item);
         return payload;
     });
 
 export const deleteSavedItem = createAsyncThunk('data/DeleteSavedItem',
     async (payload: { category: string, id: string }) => {
-        const response = await savedItemAPI.deleteSavedItem(payload.id);
+        await savedItemAPI.deleteSavedItem(payload.id);
         return payload;
     });
 
@@ -90,14 +90,13 @@ export const addCategory = createAsyncThunk('data/AddCategory',
 
 export const updateCategory = createAsyncThunk('data/UpdateCategory',
     async (payload: { id: string, name: string }) => {
-        const response = await categoryAPI.updateCategory(payload.id, payload.category);
+        await categoryAPI.updateCategory(payload.id, { name: payload.name});
         return payload;
     });
 
 export const deleteCategory = createAsyncThunk('data/DeleteCategory',
     async (payload: { id: string }) => {
-        console.log('PAYLOAD:', payload);
-        const response = await categoryAPI.deleteCategory(payload.id);
+        await categoryAPI.deleteCategory(payload.id);
         return payload;
     });
 
@@ -112,41 +111,31 @@ export const dataSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(initData.pending, (state) => {
-                state.status = 'loading';
-            })
+            //Init data
+            .addCase(initData.pending, (state) => { state.status = 'loading'; })
             .addCase(initData.fulfilled, (state, action) => {
-                state.status = 'idle';
                 state.categories = action.payload.categories as StoreCategory[] || state;
                 state.notes = action.payload.notes as Note[] || state;
                 state.apps = action.payload.apps;
                 state.channels = action.payload.channels;
-            })
-            .addCase(initData.rejected, (state) => {
-                state.status = 'failed';
-            })
-            .addCase(addSavedItem.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(addSavedItem.fulfilled, (state, action) => {
                 state.status = 'idle';
+            })
+            .addCase(initData.rejected, (state) => { state.status = 'failed'; })
+
+            //Add Item
+            .addCase(addSavedItem.pending, (state) => { state.status = 'loading'; })
+            .addCase(addSavedItem.fulfilled, (state, action) => {
                 const category = state.categories.find((category: StoreCategory) => category.name === action.payload.category);
                 const name: string = action.payload.category?.toLowerCase() || '';
-                if (name === 'apps' || name === 'channels') {
-                    state[name].items.push(action.payload.item);
-                }
-                if (category) {
-                    category.items.push(action.payload.item);
-                }
-            })
-            .addCase(addSavedItem.rejected, (state) => {
-                state.status = 'failed';
-            })
-            .addCase(updateSavedItem.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(updateSavedItem.fulfilled, (state, action) => {
+                if (name === 'apps' || name === 'channels') state[name].items.push(action.payload.item);
+                if (category) category.items.push(action.payload.item);
                 state.status = 'idle';
+            })
+            .addCase(addSavedItem.rejected, (state) => { state.status = 'failed'; })
+
+            //Update Item
+            .addCase(updateSavedItem.pending, (state) => { state.status = 'loading';})
+            .addCase(updateSavedItem.fulfilled, (state, action) => {
                 const category = action.payload.category;
                 if (action.payload.category === 'apps' || action.payload.category === 'channels') {
                     const categoryItems = state[action.payload.category].items;
@@ -163,59 +152,45 @@ export const dataSlice = createSlice({
                         }
                     }
                 }
+                state.status = 'idle';
             })
-            .addCase(updateSavedItem.rejected, (state) => {
-                state.status = 'failed';
-            }).addCase(deleteSavedItem.pending, (state) => {
-                state.status = 'loading';
-            }
-            ).addCase(deleteSavedItem.fulfilled, (state, action) => {
-                state.status = 'idle';
+            .addCase(updateSavedItem.rejected, (state) => { state.status = 'failed';})
+
+            //Delete Item
+            .addCase(deleteSavedItem.pending, (state) => { state.status = 'loading';})
+            .addCase(deleteSavedItem.fulfilled, (state, action) => {
                 const category = action.payload.category;
-                if (category === 'apps' || category === 'channels') {
-                    const itemIndex = state[category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
-
-                    if (itemIndex > 0) {
-                        state[category].items.splice(itemIndex, 1);
-                    }
-
-                }
-                else if (category) {
-                    const itemIndex = state[category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
-                    if (itemIndex > 0) {
-                        state[category].items.splice(itemIndex, 1);
-                    }
-                }
-            }).addCase(deleteSavedItem.rejected, (state) => {
-                state.status = 'failed';
-            }).addCase(addCategory.pending, (state) => {
-                state.status = 'loading';
-                console.log('Started');
-            }).addCase(addCategory.fulfilled, (state, action) => {
+                const itemIndex = state[category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
+                if (itemIndex >= 0) state[category].items.splice(itemIndex, 1);
                 state.status = 'idle';
-                console.log('Fulfilled');
-                console.log(action.payload);
+
+            })
+            .addCase(deleteSavedItem.rejected, (state) => {state.status = 'failed';})
+
+            //Add Category
+            .addCase(addCategory.pending, (state) => {state.status = 'loading';})
+            .addCase(addCategory.fulfilled, (state, action) => {
                 state.categories.push(action.payload);
-            }).addCase(addCategory.rejected, (state) => {
-                state.status = 'failed';
-            }
-            )
-            .addCase(deleteCategory.pending, (state) => {
-                state.status = 'loading';
-            }
-            ).addCase(deleteCategory.fulfilled, (state, action) => {
                 state.status = 'idle';
+            }).addCase(addCategory.rejected, (state) => {state.status = 'failed'; })
+
+            //Delete Category
+            .addCase(deleteCategory.pending, (state) => {state.status = 'loading'; })
+            .addCase(deleteCategory.fulfilled, (state, action) => {
                 const categoryIndex = state.categories.findIndex((category: StoreCategory) => category.id === action.payload.id);
-                if (categoryIndex > 0) {
-                    state.categories.splice(categoryIndex, 1);
-                }
-            }).addCase(deleteCategory.rejected, (state) => {
-                state.status = 'failed';
-            }
-            )
-        ;
+                if (categoryIndex >= 0) state.categories.splice(categoryIndex, 1);
+                state.status = 'idle';
+            })
+            .addCase(deleteCategory.rejected, (state) => {state.status = 'failed'; })
 
-
+            //Update Category
+            .addCase(updateCategory.pending, (state) => {state.status = 'loading'; })
+            .addCase(updateCategory.fulfilled, (state, action) => {
+                const categoryIndex = state.categories.findIndex((category: StoreCategory) => category.id === action.payload.id);
+                if (categoryIndex >= 0) state.categories[categoryIndex].name = action.payload.name;
+                state.status = 'idle';
+            })
+            .addCase(updateCategory.rejected, (state) => { state.status = 'failed'; });
     },
 });
 

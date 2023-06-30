@@ -38,7 +38,7 @@ export default function CustomCategoriesSettingItem(
 {
     category: Category
     onClick: () => void;
-    onDelete: (id: string) => void;
+    onDelete: (category: Category) => void;
     onEdit: (event: any) => void;
 }) {
 
@@ -48,11 +48,11 @@ export default function CustomCategoriesSettingItem(
         onClick();
     };
 
-    const handleDelete = (event) => {
+    const handleDelete = (event: any) => {
         setDeleteAnchorEl(event.currentTarget);    
     };
 
-    const handleEdit = (event) => {
+    const handleEdit = (event: any) => {
         onEdit(event);
     };
 
@@ -65,9 +65,7 @@ export default function CustomCategoriesSettingItem(
                 <EditIcon style={styles.icon} onClick={handleEdit} />
                 <DeleteIcon style={styles.icon} onClick={handleDelete} />
                 <DeleteCategoryPopOver
-                    onDelete={() => { 
-                        console.log(category.id)
-                        onDelete(category) }}
+                    onDelete={() => {onDelete(category);}}
                     anchorEl={deleteAnchorEl}
                     onClose={()=> {setDeleteAnchorEl(null);}}
                 />

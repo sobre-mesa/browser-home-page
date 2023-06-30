@@ -1,0 +1,44 @@
+.modalContainer {
+    position: absolute;
+    top: 50%;
+    left: 78%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid #000;
+    box-shadow: 24px;
+    padding: 16px;
+    border-radius: 3px;
+  }
+  
+  .title {
+    color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .imagePreview {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    background-color: transparent;
+  }
+  
+  .imageErrorText {
+    color: white;
+    margin-bottom: 10px;
+  }
+  
+  .inputField {
+    color: white;
+    border-bottom-color: white;
+  }
+  
+  .inputLabel {
+    color: white;
+  }
+  
+  .submitButton {
+    margin-left: auto;
+  }
+  

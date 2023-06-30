@@ -6,12 +6,31 @@ import Typography from '@mui/material/Typography';
 import { SavedItem } from '../models/SavedItem';
 
 export const Bookmark = ({ item }: { item: SavedItem }) => {
+    const [isHovered, setIsHovered] = React.useState(false);
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
     return (
-        <div className="square-item">
-            <Card sx={{ width: 200, backgroundColor: 'rgba(0, 0, 0, 0.9)', borderRadius: 3, margin: '0 12px', color: 'white' }}>
-                <CardMedia sx={{ height: 80, paddingBottom: 0, marginBottom: 0 }} image={item.image} />
-                <CardContent sx={{ height: 12, marginTop: "-10px", paddingBottom: 0 }}>
-                    <Typography variant="body2" color="white" sx={{fontSize: 12}}>
+        <div className="square-item" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <Card
+                sx={{ width: 240, height: 115, backgroundColor: 'rgba(0, 0, 0, 0.9)', borderRadius: 3, margin: '0 12px', color: 'white' }}
+            >
+                <CardMedia
+                    className="media"
+                    sx={{ height: 200, paddingBottom: 0, marginBottom: 0 }}
+                    image={item.image}
+                />
+                <CardContent
+                    className={`card-content ${isHovered ? 'expanded' : ''}`}
+                    sx={{ position: 'absolute', bottom: 0, width: '100%', padding: '10px', backgroundColor: 'rgba(0, 0, 0, 0.6)', height: 10}}
+                >
+                    <Typography variant="body2" color="white" sx={{ fontSize: 12 }}>
                         {item.description}
                     </Typography>
                 </CardContent>

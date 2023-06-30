@@ -12,9 +12,11 @@ body {
 }
 
 .mac-dock {
-  width: 600px;
+  min-width: 300px;
+  max-width: 820px;
   padding: 10px;
   border-radius: 10px; 
+  overflow: hidden;
   margin: 0 auto; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
   margin-top: 20px;
@@ -138,3 +140,44 @@ body {
   }
 }
 
+.scroll-arrow {
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+  }
+  
+  .left {
+	left: 0;
+  }
+  
+  .right {
+	right: 0;
+  }
+  
+  .square-item {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .media {
+    transition: transform 0.3s;
+  }
+  
+  .card-content {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .card-content.expanded {
+    opacity: 1;
+  }
+  
+  .square-item:hover .media {
+    transform: scale(1.1);
+  }
+  
+  

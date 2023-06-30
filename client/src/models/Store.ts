@@ -9,7 +9,7 @@ export type SystemCategory = {
   items : SavedItem[]
 }
 
-export type DataState ={
+export type DataState = Record<string, any> & {
   status: 'idle' | 'loading' | 'failed',
   apps: SystemCategory,
   channels: SystemCategory, 

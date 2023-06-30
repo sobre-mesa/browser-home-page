@@ -1,6 +1,6 @@
 import { SavedItem } from '../models/SavedItem';
 import { RoundItem } from './RoundItem';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { SystemCategory } from '../models/Store';
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -17,43 +17,82 @@ import { Modal } from '@mui/material';
 
 export const Bar = ({ category }: { category: SystemCategory }) => {
     const dispatch = useDispatch();
-    const openSettings = () => {
-        dispatch(toggleSystemCategorySettings(category.name));
-    };
     const modalsOpen = useSelector(selectModalOpen);
     const appStyle = {backgroundColor: 'rgba(0, 0, 0, 0.503)'};
     const channelStyle = {backgroundColor: 'rgba(164, 30, 30, 0.7)'};
 
+    const [isOverflowing, setIsOverflowing] = useState(false);
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const dockElement = document.querySelector('#mac-dock-' + category.name);
+    const scrollLeft = () => {
+        if (dockElement) {
+            dockElement.scrollLeft -= 100;
+            setScrollPosition(dockElement.scrollLeft);
+        }
+    };
+      
+    const scrollRight = () => {
+        if (dockElement) {
+            dockElement.scrollLeft += 100;
+            setScrollPosition(dockElement.scrollLeft);
+        }
+    };
+
+    const openSettings = () => {
+        dispatch(toggleSystemCategorySettings(category.name));
+    };
+
+    useEffect(() => {
+        if (dockElement) {
+            setIsOverflowing(dockElement.scrollWidth >= dockElement.clientWidth);
+            setScrollPosition(dockElement.scrollLeft);
+        }
+    }, [dockElement]);
+      
     return (
-        <div style={{display: 'flex'}}>
-            <Modal
-                className="saved-item-settings-modal"
-                open={modalsOpen[category.name] || false}
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: '100%',
-                    backdropFilter: 'blur(5px)',
-                }}>
-                <div>
-                    <SavedItemsSettingsModal category={category} />
-                </div>
-            </Modal>
-            <div className="mac-dock" style={category.name == 'apps' ? appStyle : channelStyle}>
-               
-                <ul className="dock-items">
-                    <div>
-                        <IconButton onClick={openSettings}>
-                            <SettingsIcon sx={iconSx} />
-                        </IconButton>
+        <>
+            <div style={{display: 'flex', width: 900, justifyContent: 'center', alignItems: 'center'}}>
+                {isOverflowing && scrollPosition > 0 && (
+                    <div className="scroll-arrow left" style={{color: 'white', marginTop: 44, paddingRight: 10}} onClick={scrollLeft}>
+                        &lt;
                     </div>
-                    {category.items?.map((item: SavedItem) => (
-                        <RoundItem key={item.id} item={item} />
-                    ))}
-                    <p className="vertical-text">{category.name.toUpperCase()}</p>
-                </ul>               
+                )}
+                <Modal
+                    className="saved-item-settings-modal"
+                    open={modalsOpen[category.name] || false}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        height: '100%',
+                        backdropFilter: 'blur(5px)',
+                    }}>
+                    <div>
+                        <SavedItemsSettingsModal category={category} />
+                    </div>
+                </Modal>
+                <div id={'mac-dock-' + category.name} className="mac-dock" style={category.name == 'apps' ? appStyle : channelStyle}>
+                    <ul id={'dock-items-' + category.name} className="dock-items">
+                        <div>
+                            <IconButton onClick={openSettings}>
+                                <SettingsIcon sx={iconSx} />
+                            </IconButton>
+                        </div>
+                        {category.items?.map((item: SavedItem) => (
+                            <RoundItem key={item.id} item={item} />
+                        ))}
+                        <p className="vertical-text">{category.name.toUpperCase()}</p>
+                    </ul>               
+                </div>
+                {isOverflowing && scrollPosition < (( dockElement?.scrollWidth || 0) - ( dockElement?.clientWidth || 0)) && (
+                    <div className="scroll-arrow right"
+                        style={{color: 'white',
+                            marginTop: 44,
+                            paddingLeft: 10}} onClick={scrollRight}>
+                    &gt;
+                    </div>
+                )}
             </div>
-        </div>
+        </>
     );
 };

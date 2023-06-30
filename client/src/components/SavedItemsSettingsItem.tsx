@@ -13,8 +13,8 @@ const StyledAvatar = styled(Avatar)`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 `;
 
-type EditAction = SetStateAction<SavedItem > | SetStateAction<null>
-type EditFunction = Dispatch<EditAction>;
+type EditAction = SetStateAction<SavedItem> & SetStateAction<null>
+type EditFunction = Dispatch<SetStateAction<SavedItem>> | Dispatch<SetStateAction<null>>;
 export const SavedItemsSettingsItem = ({
     category,
     item,
