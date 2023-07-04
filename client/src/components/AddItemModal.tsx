@@ -1,43 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Modal, IconButton, Avatar } from '@mui/material';
-import { TextField } from '@mui/material';
+import { Box, Typography, Modal, TextField, IconButton, Avatar } from '@mui/material';
 import { SavedItem } from '../models/SavedItem';
 import { useAppDispatch } from '../store/hooks';
 import { addSavedItem, updateSavedItem } from '../store/slices/dataSlice';
-import { StoreCategory, SystemCategory } from '../models/Store';
+import { SystemCategory } from '../models/Store';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import './AddItemModal.css';
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '78%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'rgba(0, 0, 0, 0.8)',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 3,
+};
+
+const titleStyle = {
+    color: 'rgba(255, 255, 255, 0.7)',
+    padding: '10px',
+    marginBottom: '10px',
+};
 
 type AddOrEditItemModalProps = {
   open: boolean;
   handleClose: () => any;
-  category: SystemCategory | StoreCategory;
+  category: SystemCategory;
   itemToEdit?: SavedItem | null;
 };
-
-type CustomTextFieldProps = {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-};
-
-const CustomTextField: React.FC<CustomTextFieldProps> = ({ label, value, onChange }) => (
-    <TextField
-        label={label}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        fullWidth
-        margin="normal"
-        variant="standard"
-        InputProps={{
-            className: 'inputField',
-        }}
-        InputLabelProps={{
-            className: 'inputLabel',
-        }}
-    />
-);
 
 export default function AddOrEditItemModal({
     open,
@@ -104,30 +98,93 @@ export default function AddOrEditItemModal({
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Box className="modalContainer">
-                <Typography id="modal-modal-title" variant="h6" component="h2" className="title">
+            <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2" sx={titleStyle}>
                     {title}
                 </Typography>
                 {image && !imageError ? (
                     <Avatar
                         src={image}
                         alt="Preview"
-                        className="imagePreview"
+                        sx={{
+                            width: 100,
+                            height: 100,
+                            marginBottom: '10px',
+                            backgroundColor: 'transparent',
+                        }}
                         onError={handleImageLoadError}
                     />
                 ) : (
                     imageError && (
-                        <Typography variant="body2" className="imageErrorText">
-              Image not found
+                        <Typography variant="body2" sx={{ color: 'white', marginBottom: '10px' }}>
+                Image not found
                         </Typography>
                     )
                 )}
                 <form onSubmit={onSubmit}>
-                    <CustomTextField label="Description" value={description} onChange={setDescription} />
-                    <CustomTextField label="URL" value={url} onChange={setUrl} />
-                    <CustomTextField label="Image" value={image} onChange={setImage} onPaste={handleImagePaste} />
+                    <TextField
+                        label="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        fullWidth
+                        margin="normal"
+                        variant="standard"
+                        InputProps={{
+                            style: {
+                                color: 'white',
+                                borderBottomColor: 'white',
+                            },
+                        }}
+                        InputLabelProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
+                    />
+                    <TextField
+                        label="URL"
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                        fullWidth
+                        margin="normal"
+                        variant="standard"
+                        InputProps={{
+                            style: {
+                                color: 'white',
+                                borderBottomColor: 'white',
+                            },
+                        }}
+                        InputLabelProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
+                    />
+                    <TextField
+                        label="Image"
+                        value={image}
+                        onChange={(e) => {
+                            setImage(e.target.value);
+                            setImageError(false);
+                        }}
+                        fullWidth
+                        margin="normal"
+                        variant="standard"
+                        InputProps={{
+                            style: {
+                                color: 'white',
+                                borderBottomColor: 'white',
+                            },
+                        }}
+                        InputLabelProps={{
+                            style: {
+                                color: 'white',
+                            },
+                        }}
+                        onPaste={handleImagePaste}
+                    />
                     <div style={{ display: 'flex' }}>
-                        <IconButton className="submitButton" type="submit" color="error" aria-label="AddOrEdit">
+                        <IconButton style={{ marginLeft: 'auto' }} type="submit" color="error" aria-label="AddOrEdit">
                             {isEditing ? <EditIcon fontSize="large" /> : <AddCircleOutlineIcon fontSize="large" />}
                         </IconButton>
                     </div>
