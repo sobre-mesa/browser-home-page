@@ -9,6 +9,7 @@ const getFormData = (body) => {
     formData.append('image', body.image);
     return formData;
 };
+
 export const savedItemAPI = {
     getSavedItem: async (id: string) => await get(`/savedItems/${id}`),
     getAllSavedItems:   async () => await get('/savedItems'),

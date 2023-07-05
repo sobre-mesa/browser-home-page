@@ -32,6 +32,21 @@ const getAll = (Model, enabledFeatures) => {
     }
 }
 
+const getAllForUser = (Model) => {
+    return async (req, res) => {
+        try {
+            console.log('INNIT')
+            const userId = req.params.user;
+            console.log(userId)
+            if(!userId) throw new Error();
+            const payload = await Model.find({ user: userId });
+            successGET(res, payload);
+        } catch (err) {
+            throwError(err, res);
+        }
+    };
+};
+
 const getOne = (Model) => {
     return async (req, res) => {
         try {
@@ -98,5 +113,6 @@ module.exports = {
     getOne,
     updateOne,
     deleteOne,
-    createOne
+    createOne,
+    getAllForUser
 }

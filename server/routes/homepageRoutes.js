@@ -4,7 +4,8 @@ const {getAllSavedItems,
         getSavedItem,
         updateSavedItem,
         deleteSavedItem,
-        newSavedItem} = require(`${__dirname}/../controllers/savedItemController.js`);
+        newSavedItem,
+        getAllItemsForUser} = require(`${__dirname}/../controllers/savedItemController.js`);
 
 const {getAllCategories,
         getCategory,
@@ -15,6 +16,10 @@ const {getAllCategories,
 let router = express.Router();
 router.route('/savedItems')
     .get(getAllSavedItems)
+    .post(newSavedItem)
+
+router.route('/savedItems/user/:user')
+    .get(getAllItemsForUser)
     .post(newSavedItem)
     
 router.route('/savedItems/:id')
