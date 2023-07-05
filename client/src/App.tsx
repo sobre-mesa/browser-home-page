@@ -5,18 +5,26 @@ import React, { useEffect } from 'react';
 import { Bar } from './components/Bar';
 import { CustomCategoryPanel } from './components/CustomCategoryPanel';
 import {CustomCategoriesSettingsModal} from './components/CustomCategoriesSettingsModal';
+import {
+    ClerkProvider,
+    SignedIn,
+    SignedOut,
+    UserButton,
+    useUser,
+    RedirectToSignIn,
+    SignOutButton
+} from '@clerk/clerk-react';
 
-function App() {
-    const data = useAppSelector(selectData);
-    const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        dispatch(initData());
-    }, [dispatch]);
-
-    return (
+if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
+    throw new Error('Missing Publishable Key');
+}
+const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
+function Welcome({data}) {
+    const { user } = useUser();
+    console.log(user.id)
+    return ( 
         <div className="App">
-
             <CustomCategoriesSettingsModal
                 open={true}
                 setOpen={() => {}}
@@ -34,6 +42,27 @@ function App() {
             </header>
 
         </div>
+    );
+}
+function App() {
+    const data = useAppSelector(selectData);
+    const dispatch = useAppDispatch();
+    // console.log(user);
+    useEffect(() => {
+
+        dispatch(initData());
+    }, [dispatch]);
+
+    return (
+        <ClerkProvider publishableKey={clerkPubKey}>
+            <SignedIn>
+                <SignOutButton/>
+                <Welcome data={data}/>
+            </SignedIn>
+            <SignedOut>
+                <RedirectToSignIn />
+            </SignedOut>
+        </ClerkProvider>
     );
 }
 
