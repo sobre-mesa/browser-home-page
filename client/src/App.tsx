@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from './store/hooks';
-import { selectData, initData } from './store/slices/dataSlice';
+import { selectData, fetchUserData } from './store/slices/dataSlice';
 import './styles/App.css';
 import React, { useEffect } from 'react';
 import { Bar } from './components/Bar';
@@ -20,9 +20,16 @@ if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
     throw new Error('Missing Publishable Key');
 }
 const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
-function Welcome({data}) {
+function Welcome() {
     const { user } = useUser();
-    console.log(user.id)
+
+    const data = useAppSelector(selectData);
+    const dispatch = useAppDispatch();
+    // console.log(user);
+    useEffect(() => {
+        dispatch(fetchUserData({userId: user?.id}));
+    }, [dispatch]);
+
     return ( 
         <div className="App">
             <CustomCategoriesSettingsModal
@@ -45,19 +52,12 @@ function Welcome({data}) {
     );
 }
 function App() {
-    const data = useAppSelector(selectData);
-    const dispatch = useAppDispatch();
-    // console.log(user);
-    useEffect(() => {
-
-        dispatch(initData());
-    }, [dispatch]);
 
     return (
         <ClerkProvider publishableKey={clerkPubKey}>
             <SignedIn>
                 <SignOutButton/>
-                <Welcome data={data}/>
+                <Welcome />
             </SignedIn>
             <SignedOut>
                 <RedirectToSignIn />
