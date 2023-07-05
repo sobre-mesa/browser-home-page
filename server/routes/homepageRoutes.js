@@ -6,12 +6,6 @@ const {getAllSavedItems,
         deleteSavedItem,
         newSavedItem} = require(`${__dirname}/../controllers/savedItemController.js`);
 
-const {getAllNotes,
-        getNote,
-        updateNote,
-        deleteNote,
-        newNote} = require(`${__dirname}/../controllers/noteController.js`);
-
 const {getAllCategories,
         getCategory,
         updateCategory,
@@ -27,15 +21,6 @@ router.route('/savedItems/:id')
     .get(getSavedItem)
     .patch(updateSavedItem)
     .delete(deleteSavedItem)
-
-router.route('/notes')
-    .get(getAllNotes)
-    .post(newNote)
-
-router.route('/notes/:id')
-    .get(getNote)
-    .patch(updateNote)
-    .delete(deleteNote)
 
 router.route('/categories')
     .get(getAllCategories)

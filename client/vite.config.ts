@@ -6,20 +6,6 @@ export default defineConfig({
     plugins: [react()],
     server: {
         open: true,
-        // proxy: {
-        //     '/categories': {
-        //         target: 'http://localhost:8000',
-        //         changeOrigin: true,
-        //     },
-        //     '/notes': {
-        //         target: 'http://localhost:8000',
-        //         changeOrigin: true,
-        //     },
-        //     '/savedItems': {
-        //         target: 'http://localhost:8000',
-        //         changeOrigin: true,
-        //     },
-        // },
     },
     build: {
         outDir: 'build',

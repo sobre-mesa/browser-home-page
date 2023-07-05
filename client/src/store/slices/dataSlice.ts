@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Note } from '../../models/Note';
 import { SavedItem } from '../../models/SavedItem';
 import { savedItemAPI } from '../../api/savedItemAPI';
-import { noteAPI } from '../../api/noteAPI';
 import { categoryAPI } from '../../api/categoryAPI';
 import type { StoreCategory, DataState } from '../../models/Store';
 import type { APIResponseWithArray } from '../../models/API';
@@ -14,7 +12,6 @@ const initialState: DataState = {
     categories: [],
     channels: { name: '', id: '', items: [] },
     apps: { name: '', id: '', items: [] },
-    notes: [],  
     modalsOpen: {
         apps: false,
         channels: false,
@@ -48,15 +45,13 @@ const reduceCategories = (
 };
 
 export const initData = createAsyncThunk('data/InitData', async () => {
-    const [notes, categories, savedItems] = await Promise.all([
-        noteAPI.getAllNotes(),
+    const [categories, savedItems] = await Promise.all([
         categoryAPI.getAllCategories(),
         savedItemAPI.getAllSavedItems(),
     ]);
 
     const { apps, channels, customCategories } = reduceCategories(categories, savedItems);
     return {
-        notes: notes?.payload || [],
         categories: customCategories || [],
         apps: apps || [],
         channels: channels || [],
@@ -115,7 +110,6 @@ export const dataSlice = createSlice({
             .addCase(initData.pending, (state) => { state.status = 'loading'; })
             .addCase(initData.fulfilled, (state, action) => {
                 state.categories = action.payload.categories as StoreCategory[] || state;
-                state.notes = action.payload.notes as Note[] || state;
                 state.apps = action.payload.apps;
                 state.channels = action.payload.channels;
                 state.status = 'idle';
