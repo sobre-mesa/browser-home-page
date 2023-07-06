@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Modal, TextField, IconButton, Avatar } from '@mui/material';
 import { SavedItem } from '../models/SavedItem';
-import { useAppDispatch } from '../store/hooks';
-import { addSavedItem, updateSavedItem } from '../store/slices/dataSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { addSavedItem, updateSavedItem, selectUser } from '../store/slices/dataSlice';
 import { SystemCategory } from '../models/Store';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
@@ -43,7 +43,7 @@ export default function AddOrEditItemModal({
     const [url, setUrl] = useState(itemToEdit?.url || '');
     const [image, setImage] = useState(itemToEdit?.image || '');
     const [imageError, setImageError] = useState(false);
-
+    const user = useAppSelector(selectUser);
     useEffect(() => {
         setDescription(itemToEdit?.description || '');
         setUrl(itemToEdit?.url || '');
@@ -60,6 +60,7 @@ export default function AddOrEditItemModal({
             url,
             image,
             category: category.id,
+            user
         };
         const action = itemToEdit
             ? updateSavedItem({ ...payload, item, id: itemToEdit.id as string })
