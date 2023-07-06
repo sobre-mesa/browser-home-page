@@ -67,4 +67,36 @@
     margin-left: auto;
     margin-right: -10px;
   }
+
+  .scroll-arrow {
+    margin-top: 23px;
+    color: white;
+    animation: bounce 2s infinite;
+  }
   
+  .scroll-arrow .right{ 
+    padding-left: 10px;
+  }
+
+  .saved-item-settings-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    backdrop-filter: blur(5px);
+}
+
+#mac-dock-apps{
+  background-color: rgba(0, 0, 0, 0.503);
+}
+
+#mac-dock-channels{
+  background-color: rgba(164, 30, 30, 0.7);
+}
+
+.outsideBarIShouldDeleteThis{
+  display: flex;
+  width: 900px;
+  justify-content: center;
+  align-items: center;
+}
