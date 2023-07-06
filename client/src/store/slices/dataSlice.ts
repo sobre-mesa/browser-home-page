@@ -49,8 +49,8 @@ export const fetchUserData = createAsyncThunk('data/fetchUserData',
     async (payload: {userId: string}) => {
         console.log(payload);
         const [categories, savedItems] = await Promise.all([
-            categoryAPI.getAllCategories(),
-            savedItemAPI.getAllSavedItems(),
+            categoryAPI.getCategoriesForUser(payload.userId),
+            savedItemAPI.getItemsForUser(payload.userId),
         ]);
 
         const { apps, channels, customCategories } = reduceCategories(categories, savedItems);

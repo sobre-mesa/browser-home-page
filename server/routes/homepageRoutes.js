@@ -11,17 +11,15 @@ const {getAllCategories,
         getCategory,
         updateCategory,
         deleteCategory,
-        newCategory} = require(`${__dirname}/../controllers/categoryController.js`);
+        newCategory,
+        getAllCategoriesForUser } = require(`${__dirname}/../controllers/categoryController.js`);
 
 let router = express.Router();
-router.route('/savedItems')
-    .get(getAllSavedItems)
-    .post(newSavedItem)
 
+router.route('/savedItems')
+    .post(newSavedItem)
 router.route('/savedItems/user/:user')
     .get(getAllItemsForUser)
-    .post(newSavedItem)
-    
 router.route('/savedItems/:id')
     .get(getSavedItem)
     .patch(updateSavedItem)
@@ -30,7 +28,8 @@ router.route('/savedItems/:id')
 router.route('/categories')
     .get(getAllCategories)
     .post(newCategory)
-
+router.route('/categories/user/:user')
+    .get(getAllCategoriesForUser)
 router.route('/categories/:id')
     .get(getCategory)
     .patch(updateCategory)

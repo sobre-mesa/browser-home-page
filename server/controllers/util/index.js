@@ -33,13 +33,14 @@ const getAll = (Model, enabledFeatures) => {
 }
 
 const getAllForUser = (Model) => {
+    const systemCategories = ['64920f348d03c711f2551a86', '6491e9958d03c711f2551991']
+    //please noone look at this code
     return async (req, res) => {
         try {
-            console.log('INNIT')
             const userId = req.params.user;
-            console.log(userId)
             if(!userId) throw new Error();
-            const payload = await Model.find({ user: userId });
+            const query = { $or: [{ user: userId }, { _id: { $in: systemCategories } }] };
+            const payload = await Model.find(query);
             successGET(res, payload);
         } catch (err) {
             throwError(err, res);
