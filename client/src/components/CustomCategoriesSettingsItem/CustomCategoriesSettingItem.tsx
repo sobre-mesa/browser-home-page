@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import DeleteCategoryPopOver from './DeleteCategoryPopOver';
-import {Category} from '../models/Category';
+import DeleteCategoryPopOver from '../DeleteCategoryPopover/DeleteCategoryPopOver';
+import {Category} from '../../models/Category';
 
 const styles = {
     container: {

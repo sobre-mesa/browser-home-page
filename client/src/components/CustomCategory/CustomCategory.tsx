@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Bookmark } from './SquareItem';
-import { SavedItem } from '../models/SavedItem';
+import { Bookmark } from '../SquareItem/SquareItem';
+import { SavedItem } from '../../models/SavedItem';
 
 export const Category = ({ category, items }: { category: string; items: SavedItem[] }) => {
     const containerRef = useRef(null);

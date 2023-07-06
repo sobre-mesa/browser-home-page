@@ -3,8 +3,8 @@ import { selectData, fetchUserData } from './store/slices/dataSlice';
 import './styles/App.css';
 import React, { useEffect } from 'react';
 import { Bar } from './components/Bar/Bar';
-import { CustomCategoryPanel } from './components/CustomCategoryPanel';
-import {CustomCategoriesSettingsModal} from './components/CustomCategoriesSettingsModal';
+import { CustomCategoryPanel } from './components/CustomCategoryPanel/CustomCategoryPanel';
+import {CustomCategoriesSettingsModal} from './components/CustomCategoriesSettingsModal/CustomCategoriesSettingsModal';
 import {
     ClerkProvider,
     SignedIn,

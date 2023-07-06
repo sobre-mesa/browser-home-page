@@ -4,10 +4,10 @@ import {Paper, IconButton } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { SystemCategory, StoreCategory } from '../models/Store';
-import { SavedItemsSettingsItem } from './SavedItemsSettingsItem';
-import AddItemModal from './AddItemModal';
-import { toggleSystemCategorySettings } from '../store/slices/dataSlice';
+import { SystemCategory, StoreCategory } from '../../models/Store';
+import { SavedItemsSettingsItem } from '../SavedItemSettingsItem/SavedItemsSettingsItem';
+import AddItemModal from '../AddItemModal/AddItemModal';
+import { toggleSystemCategorySettings } from '../../store/slices/dataSlice';
 
 
 export const SavedItemsSettingsModal = ({ category }: { category: SystemCategory | StoreCategory}) => {

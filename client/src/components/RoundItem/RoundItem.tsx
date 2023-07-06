@@ -1,5 +1,5 @@
 import React from 'react';
-import { SavedItem } from '../models/SavedItem';
+import { SavedItem } from '../../models/SavedItem';
 import { Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Modal, TextField, IconButton, Avatar } from '@mui/material';
-import { SavedItem } from '../models/SavedItem';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { addSavedItem, updateSavedItem, selectUser } from '../store/slices/dataSlice';
-import { SystemCategory } from '../models/Store';
+import { SavedItem } from '../../models/SavedItem';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addSavedItem, updateSavedItem, selectUser } from '../../store/slices/dataSlice';
+import { SystemCategory } from '../../models/Store';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 

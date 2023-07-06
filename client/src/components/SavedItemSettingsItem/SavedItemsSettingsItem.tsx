@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import type { SavedItem } from '../models/SavedItem';
+import type { SavedItem } from '../../models/SavedItem';
 import { Avatar, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
-import { useAppDispatch } from '../store/hooks';
-import {  deleteSavedItem } from '../store/slices/dataSlice';
+import { useAppDispatch } from '../../store/hooks';
+import {  deleteSavedItem } from '../../store/slices/dataSlice';
 import { DeleteSharp } from '@mui/icons-material';
 import type { Dispatch, SetStateAction } from 'react';
-import { AreYouSureModal } from './AreYouSureModal';
+import { AreYouSureModal } from '../AreYouSureModal/AreYouSureModal';
 const StyledAvatar = styled(Avatar)`
   margin: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
