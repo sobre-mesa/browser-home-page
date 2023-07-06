@@ -23,7 +23,7 @@ export const Bar = ({ category }: { category: SystemCategory }) => {
 
     const [isOverflowing, setIsOverflowing] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
-    const dockElement = document.querySelector('#mac-dock-' + category.name);
+    const dockElement = document.querySelector('#mac-dock-' + category?.name);
     const scrollLeft = () => {
         if (dockElement) {
             dockElement.scrollLeft -= 100;
@@ -39,7 +39,7 @@ export const Bar = ({ category }: { category: SystemCategory }) => {
     };
 
     const openSettings = () => {
-        dispatch(toggleSystemCategorySettings(category.name));
+        dispatch(toggleSystemCategorySettings(category?.name));
     };
 
     useEffect(() => {
@@ -81,7 +81,7 @@ export const Bar = ({ category }: { category: SystemCategory }) => {
                         {category.items?.map((item: SavedItem) => (
                             <RoundItem key={item.id} item={item} />
                         ))}
-                        <p className="vertical-text">{category.name.toUpperCase()}</p>
+                        <p className="vertical-text">{category?.name?.toUpperCase()}</p>
                     </ul>               
                 </div>
                 {isOverflowing && scrollPosition < (( dockElement?.scrollWidth || 0) - ( dockElement?.clientWidth || 0)) && (

@@ -9,6 +9,9 @@ const schema = new mongoose.Schema({
         ...rules.required(schemaName, 'title'),
         ...rules.charMinMax(schemaName, 'title', 1, 40)
     },
+    user: {
+      type: String,
+  },
   },
     {
       toJSON: { virtuals: true }, 

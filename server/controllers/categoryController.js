@@ -1,5 +1,5 @@
 const Category = require('../models/categoryModel');
-const { getAll, getOne, updateOne, deleteOne, createOne, deleteAll } = require('./util/index');
+const { getAll, getOne, updateOne, deleteOne, createOne, getAllForUser } = require('./util/index');
 const {deleteAllInCategory} = require('./savedItemController');
 
 exports.getAllCategories = getAll(Category);
@@ -10,3 +10,4 @@ exports.deleteCategory = (req, res) => {
     deleteAllInCategory(req.params.id);
 }
 exports.newCategory = createOne(Category);
+exports.getAllCategoriesForUser = getAllForUser(Category);

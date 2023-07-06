@@ -27,6 +27,9 @@ const schema = new mongoose.Schema({
         default: Date.now(),
         select: false
     },
+    user: {
+      type: String,
+  },
   },
     {
       toJSON: { virtuals: true }, 

@@ -1,5 +1,5 @@
 const SavedItem = require('../models/savedItemModel');
-const { getAll, getOne, updateOne, deleteOne, createOne } = require('./util/index');
+const { getAll, getOne, updateOne, deleteOne, createOne, getAllForUser } = require('./util/index');
 
 exports.deleteAllInCategory = (categoryId) => {
     SavedItem.deleteMany({ category: categoryId }, (err) => {
@@ -18,3 +18,4 @@ exports.getSavedItem  = getOne(SavedItem);
 exports.updateSavedItem = updateOne(SavedItem);
 exports.deleteSavedItem = deleteOne(SavedItem);
 exports.newSavedItem = createOne(SavedItem);
+exports.getAllItemsForUser = getAllForUser(SavedItem);

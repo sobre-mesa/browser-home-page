@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Popover, TextField, IconButton } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import { useAppDispatch } from '../store/hooks';
-import { addCategory, updateCategory } from '../store/slices/dataSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { addCategory, updateCategory, selectUser } from '../store/slices/dataSlice';
 const AddCategoryPopOver = (
     {categoryToEdit, anchorEl, setAnchorEl} 
     : {categoryToEdit: any, anchorEl: any, setAnchorEl: any}
@@ -14,9 +14,9 @@ const AddCategoryPopOver = (
     const [inputValue, setInputValue] = useState(isEditing ? categoryToEdit.name : '');
     const label = isEditing? 'Edit category: ' + categoryToEdit.name : 'Add category';
     const dispatch = useAppDispatch();
-
+    const user = useAppSelector(selectUser);
     const handleSubmit = () => {
-        const payload = { name: inputValue };
+        const payload = { name: inputValue, user };
         const action = isEditing ? updateCategory({...payload, id: categoryToEdit?.id}) : addCategory(payload);
         dispatch(action);
         handleClose();

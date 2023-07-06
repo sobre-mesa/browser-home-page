@@ -32,6 +32,22 @@ const getAll = (Model, enabledFeatures) => {
     }
 }
 
+const getAllForUser = (Model) => {
+    const systemCategories = ['64920f348d03c711f2551a86', '6491e9958d03c711f2551991']
+    //please noone look at this code
+    return async (req, res) => {
+        try {
+            const userId = req.params.user;
+            if(!userId) throw new Error();
+            const query = { $or: [{ user: userId }, { _id: { $in: systemCategories } }] };
+            const payload = await Model.find(query);
+            successGET(res, payload);
+        } catch (err) {
+            throwError(err, res);
+        }
+    };
+};
+
 const getOne = (Model) => {
     return async (req, res) => {
         try {
@@ -98,5 +114,6 @@ module.exports = {
     getOne,
     updateOne,
     deleteOne,
-    createOne
+    createOne,
+    getAllForUser
 }

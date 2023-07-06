@@ -8,6 +8,7 @@ const getFormData = (body) => {
 };
 
 export const categoryAPI = {
+    getCategoriesForUser: async (user: string) => await get(`/categories/user/${user}`),
     getCategory: async (id: string) => await get(`/categories/${id}`),
     getAllCategories: async () => await get('/categories'),
     createCategory: async (category: Category) => await post('/categories', getFormData(category)),

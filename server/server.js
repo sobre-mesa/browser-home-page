@@ -36,10 +36,6 @@ mongoose.connect(process.env.DATABASE, {
   console.log('/savedItems')
   console.log('/savedItems/:id: ');
   console.log(`              `)
-  console.log('notes:')
-  console.log('/notes')
-  console.log('/notes/:id: ');
-  console.log(`              `)
   console.log('categories:')
   console.log('/categories')
   console.log('/categories/:id: ');

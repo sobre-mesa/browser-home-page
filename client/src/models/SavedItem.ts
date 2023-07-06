@@ -4,4 +4,5 @@ export type SavedItem = {
     description: string,
     category?: string,
     image: string,
+    user?: string
 }
