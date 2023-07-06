@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Bookmark } from '../SquareItem/SquareItem';
 import { SavedItem } from '../../models/SavedItem';
-
+import './CustomCategory.css';
 export const Category = ({ category, items }: { category: string; items: SavedItem[] }) => {
     const containerRef = useRef(null);
     const [scrollLeft, setScrollLeft] = useState(0);
@@ -28,7 +28,7 @@ export const Category = ({ category, items }: { category: string; items: SavedIt
             <button className="scroll-button left" onClick={handleScrollLeft}>
                 &lt;
             </button>
-            <div className="bar-section-items" ref={containerRef}>
+            <div className="custom-category-items" ref={containerRef}>
                 {items?.map((item) => (
                     <Bookmark key={item.id} item={item} />
                 ))}

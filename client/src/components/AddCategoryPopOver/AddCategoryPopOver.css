@@ -1,0 +1,10 @@
+.popover{
+    padding-left: 10px;
+    background-color: black;
+    border-radius: 3px;
+    display: flex;
+    height: 66px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }

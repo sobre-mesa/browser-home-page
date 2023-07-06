@@ -4,6 +4,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addCategory, updateCategory, selectUser } from '../../store/slices/dataSlice';
+import './AddCategoryPopover.css';
+
 const AddCategoryPopOver = (
     {categoryToEdit, anchorEl, setAnchorEl} 
     : {categoryToEdit: any, anchorEl: any, setAnchorEl: any}
@@ -29,28 +31,19 @@ const AddCategoryPopOver = (
     return (
         <>
             <Popover
-                open={open}
                 anchorEl={anchorEl}
-                onClose={handleClose}
                 anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'center',
                 }}
+                open={open}
+                onClose={handleClose}
                 transformOrigin={{
                     vertical: 'bottom',
                     horizontal: 'center',
                 }}
             >
-                <div style={{ 
-                    paddingLeft: '10px',
-                    backgroundColor:'black',
-                    borderRadius: 3,
-                    display: 'flex',
-                    height: '66px',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    fontSize: 12,
-                }}>
+                <div className="popover">
                     <TextField
                         label={label}
                         value={inputValue}
@@ -71,8 +64,15 @@ const AddCategoryPopOver = (
                             },
                         }}
                     />
-                    <IconButton style={{ marginLeft: 'auto' }} type="submit" color="error" aria-label="AddOrEdit" onClick={handleSubmit}>
-                        { !isEditing ? <AddCircleOutlineIcon fontSize="large"  sx={{widtH: 20, height: 20}}/> : <EditIcon fontSize="large" sx={{widtH: 20, height: 20}}/>}
+                    <IconButton 
+                        sx={{ marginLeft: 'auto' }}
+                        type="submit"
+                        color="error"
+                        aria-label="AddOrEdit"
+                        onClick={handleSubmit}>
+                        { !isEditing ? 
+                            <AddCircleOutlineIcon fontSize="large"  sx={{widtH: 20, height: 20}}/> 
+                            : <EditIcon fontSize="large" sx={{widtH: 20, height: 20}}/>}
                     </IconButton>
                 </div>
             </Popover>

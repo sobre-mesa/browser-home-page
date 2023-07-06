@@ -1,0 +1,31 @@
+.square-item {
+    position: relative;
+    border-radius: 10px;
+    margin: '0 12px'
+  }
+  
+  .media {
+    transition: transform 0.3s;
+    height: 120px;
+    width: 240px;
+  }
+  
+  .card-content {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s;
+    width: 87%;
+    height: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    bottom: 0px;
+    color: white;
+  }
+  
+  .card-content.expanded {
+    opacity: 1;
+  }
+  
+  .square-item:hover .media {
+    transform: scale(1.1);
+  }
+  

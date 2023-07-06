@@ -1,6 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .custom-category-panel-container {
+    height: 300px;
+  }
+}
 
 body {
   margin: 0;
@@ -18,25 +24,6 @@ body {
   border-bottom-color: white !important;
 }
 
-.bar-section-items {
-  display: flex;
-  align-items: center;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-  scrollbar-width: hide;
-  padding: 10px;
-  max-width: 895px;
-}
-
-.scroll-button {
-  font-size: 1.5rem;
-  padding: 5px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.323);
-}
-
 .App-header {
   display: flex;
   flex-direction: column;
@@ -50,63 +37,5 @@ body {
   padding: 20px;
 }
 
-.custom-category-panel-container {
-  margin-top: 25px;
-  height: 460px;
-  width: 100%;
-  max-width: 964px;
-  background-color: rgba(0, 0, 0, 0.503);
-  margin-left: auto;
-  margin-right: auto;
-}
 
-@media (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
-
-  .custom-category-panel-container {
-    height: 300px;
-  }
-}
-
-.scroll-arrow {
-  width: 30px;
-  height: 30px;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.left {
-  left: 0;
-}
-
-.right {
-  right: 0;
-}
-
-.square-item {
-  position: relative;
-  overflow: hidden;
-}
-
-.media {
-  transition: transform 0.3s;
-}
-
-.card-content {
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.card-content.expanded {
-  opacity: 1;
-}
-
-.square-item:hover .media {
-  transform: scale(1.1);
-}
 
