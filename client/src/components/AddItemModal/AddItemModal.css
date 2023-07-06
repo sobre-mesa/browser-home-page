@@ -1,0 +1,32 @@
+.addItemModal {
+    position: absolute;
+    top: 50%;
+    left: 78%;
+    transform: translate(-50%, -50%);
+    max-width: 400px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid #000;
+    box-shadow: 24px;
+    padding: 4px;
+    border-radius: 3px;
+  }
+
+.addItemModalTitle {
+    color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    margin-bottom: 10px;
+};
+
+.previewImage {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    background-color: transparent;
+}
+
+
+.submitButtonContainer { 
+    display: flex;
+    align-items: right;
+    justify-content: right;
+}
