@@ -1,12 +1,12 @@
-import { SavedItem } from '../models/SavedItem';
-import { RoundItem } from './RoundItem';
+import { SavedItem } from '../../models/SavedItem';
+import { RoundItem } from '../RoundItem';
 import React, {useState, useEffect} from 'react';
-import { SystemCategory } from '../models/Store';
+import { SystemCategory } from '../../models/Store';
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { toggleSystemCategorySettings, selectModalOpen } from '../store/slices/dataSlice';
+import { toggleSystemCategorySettings, selectModalOpen } from '../../store/slices/dataSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { SavedItemsSettingsModal } from './SavedItemsSettingsModal';
+import { SavedItemsSettingsModal } from '../SavedItemsSettingsModal';
 const iconSx = { width: 15,
     height: 15,
     marginLeft: '-10px',

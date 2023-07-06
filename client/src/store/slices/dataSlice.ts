@@ -47,7 +47,6 @@ const reduceCategories = (
 
 export const fetchUserData = createAsyncThunk('data/fetchUserData',
     async (payload: {userId: string}) => {
-        console.log(payload);
         const [categories, savedItems] = await Promise.all([
             categoryAPI.getCategoriesForUser(payload.userId),
             savedItemAPI.getItemsForUser(payload.userId),
@@ -64,6 +63,7 @@ export const fetchUserData = createAsyncThunk('data/fetchUserData',
 
 export const addSavedItem = createAsyncThunk('data/AddSavedItem',
     async (payload: { category: string, item: SavedItem }) => {
+        console.log('ADDSAVEDITEM', payload)
         await savedItemAPI.createSavedItem(payload.item);
         return payload;
     });
@@ -81,9 +81,9 @@ export const deleteSavedItem = createAsyncThunk('data/DeleteSavedItem',
     });
 
 export const addCategory = createAsyncThunk('data/AddCategory',
-    async (payload: { name: string }) => {
-        const category = { name: payload.name };
-        const response = await categoryAPI.createCategory(category);
+    async (payload: { name: string, user: string }) => {
+        console.log('ADDCATEGORY', payload)
+        const response = await categoryAPI.createCategory(payload);
         return response.payload; 
     });
 

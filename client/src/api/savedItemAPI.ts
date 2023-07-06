@@ -7,6 +7,7 @@ const getFormData = (body) => {
     formData.append('description', body.description);
     formData.append('category', body.category);
     formData.append('image', body.image);
+    formData.append('user', body.user);
     return formData;
 };
 

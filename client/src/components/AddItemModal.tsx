@@ -33,6 +33,7 @@ type AddOrEditItemModalProps = {
   itemToEdit?: SavedItem | null;
 };
 
+
 export default function AddOrEditItemModal({
     open,
     handleClose,
@@ -62,6 +63,7 @@ export default function AddOrEditItemModal({
             category: category.id,
             user
         };
+        console.log(item);
         const action = itemToEdit
             ? updateSavedItem({ ...payload, item, id: itemToEdit.id as string })
             : addSavedItem({ ...payload, item });

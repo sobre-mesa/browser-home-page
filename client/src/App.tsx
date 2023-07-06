@@ -2,7 +2,7 @@ import { useAppSelector, useAppDispatch } from './store/hooks';
 import { selectData, fetchUserData } from './store/slices/dataSlice';
 import './styles/App.css';
 import React, { useEffect } from 'react';
-import { Bar } from './components/Bar';
+import { Bar } from './components/Bar/Bar';
 import { CustomCategoryPanel } from './components/CustomCategoryPanel';
 import {CustomCategoriesSettingsModal} from './components/CustomCategoriesSettingsModal';
 import {

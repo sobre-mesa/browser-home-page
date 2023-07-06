@@ -5,7 +5,7 @@ import { selectModalOpen, selectData, deleteCategory } from '../store/slices/dat
 import { StoreCategory } from '../models/Store';
 import CustomCategoriesSettingItem from './CustomCategoriesSettingItem';
 import { Modal, IconButton } from '@mui/material';
-import AddCategoryPopOver  from './AddCategoryPopOver';
+import AddCategoryPopOver  from './AddCategoryPopOver/AddCategoryPopOver';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 export const CustomCategoriesSettingsModal = ({

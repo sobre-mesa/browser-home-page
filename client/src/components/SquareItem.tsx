@@ -19,7 +19,7 @@ export const Bookmark = ({ item }: { item: SavedItem }) => {
     return (
         <div className="square-item" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <Card
-                sx={{ maxWidth: 240, height: 115, backgroundColor: 'rgba(0, 0, 0, 0.9)', borderRadius: 3, margin: '0 12px', color: 'white' }}
+                sx={{ width: 240, height: 115, backgroundColor: 'rgba(0, 0, 0, 0.9)', borderRadius: 3, margin: '0 12px', color: 'white' }}
             >
                 <CardMedia
                     className="media"

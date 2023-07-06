@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Popover, TextField, IconButton } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { addCategory, updateCategory, selectUser } from '../store/slices/dataSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addCategory, updateCategory, selectUser } from '../../store/slices/dataSlice';
 const AddCategoryPopOver = (
     {categoryToEdit, anchorEl, setAnchorEl} 
     : {categoryToEdit: any, anchorEl: any, setAnchorEl: any}

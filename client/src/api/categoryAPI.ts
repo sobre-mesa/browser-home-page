@@ -4,6 +4,7 @@ import { get, post, put, del } from './api';
 const getFormData = (body) => {
     const formData = new URLSearchParams();
     formData.append('name', body.name);
+    formData.append('user', body.user);
     return formData;
 };
 
