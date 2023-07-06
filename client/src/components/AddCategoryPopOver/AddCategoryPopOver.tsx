@@ -10,13 +10,14 @@ const AddCategoryPopOver = (
     {categoryToEdit, anchorEl, setAnchorEl} 
     : {categoryToEdit: any, anchorEl: any, setAnchorEl: any}
 ) => {
+
+    const user = useAppSelector(selectUser);
+    const dispatch = useAppDispatch();
    
-    const open = Boolean(anchorEl);
     const isEditing = categoryToEdit !== null;
     const [inputValue, setInputValue] = useState(isEditing ? categoryToEdit.name : '');
     const label = isEditing? 'Edit category: ' + categoryToEdit.name : 'Add category';
-    const dispatch = useAppDispatch();
-    const user = useAppSelector(selectUser);
+
     const handleSubmit = () => {
         const payload = { name: inputValue, user };
         const action = isEditing ? updateCategory({...payload, id: categoryToEdit?.id}) : addCategory(payload);
@@ -36,7 +37,7 @@ const AddCategoryPopOver = (
                     vertical: 'top',
                     horizontal: 'center',
                 }}
-                open={open}
+                open={!!anchorEl}
                 onClose={handleClose}
                 transformOrigin={{
                     vertical: 'bottom',
@@ -45,13 +46,7 @@ const AddCategoryPopOver = (
             >
                 <div className="popover">
                     <TextField
-                        label={label}
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
                         fullWidth
-                        margin="normal"
-                        variant="standard"
-                        placeholder="Category name"
                         InputProps={{
                             style: {
                                 color: 'white',
@@ -63,13 +58,19 @@ const AddCategoryPopOver = (
                                 color: 'white',
                             },
                         }}
+                        label={label}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        margin="normal"
+                        placeholder="Category name"
+                        value={inputValue}
+                        variant="standard"
                     />
                     <IconButton 
-                        sx={{ marginLeft: 'auto' }}
-                        type="submit"
-                        color="error"
                         aria-label="AddOrEdit"
-                        onClick={handleSubmit}>
+                        color="error"
+                        onClick={handleSubmit}
+                        sx={{ marginLeft: 'auto' }}
+                        type="submit">
                         { !isEditing ? 
                             <AddCircleOutlineIcon fontSize="large"  sx={{widtH: 20, height: 20}}/> 
                             : <EditIcon fontSize="large" sx={{widtH: 20, height: 20}}/>}

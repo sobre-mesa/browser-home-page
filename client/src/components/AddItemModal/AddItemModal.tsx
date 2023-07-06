@@ -89,11 +89,10 @@ export default function AddOrEditItemModal({
 
     return (
         <Modal
-            open={open}
-            onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-        >
+            onClose={handleClose}
+            open={open}>
             <Box className="addItemModal">
                 <Typography id="modal-modal-title" variant="h6" component="h6" className="addItemModalTitle">
                     {title}
@@ -101,34 +100,21 @@ export default function AddOrEditItemModal({
                 {
                     (image && !imageError) ? (
                         <Avatar
-                            src={image}
                             alt="Preview"
+                            onError={handleImageLoadError}
+                            src={image}
                             sx={{
                                 width: 100,
                                 height: 100,
                                 marginBottom: '10px',
                             }}
-                            onError={handleImageLoadError}
                         />
                     ) : imageError && <ImageNotFound />
                 }
                 <form onSubmit={onSubmit}>
                     {['Description', 'URL', 'Image'].map((field) => (
                         <TextField
-                            key={field}
-                            label={field}
-                            value={field === 'Description' ? description : field === 'URL' ? url : image}
-                            onChange={(e) => {
-                                if (field === 'Description') setDescription(e.target.value);
-                                else if (field === 'URL') setUrl(e.target.value);
-                                else {
-                                    setImage(e.target.value);
-                                    setImageError(false);
-                                }
-                            }}
                             fullWidth
-                            margin="normal"
-                            variant="standard"
                             InputProps={{
                                 style: {
                                     color: 'white',
@@ -140,7 +126,20 @@ export default function AddOrEditItemModal({
                                     color: 'white',
                                 },
                             }}
+                            key={field}
+                            margin="normal"
+                            label={field}
+                            onChange={(e) => {
+                                if (field === 'Description') setDescription(e.target.value);
+                                else if (field === 'URL') setUrl(e.target.value);
+                                else {
+                                    setImage(e.target.value);
+                                    setImageError(false);
+                                }
+                            }}
                             onPaste={field === 'Image' ? handleImagePaste : undefined}
+                            value={field === 'Description' ? description : field === 'URL' ? url : image}
+                            variant="standard"
                         />
                     ))}
                     <div className="submitButtonContainer">

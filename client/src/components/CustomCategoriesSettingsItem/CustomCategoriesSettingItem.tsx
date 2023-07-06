@@ -3,29 +3,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteCategoryPopOver from '../DeleteCategoryPopover/DeleteCategoryPopOver';
 import {Category} from '../../models/Category';
+import './CustomCategoriesSettingItem.css';
 
 const styles = {
-    container: {
-        display: 'flex',
-        alignItems: 'center',
-        backgroundColor: 'rgba(164, 30, 30, 0.7)',
-        borderRadius: '7 7 0 0',
-        padding: '10',
-        width: 200,
-        height: 30,
-        marginBottom: 2
-    },
-    label: {
-        marginLeft: 6,
-        cursor: 'pointer',
-        color: 'rgba(255, 255, 255, 0.95)',
-        fontSize: 13,
-    },
-    icons: {
-        marginLeft: 'auto',
-        display: 'flex',
-        alignItems: 'center',
-    },
     icon: {
         cursor: 'pointer',
         marginLeft: 2,
@@ -57,19 +37,22 @@ export default function CustomCategoriesSettingItem(
     };
 
     return (
-        <div style={styles.container}>
-            <span style={styles.label} onClick={handleClick}>
+        <div className="custom-categories-settings-item">
+            <span className="custom-categories-settings-item-label"
+                onClick={handleClick}>
                 {category.name}
             </span>
-            <div style={styles.icons}>
-                <EditIcon style={styles.icon} onClick={handleEdit} />
-                <DeleteIcon style={styles.icon} onClick={handleDelete} />
-                <DeleteCategoryPopOver
-                    onDelete={() => {onDelete(category);}}
-                    anchorEl={deleteAnchorEl}
-                    onClose={()=> {setDeleteAnchorEl(null);}}
-                />
+            <div className="custom-categories-settings-item-icons">
+                <EditIcon className="custom-categories-settings-item-icon"
+                    onClick={handleEdit} />
+                <DeleteIcon className="custom-categories-settings-item-icon"
+                    onClick={handleDelete} />
             </div>
+            <DeleteCategoryPopOver
+                anchorEl={deleteAnchorEl}
+                onClose={()=> {setDeleteAnchorEl(null);}}
+                onDelete={() => {onDelete(category);}}
+            />
         </div>
     );
 }

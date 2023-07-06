@@ -76,8 +76,8 @@ export const Bar = ({ category }: { category: SystemCategory }) => {
                         </IconButton>
                         {category.items?.map((item: SavedItem) => (
                             <RoundItem
-                                key={item.id}
-                                item={item} />
+                                item={item} 
+                                key={item.id}/>
                         ))}
                         <p className="vertical-text"> {category?.name?.toUpperCase()}</p>
                     </ul>               

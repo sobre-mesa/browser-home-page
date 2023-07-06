@@ -68,14 +68,14 @@ export const CustomCategoriesSettingsModal = ({
                         <AddCircleOutlineIcon sx={{color: 'rgba(164, 30, 30, 0.7)'}} />
                     </IconButton>
                     <AddCategoryPopOver
-                        categoryToEdit={categorytoEdit}
                         anchorEl={anchorEl}
+                        categoryToEdit={categorytoEdit}
                         setAnchorEl={setAnchorEl} />
                     {displayedCategories?.length || 0 > 0 ? 
                         displayedCategories?.map((category) => (
                             <CustomCategoriesSettingItem
-                                key={category.id}
                                 category={category}
+                                key={category.id}
                                 onClick={() => handleCategoryClick(category)}
                                 onDelete={(x) => dispatch(deleteCategory({id: x.id as string})) }
                                 onEdit={(event) => {

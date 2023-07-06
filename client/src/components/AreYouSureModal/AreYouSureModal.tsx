@@ -30,22 +30,22 @@ export const AreYouSureModal = ({ open, setOpen, onConfirm, title, message }: Ar
             aria-describedby="modal-modal-description">
             <Box className="areYouSureModal">
                 <Typography 
-                    id="modal-modal-title"
-                    variant="h6"
+                    color="#fff"
                     component="h2"
-                    color="#fff">
+                    id="modal-modal-title"
+                    variant="h6">
                     {title}
                 </Typography>
                 <Typography
+                    color="#fff"
                     id="modal-modal-description"
-                    sx={{ mt: 2 }} 
-                    color="#fff">
+                    sx={{ mt: 2 }} >
                     {message}
                 </Typography>
                 <Button
-                    variant="contained"
                     onClick={onConfirm}
-                    sx={{ mt: 2, backgroundColor: 'red' }}>
+                    sx={{ mt: 2, backgroundColor: 'red' }}
+                    variant="contained">
                     Confirm
                 </Button>
                 <CloseButton />
