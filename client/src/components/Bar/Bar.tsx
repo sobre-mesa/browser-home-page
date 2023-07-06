@@ -14,6 +14,7 @@ const iconSx = { width: 15,
     color: 'rgba(255, 255, 255, 0.503)' };
 
 import { Modal } from '@mui/material';
+import './Bar.css';
 
 export const Bar = ({ category }: { category: SystemCategory }) => {
     const dispatch = useDispatch();
