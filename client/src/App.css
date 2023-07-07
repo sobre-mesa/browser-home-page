@@ -1,11 +1,8 @@
-@media (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
-
-  .custom-category-panel-container {
-    height: 300px;
-  }
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
@@ -17,25 +14,22 @@ body {
   background-repeat: repeat;
 }
 
-.saved-item-settings-modal :focus {
-  outline: none;
-}
-.white-input.Mui-focused .MuiInput-underline:before {
-  border-bottom-color: white !important;
-}
-
-.App-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .container {
   max-width: 1200px;
   margin: 0 auto; 
   padding: 20px;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
 
+  .custom-category-panel-container {
+    height: 300px;
+  }
+}
 
+.white-input.Mui-focused .MuiInput-underline:before {
+  border-bottom-color: white !important;
+}
