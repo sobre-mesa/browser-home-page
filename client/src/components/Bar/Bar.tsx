@@ -1,5 +1,5 @@
 import { SavedItem } from '../../models/SavedItem';
-import { RoundItem } from '../RoundItem/RoundItem';
+import RoundItem from '../RoundItem/RoundItem';
 import React, {useState, useEffect} from 'react';
 import { SystemCategory } from '../../models/Store';
 import IconButton from '@mui/material/IconButton';
@@ -17,7 +17,7 @@ const iconSx = { width: 15,
 import { Modal } from '@mui/material';
 import './Bar.css';
 
-export const Bar = ({ category }: { category: SystemCategory }) => {
+const Bar = ({ category }: { category: SystemCategory }) => {
     const dispatch = useDispatch();
     const modalsOpen = useSelector(selectModalOpen);
     const [isOverflowing, setIsOverflowing] = useState(false);
@@ -86,11 +86,11 @@ export const Bar = ({ category }: { category: SystemCategory }) => {
             </div>
             <Modal
                 className="saved-item-settings-modal"
-                open={modalsOpen[category.name]}>
-                <div>
-                    <SavedItemsSettingsModal category={category} />
-                </div>
+                open={modalsOpen[category.name] || false}>
+                <SavedItemsSettingsModal category={category} />
             </Modal>
         </>
     );
 };
+
+export default Bar;

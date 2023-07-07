@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
-import { Bookmark } from '../SquareItem/SquareItem';
+import SquareItem  from '../SquareItem/SquareItem';
 import { SavedItem } from '../../models/SavedItem';
 import './CustomCategory.css';
-export const Category = ({ category, items }: { category: string; items: SavedItem[] }) => {
-    const containerRef = useRef(null);
+const CustomCategory = ({ items }: { items: SavedItem[] }) => {
+    const containerRef = useRef<any>(null);
     const [scrollLeft, setScrollLeft] = useState(0);
 
     const LeftArrow = () => {
@@ -32,9 +32,11 @@ export const Category = ({ category, items }: { category: string; items: SavedIt
         <div className="bar-section">
             <LeftArrow />
             <div className="square-items" ref={containerRef}>
-                { items?.map((item) => ( <Bookmark item={item} key={item.id}/>)) }
+                { items?.map((item) => ( <SquareItem item={item} key={item.id}/>)) }
             </div>
             <RightArrow />
         </div>
     );
 };
+
+export default CustomCategory;

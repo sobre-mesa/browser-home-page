@@ -7,7 +7,7 @@ const StyledAvatar = styled(Avatar)`
      margin: 8px;
      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); `;
 
-export const RoundItem = ({item}: { item: SavedItem }) => {
+const RoundItem = ({item}: { item: SavedItem }) => {
     return (
         <a href={item.url}>
             <StyledAvatar
@@ -19,4 +19,5 @@ export const RoundItem = ({item}: { item: SavedItem }) => {
     );
 };
 
+export default RoundItem;
 

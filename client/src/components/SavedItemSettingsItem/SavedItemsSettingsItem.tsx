@@ -5,7 +5,7 @@ import type { SavedItem } from '../../models/SavedItem';
 
 import { useAppDispatch } from '../../store/hooks';
 import {  deleteSavedItem } from '../../store/slices/dataSlice';
-import { AreYouSureModal } from '../AreYouSureModal/AreYouSureModal';
+import AreYouSureModal from '../AreYouSureModal/AreYouSureModal';
 
 import { Avatar, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -13,7 +13,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { DeleteSharp } from '@mui/icons-material';
 
 
-export const SavedItemsSettingsItem = ({ category, item, onEdit, handleOpen}: ItemProps) => {
+const SavedItemsSettingsItem = ({ category, item, onEdit, handleOpen}: ItemProps) => {
     const dispatch = useAppDispatch();
     const handleModalOpen = () => {
         handleOpen();
@@ -69,3 +69,4 @@ type ItemProps = {
 
 type EditAction = SetStateAction<SavedItem> & SetStateAction<null>
 type EditFunction = Dispatch<SetStateAction<SavedItem>> | Dispatch<SetStateAction<null>>;
+export default SavedItemsSettingsItem;

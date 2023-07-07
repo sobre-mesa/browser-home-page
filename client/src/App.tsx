@@ -2,14 +2,13 @@ import { useAppSelector, useAppDispatch } from './store/hooks';
 import { selectData, fetchUserData } from './store/slices/dataSlice';
 import './App.css';
 import React, { useEffect } from 'react';
-import { Bar } from './components/Bar/Bar';
-import { CustomCategoryPanel } from './components/CustomCategoryPanel/CustomCategoryPanel';
-import {CustomCategoriesSettingsModal} from './components/CustomCategoriesSettingsModal/CustomCategoriesSettingsModal';
+import Bar from './components/Bar/Bar';
+import CustomCategoryPanel from './components/CustomCategoryPanel/CustomCategoryPanel';
+import CustomCategoriesSettingsModal from './components/CustomCategoriesSettingsModal/CustomCategoriesSettingsModal';
 import {
     ClerkProvider,
     SignedIn,
     SignedOut,
-    UserButton,
     useUser,
     RedirectToSignIn,
     SignOutButton

@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { SavedItem } from '../../models/SavedItem';
 import './SquareItem.css';
 
-export const Bookmark = ({ item }: { item: SavedItem }) => {
+const SquareItem = ({ item }: { item: SavedItem }) => {
     const [isHovered, setIsHovered] = React.useState(false);
     const cardSX = {width: 240, height: 115,backgroundColor: 'rgba(0, 0, 0, 0.9)', borderRadius: 3 };
     return (
@@ -22,3 +22,5 @@ export const Bookmark = ({ item }: { item: SavedItem }) => {
         </div>
     );
 };
+
+export default SquareItem;

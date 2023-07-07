@@ -9,7 +9,7 @@ import AddCategoryPopOver  from '../AddCategoryPopOver/AddCategoryPopOver';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import './CustomCategoriesSettingsModal.css';
 
-export const CustomCategoriesSettingsModal = ({categories}: { categories: StoreCategory[]}) => {
+const CustomCategoriesSettingsModal = ({categories}: { categories: StoreCategory[]}) => {
     const [displayedCategories, setDisplayedCategories] = useState<StoreCategory[] | null>(categories);
     const [selectedCategory, setSelectedCategory] = useState<StoreCategory | null>(null);
     const [categorytoEdit, setCategoryToEdit] = useState<StoreCategory | null>(null);
@@ -71,3 +71,5 @@ export const CustomCategoriesSettingsModal = ({categories}: { categories: StoreC
         </Modal>
     );
 };
+
+export default CustomCategoriesSettingsModal;

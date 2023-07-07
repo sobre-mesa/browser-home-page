@@ -23,7 +23,6 @@ const ImageNotFound = () => {
     ); 
 };
 
-
 function AddOrEditItemModal({open, handleClose, category, itemToEdit}: AddOrEditItemModalProps) {
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');

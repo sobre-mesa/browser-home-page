@@ -5,7 +5,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CloseIcon from '@mui/icons-material/Close';
 
 import { SystemCategory, StoreCategory } from '../../models/Store';
-import { SavedItemsSettingsItem } from '../SavedItemSettingsItem/SavedItemsSettingsItem';
+import SavedItemsSettingsItem from '../SavedItemSettingsItem/SavedItemsSettingsItem';
 import AddItemModal from '../AddItemModal/AddItemModal';
 import { toggleSystemCategorySettings } from '../../store/slices/dataSlice';
 
@@ -26,9 +26,8 @@ export const SavedItemsSettingsModal = ({ category }: { category: SystemCategory
     const handleOpenAddModal = () => {
         setItemToEdit(null);
         setModalOpen(true);
-    };
-  
-    
+    };  
+        
     const closeButtonSx = { position: 'absolute', top: '10px', right: '10px', zIndex: 1 };
     const closeIconSX = { width: 15, height: 15, marginRight: '-10px', marginTop: '-15px', color: 'rgba(255, 255, 255, 0.3)' };
     const addIconSX = { width: 20, height: 20, color: 'rgba(255, 255, 255, 0.3)', paddingBottom: '6px' };
@@ -61,6 +60,7 @@ export const SavedItemsSettingsModal = ({ category }: { category: SystemCategory
             </IconButton>
         </div>
     );
+
     return (
         <Paper sx={paperstyle}>
             <span className="saved-items-modal-title"> {category.name.toUpperCase()}</span>

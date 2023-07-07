@@ -12,7 +12,7 @@ type AreYouSureModalProps = {
 };
 
 
-export const AreYouSureModal = ({ open, setOpen, onConfirm, title, message }: AreYouSureModalProps) => {
+const AreYouSureModal = ({ open, setOpen, onConfirm, title, message }: AreYouSureModalProps) => {
     const handleClose = () => setOpen(false);
     const CloseButton = () => {
         return (
@@ -53,3 +53,5 @@ export const AreYouSureModal = ({ open, setOpen, onConfirm, title, message }: Ar
         </Modal>
     );
 };
+
+export default AreYouSureModal;
