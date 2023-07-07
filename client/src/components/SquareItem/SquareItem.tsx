@@ -8,26 +8,15 @@ import './SquareItem.css';
 
 export const Bookmark = ({ item }: { item: SavedItem }) => {
     const [isHovered, setIsHovered] = React.useState(false);
-
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
-
+    const cardSX = {width: 240, height: 115,backgroundColor: 'rgba(0, 0, 0, 0.9)', borderRadius: 3 };
     return (
-        <div className="square-item" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <Card sx={{width: 240, height: 115,backgroundColor: 'rgba(0, 0, 0, 0.9)', borderRadius: 3, }}>
-                <CardMedia
-                    className="media"
-                    image={item.image}
-                />
+        <div className="square-item"
+            onMouseEnter={() => setIsHovered(true)} 
+            onMouseLeave={ () => setIsHovered(false)}>
+            <Card sx={cardSX}>
+                <CardMedia className="media" image={item.image}/>
                 <CardContent className={`card-content ${isHovered ? 'expanded' : ''}`}>
-                    <Typography variant="body2" color="white" sx={{ fontSize: 12 }}>
-                        {item.description}
-                    </Typography>
+                    <Typography variant="body2" color="white"> {item.description}</Typography>
                 </CardContent>
             </Card>
         </div>
