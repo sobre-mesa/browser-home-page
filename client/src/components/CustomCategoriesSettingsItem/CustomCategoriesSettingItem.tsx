@@ -5,48 +5,27 @@ import DeleteCategoryPopOver from '../DeleteCategoryPopover/DeleteCategoryPopOve
 import {Category} from '../../models/Category';
 import './CustomCategoriesSettingItem.css';
 
-const styles = {
-    icon: {
-        cursor: 'pointer',
-        marginLeft: 2,
-        color: 'rgba(0, 0, 0, 0.503)'
-    },
-};
-
-export default function CustomCategoriesSettingItem(
-    {category, onClick, onDelete, onEdit} : 
-{
+type CustomCategoriesSettingItemProps = {
     category: Category
     onClick: () => void;
     onDelete: (category: Category) => void;
     onEdit: (event: any) => void;
-}) {
-
+}
+    
+function CustomCategoriesSettingItem({category, onClick, onDelete, onEdit} : CustomCategoriesSettingItemProps) {
     const [deleteAnchorEl, setDeleteAnchorEl] = useState(null);
-    const handleClick = () => {
-        console.info('You clicked the Chip.');
-        onClick();
-    };
-
-    const handleDelete = (event: any) => {
-        setDeleteAnchorEl(event.currentTarget);    
-    };
-
-    const handleEdit = (event: any) => {
-        onEdit(event);
-    };
 
     return (
         <div className="custom-categories-settings-item">
             <span className="custom-categories-settings-item-label"
-                onClick={handleClick}>
+                onClick={onClick}>
                 {category.name}
             </span>
             <div className="custom-categories-settings-item-icons">
                 <EditIcon className="custom-categories-settings-item-icon"
-                    onClick={handleEdit} />
+                    onClick={onEdit} />
                 <DeleteIcon className="custom-categories-settings-item-icon"
-                    onClick={handleDelete} />
+                    onClick={(e) => setDeleteAnchorEl(e.currentTarget)} />
             </div>
             <DeleteCategoryPopOver
                 anchorEl={deleteAnchorEl}
@@ -56,3 +35,5 @@ export default function CustomCategoriesSettingItem(
         </div>
     );
 }
+
+export default CustomCategoriesSettingItem;

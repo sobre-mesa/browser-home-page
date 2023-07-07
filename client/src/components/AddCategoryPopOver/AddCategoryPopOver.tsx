@@ -6,11 +6,8 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addCategory, updateCategory, selectUser } from '../../store/slices/dataSlice';
 import './AddCategoryPopover.css';
 
-const AddCategoryPopOver = (
-    {categoryToEdit, anchorEl, setAnchorEl} 
-    : {categoryToEdit: any, anchorEl: any, setAnchorEl: any}
-) => {
-
+type AddCategoryPopOverProps = {categoryToEdit: any, anchorEl: any, setAnchorEl: any}
+const AddCategoryPopOver = ({categoryToEdit, anchorEl, setAnchorEl} : AddCategoryPopOverProps) => {
     const user = useAppSelector(selectUser);
     const dispatch = useAppDispatch();
    

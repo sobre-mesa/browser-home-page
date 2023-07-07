@@ -24,12 +24,7 @@ const ImageNotFound = () => {
 };
 
 
-export default function AddOrEditItemModal({
-    open,
-    handleClose,
-    category,
-    itemToEdit,
-}: AddOrEditItemModalProps) {
+function AddOrEditItemModal({open, handleClose, category, itemToEdit}: AddOrEditItemModalProps) {
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [image, setImage] = useState('');
@@ -152,3 +147,5 @@ export default function AddOrEditItemModal({
         </Modal>
     );
 }
+
+export default AddOrEditItemModal;

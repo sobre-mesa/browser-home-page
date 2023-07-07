@@ -7,12 +7,9 @@ import CustomCategoriesSettingItem from '../CustomCategoriesSettingsItem/CustomC
 import { Modal, IconButton } from '@mui/material';
 import AddCategoryPopOver  from '../AddCategoryPopOver/AddCategoryPopOver';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import './CustomCategoriesSettingsModal.css';
 
-export const CustomCategoriesSettingsModal = ({
-    categories
-}: {
-  categories: StoreCategory[];
-}) => {
+export const CustomCategoriesSettingsModal = ({categories}: { categories: StoreCategory[]}) => {
     const [displayedCategories, setDisplayedCategories] = useState<StoreCategory[] | null>(categories);
     const [selectedCategory, setSelectedCategory] = useState<StoreCategory | null>(null);
     const [categorytoEdit, setCategoryToEdit] = useState<StoreCategory | null>(null);
@@ -28,73 +25,48 @@ export const CustomCategoriesSettingsModal = ({
     useEffect(() => {
         setDisplayedCategories(data.categories);
         if (selectedCategory) {
-            const updatedCategory = data.categories.find((category) => category.id === selectedCategory.id);
-            if (updatedCategory) {
-                setSelectedCategory(updatedCategory);
-            }
-            else { 
-                setSelectedCategory(data.categories[0]);
-            }
+            const updatedCategory = data.categories.find((c) => c.id === selectedCategory.id);
+            setSelectedCategory(updatedCategory ? updatedCategory : data.categories[0]);
         }
-        else {
-            if(data.categories.length > 0)
-                setSelectedCategory(data.categories[0]);
-        }
+        else if(data.categories.length > 0) setSelectedCategory(data.categories[0]);
     }, [data.categories]);
-
-    // useEffect(() => {
-    //     setDisplayedCategories(data.categories);
-    // }, [data.categories]);
 
     const handleCategoryClick = (category: StoreCategory) => {
         setSelectedCategory(category);
     };
+    
+    const getOnEdit = (category) => {
+        return (event) => {
+            setCategoryToEdit(category);
+            setSelectedCategory(category);
+            setAnchorEl(event.currentTarget);
+        };
+    };
 
+    const thereIsACategory = () => displayedCategories?.length || 0 > 0;
+    const circleButtonSX = {color: 'rgba(164, 30, 30, 0.7)'};
     return (
-        <Modal
-            className="saved-item-settings-modal"
-            open={modalsOpen['custom']}
-            style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '100%',
-                backdropFilter: 'blur(5px)',
-            }}
-        >
-            <div className="custom-categories-settings-modal" style={{ display: 'flex' }}>
-                <div className="custom-categories-side-bar" style={{ marginRight: 60, marginLeft: '-220px' }}>
+        <Modal className="saved-item-settings-modal" open={modalsOpen['custom']}>
+            <div className="flex">
+                <div className="custom-categories-side-bar">
                     <IconButton onClick={handleAddCategory} style={{marginLeft: '80px'}}>
-                        <AddCircleOutlineIcon sx={{color: 'rgba(164, 30, 30, 0.7)'}} />
+                        <AddCircleOutlineIcon sx={circleButtonSX}/>
                     </IconButton>
                     <AddCategoryPopOver
                         anchorEl={anchorEl}
                         categoryToEdit={categorytoEdit}
                         setAnchorEl={setAnchorEl} />
-                    {displayedCategories?.length || 0 > 0 ? 
-                        displayedCategories?.map((category) => (
-                            <CustomCategoriesSettingItem
-                                category={category}
-                                key={category.id}
-                                onClick={() => handleCategoryClick(category)}
-                                onDelete={(x) => dispatch(deleteCategory({id: x.id as string})) }
-                                onEdit={(event) => {
-                                    setCategoryToEdit(category);
-                                    setSelectedCategory(category);
-                                    setAnchorEl(event.currentTarget);
-                                }}
-                            />
-                        )) :
-                        <div style={{marginLeft: '80px', marginTop: '20px', color: 'rgba(164, 30, 30, 0.7)'}}>
-                        No custom categories yet!
-                        </div>
-                    }
+                    { thereIsACategory() ? displayedCategories?.map((category) => (
+                        <CustomCategoriesSettingItem
+                            category={category}
+                            key={category.id}
+                            onClick={() => handleCategoryClick(category)}
+                            onDelete={(x) => dispatch(deleteCategory({id: x.id as string})) }
+                            onEdit={getOnEdit(category)}
+                        /> )) 
+                        : <div className="no-custom-categories"> No custom categories yet! </div> }
                 </div>
-                {selectedCategory && (
-                    <SavedItemsSettingsModal
-                        category={selectedCategory}
-                    />
-                )}
+                { selectedCategory && <SavedItemsSettingsModal category={selectedCategory}/> }
             </div>
         </Modal>
     );
