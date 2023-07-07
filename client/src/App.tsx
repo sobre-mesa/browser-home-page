@@ -1,15 +1,14 @@
 import { useAppSelector, useAppDispatch } from './store/hooks';
 import { selectData, fetchUserData } from './store/slices/dataSlice';
-import './styles/App.css';
+import './App.css';
 import React, { useEffect } from 'react';
-import { Bar } from './components/Bar/Bar';
-import { CustomCategoryPanel } from './components/CustomCategoryPanel';
-import {CustomCategoriesSettingsModal} from './components/CustomCategoriesSettingsModal';
+import Bar from './components/Bar/Bar';
+import CustomCategoryPanel from './components/CustomCategoryPanel/CustomCategoryPanel';
+import CustomCategoriesSettingsModal from './components/CustomCategoriesSettingsModal/CustomCategoriesSettingsModal';
 import {
     ClerkProvider,
     SignedIn,
     SignedOut,
-    UserButton,
     useUser,
     RedirectToSignIn,
     SignOutButton
@@ -27,15 +26,12 @@ function Welcome() {
     const dispatch = useAppDispatch();
     // console.log(user);
     useEffect(() => {
-        dispatch(fetchUserData({userId: user?.id}));
+        dispatch(fetchUserData({userId: user?.id || ''}));
     }, [dispatch]);
 
     return ( 
         <div className="App">
             <CustomCategoriesSettingsModal
-                open={true}
-                setOpen={() => {}}
-                onEdit={() => {}}
                 categories={data.categories}
             />
             <header className="App-header">

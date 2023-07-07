@@ -1,0 +1,21 @@
+.custom-category-warning{
+    color: white;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: Roboto;
+    font-style: normal;
+    cursor: pointer;
+  }
+
+  .no-categories-yet{
+    height: 340px;
+    background-color: rgba(255, 255, 255,0.03);
+  }

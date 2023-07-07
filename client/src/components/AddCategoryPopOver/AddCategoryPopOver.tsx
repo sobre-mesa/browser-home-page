@@ -4,17 +4,17 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addCategory, updateCategory, selectUser } from '../../store/slices/dataSlice';
-const AddCategoryPopOver = (
-    {categoryToEdit, anchorEl, setAnchorEl} 
-    : {categoryToEdit: any, anchorEl: any, setAnchorEl: any}
-) => {
+import './AddCategoryPopover.css';
+
+type AddCategoryPopOverProps = {categoryToEdit: any, anchorEl: any, setAnchorEl: any}
+const AddCategoryPopOver = ({categoryToEdit, anchorEl, setAnchorEl} : AddCategoryPopOverProps) => {
+    const user = useAppSelector(selectUser);
+    const dispatch = useAppDispatch();
    
-    const open = Boolean(anchorEl);
     const isEditing = categoryToEdit !== null;
     const [inputValue, setInputValue] = useState(isEditing ? categoryToEdit.name : '');
     const label = isEditing? 'Edit category: ' + categoryToEdit.name : 'Add category';
-    const dispatch = useAppDispatch();
-    const user = useAppSelector(selectUser);
+
     const handleSubmit = () => {
         const payload = { name: inputValue, user };
         const action = isEditing ? updateCategory({...payload, id: categoryToEdit?.id}) : addCategory(payload);
@@ -29,36 +29,21 @@ const AddCategoryPopOver = (
     return (
         <>
             <Popover
-                open={open}
                 anchorEl={anchorEl}
-                onClose={handleClose}
                 anchorOrigin={{
                     vertical: 'top',
                     horizontal: 'center',
                 }}
+                open={!!anchorEl}
+                onClose={handleClose}
                 transformOrigin={{
                     vertical: 'bottom',
                     horizontal: 'center',
                 }}
             >
-                <div style={{ 
-                    paddingLeft: '10px',
-                    backgroundColor:'black',
-                    borderRadius: 3,
-                    display: 'flex',
-                    height: '66px',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    fontSize: 12,
-                }}>
+                <div className="popover">
                     <TextField
-                        label={label}
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
                         fullWidth
-                        margin="normal"
-                        variant="standard"
-                        placeholder="Category name"
                         InputProps={{
                             style: {
                                 color: 'white',
@@ -70,9 +55,22 @@ const AddCategoryPopOver = (
                                 color: 'white',
                             },
                         }}
+                        label={label}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        margin="normal"
+                        placeholder="Category name"
+                        value={inputValue}
+                        variant="standard"
                     />
-                    <IconButton style={{ marginLeft: 'auto' }} type="submit" color="error" aria-label="AddOrEdit" onClick={handleSubmit}>
-                        { !isEditing ? <AddCircleOutlineIcon fontSize="large"  sx={{widtH: 20, height: 20}}/> : <EditIcon fontSize="large" sx={{widtH: 20, height: 20}}/>}
+                    <IconButton 
+                        aria-label="AddOrEdit"
+                        color="error"
+                        onClick={handleSubmit}
+                        sx={{ marginLeft: 'auto' }}
+                        type="submit">
+                        { !isEditing ? 
+                            <AddCircleOutlineIcon fontSize="large"  sx={{widtH: 20, height: 20}}/> 
+                            : <EditIcon fontSize="large" sx={{widtH: 20, height: 20}}/>}
                     </IconButton>
                 </div>
             </Popover>

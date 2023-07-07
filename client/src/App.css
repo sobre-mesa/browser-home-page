@@ -1,0 +1,35 @@
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("https://wallpapers.com/images/featured/7sfd6znw2ry6hnlt.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto; 
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .custom-category-panel-container {
+    height: 300px;
+  }
+}
+
+.white-input.Mui-focused .MuiInput-underline:before {
+  border-bottom-color: white !important;
+}

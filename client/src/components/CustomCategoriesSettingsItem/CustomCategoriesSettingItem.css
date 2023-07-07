@@ -1,0 +1,29 @@
+.custom-categories-settings-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(164, 30, 30, 0.7);
+    border-radius: 7px 7px 0 0;
+    padding: 10px;
+    width: 200px;
+    height: 20px;
+    margin-bottom: 2px;
+  }
+  
+  .custom-categories-settings-item-label {
+    margin-left: 6px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 13px;
+  }
+  
+  .custom-categories-settings-item-icons {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-categories-settings-item-icon {
+    cursor: pointer;
+    margin-left: 2px;
+    color: rgba(0, 0, 0, 0.503);
+  }
