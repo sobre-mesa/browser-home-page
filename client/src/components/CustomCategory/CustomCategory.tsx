@@ -6,36 +6,35 @@ export const Category = ({ category, items }: { category: string; items: SavedIt
     const containerRef = useRef(null);
     const [scrollLeft, setScrollLeft] = useState(0);
 
-    const handleScrollLeft = () => {
-        if (containerRef.current) {
-            const newScrollLeft = scrollLeft - containerRef.current.offsetWidth;
-            setScrollLeft(newScrollLeft >= 0 ? newScrollLeft : 0);
-            containerRef.current.scrollLeft = newScrollLeft;
-        }
-    };
+    const LeftArrow = () => {
+        const scroll = () => {
+            if (containerRef.current) {
+                const newScrollLeft = scrollLeft - containerRef.current.offsetWidth;
+                setScrollLeft(newScrollLeft >= 0 ? newScrollLeft : 0);
+                containerRef.current.scrollLeft = newScrollLeft;
+            }
+        };
 
-    const handleScrollRight = () => {
-        if (containerRef.current) {
-            const newScrollLeft = scrollLeft + containerRef.current.offsetWidth;
-            const maxScrollLeft = containerRef.current.scrollWidth - containerRef.current.offsetWidth;
-            setScrollLeft(newScrollLeft <= maxScrollLeft ? newScrollLeft : maxScrollLeft);
-            containerRef.current.scrollLeft = newScrollLeft;
-        }
+        return <button className="scroll-button left" onClick={scroll}> &lt; </button>;
     };
-
+    const RightArrow = () => {
+        const scroll = () => {
+            if (containerRef.current) {
+                const newScrollLeft = scrollLeft + containerRef.current.offsetWidth;
+                const maxScrollLeft = containerRef.current.scrollWidth - containerRef.current.offsetWidth;
+                setScrollLeft(newScrollLeft <= maxScrollLeft ? newScrollLeft : maxScrollLeft);
+                containerRef.current.scrollLeft = newScrollLeft;
+            }
+        };
+        return <button className="scroll-button right" onClick={scroll}> &gt; </button>;
+    };
     return (
-        <div className="bar-section" style={{display: 'flex', padding: '1px', backgroundColor: ' rgba(255, 255, 255,0.05)', borderRadius: 10}}>
-            <button className="scroll-button left" onClick={handleScrollLeft}>
-                &lt;
-            </button>
-            <div className="custom-category-items" ref={containerRef}>
-                {items?.map((item) => (
-                    <Bookmark key={item.id} item={item} />
-                ))}
+        <div className="bar-section">
+            <LeftArrow />
+            <div className="square-items" ref={containerRef}>
+                { items?.map((item) => ( <Bookmark item={item} key={item.id}/>)) }
             </div>
-            <button className="scroll-button right" onClick={handleScrollRight}>
-                &gt;
-            </button>
+            <RightArrow />
         </div>
     );
 };

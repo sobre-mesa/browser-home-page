@@ -1,13 +1,4 @@
-.custom-category-items {
-    display: flex;
-    align-items: center;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    scrollbar-width: hide;
-    padding: 10px;
-    max-width: 895px;
-  }
-  
+
   .scroll-button {
     font-size: 1.5rem;
     padding: 5px;
