@@ -26,15 +26,12 @@ function Welcome() {
     const dispatch = useAppDispatch();
     // console.log(user);
     useEffect(() => {
-        dispatch(fetchUserData({userId: user?.id}));
+        dispatch(fetchUserData({userId: user?.id || ''}));
     }, [dispatch]);
 
     return ( 
         <div className="App">
             <CustomCategoriesSettingsModal
-                open={true}
-                setOpen={() => {}}
-                onEdit={() => {}}
                 categories={data.categories}
             />
             <header className="App-header">

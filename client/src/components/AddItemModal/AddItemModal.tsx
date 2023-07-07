@@ -3,7 +3,7 @@ import { Box, Typography, Modal, TextField, IconButton, Avatar } from '@mui/mate
 import { SavedItem } from '../../models/SavedItem';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { addSavedItem, updateSavedItem, selectUser } from '../../store/slices/dataSlice';
-import { SystemCategory } from '../../models/Store';
+import { SystemCategory, StoreCategory } from '../../models/Store';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import './AddItemModal.css';
@@ -11,7 +11,7 @@ import './AddItemModal.css';
 type AddOrEditItemModalProps = {
   open: boolean;
   handleClose: () => any;
-  category: SystemCategory;
+  category: SystemCategory | StoreCategory;
   itemToEdit?: SavedItem | null;
 };
 
@@ -66,8 +66,8 @@ function AddOrEditItemModal({open, handleClose, category, itemToEdit}: AddOrEdit
         setImageError(true);
     };
 
-    const handleImagePaste = (event: React.ClipboardEvent<HTMLTextAreaElement>) => {
-        const clipboardData = event.clipboardData;
+    const handleImagePaste = (event: React.ClipboardEvent | undefined) => {
+        const clipboardData = event?.clipboardData;
         if (clipboardData) {
             const pastedImage = clipboardData.items[0];
             if (pastedImage.type.indexOf('image') === 0) {

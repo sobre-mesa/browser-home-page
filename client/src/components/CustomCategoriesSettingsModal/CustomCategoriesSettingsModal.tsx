@@ -35,8 +35,8 @@ const CustomCategoriesSettingsModal = ({categories}: { categories: StoreCategory
         setSelectedCategory(category);
     };
     
-    const getOnEdit = (category) => {
-        return (event) => {
+    const getOnEdit = (category: StoreCategory) => {
+        return (event: any) => {
             setCategoryToEdit(category);
             setSelectedCategory(category);
             setAnchorEl(event.currentTarget);
