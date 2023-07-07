@@ -24,6 +24,7 @@ const AreYouSureModal = ({ open, setOpen, onConfirm, title, message }: AreYouSur
     };
     return (
         <Modal 
+            className="modal"
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"

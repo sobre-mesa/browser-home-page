@@ -83,6 +83,7 @@ function AddOrEditItemModal({open, handleClose, category, itemToEdit}: AddOrEdit
 
     return (
         <Modal
+            className="modal"
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             onClose={handleClose}

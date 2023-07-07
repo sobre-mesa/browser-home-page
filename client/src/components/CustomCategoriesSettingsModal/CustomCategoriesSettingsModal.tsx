@@ -46,7 +46,7 @@ const CustomCategoriesSettingsModal = ({categories}: { categories: StoreCategory
     const thereIsACategory = () => displayedCategories?.length || 0 > 0;
     const circleButtonSX = {color: 'rgba(164, 30, 30, 0.7)'};
     return (
-        <Modal className="saved-item-settings-modal" open={modalsOpen['custom']}>
+        <Modal className="modal saved-item-settings-modal" open={modalsOpen['custom']}>
             <div className="flex">
                 <div className="custom-categories-side-bar">
                     <IconButton onClick={handleAddCategory} style={{marginLeft: '80px'}}>

@@ -19,6 +19,12 @@ body {
   margin: 0 auto; 
   padding: 20px;
 }
+@media (max-height: 768px) {
+  .modal {
+    min-height: 300px;
+    padding: 50px;
+  }
+}
 
 @media (max-width: 768px) {
   .container {
@@ -28,8 +34,15 @@ body {
   .custom-category-panel-container {
     height: 300px;
   }
+
+ 
 }
 
 .white-input.Mui-focused .MuiInput-underline:before {
   border-bottom-color: white !important;
+}
+
+.modal {
+  min-height:900;
+  overflow-y: auto;
 }

@@ -98,7 +98,7 @@ export const deleteCategory = createAsyncThunk('data/DeleteCategory',
         await categoryAPI.deleteCategory(payload.id);
         return payload;
     });
-
+const isSystemCategory = (x: string) => x === 'Apps' || x === 'Channels';
 export const dataSlice = createSlice({
     name: 'data',
     initialState,
@@ -126,7 +126,7 @@ export const dataSlice = createSlice({
             .addCase(addSavedItem.fulfilled, (state, action) => {
                 const category = state.categories.find((category: StoreCategory) => category.name === action.payload.category);
                 const name: string = action.payload.category?.toLowerCase() || '';
-                if (name === 'apps' || name === 'channels') state[name].items.push(action.payload.item);
+                if (isSystemCategory(name)) state[name].items.push(action.payload.item);
                 if (category) category.items.push(action.payload.item);
                 state.status = 'idle';
             })
@@ -136,7 +136,7 @@ export const dataSlice = createSlice({
             .addCase(updateSavedItem.pending, (state) => { state.status = 'loading';})
             .addCase(updateSavedItem.fulfilled, (state, action) => {
                 const category = action.payload.category;
-                if (action.payload.category === 'apps' || action.payload.category === 'channels') {
+                if (isSystemCategory(action.payload.category)) {
                     const categoryItems = state[action.payload.category].items;
                     const itemIndex = categoryItems.findIndex((item: SavedItem) => item.id === action.payload.id);
                     if (itemIndex !== -1) {
@@ -159,8 +159,10 @@ export const dataSlice = createSlice({
             .addCase(deleteSavedItem.pending, (state) => { state.status = 'loading';})
             .addCase(deleteSavedItem.fulfilled, (state, action) => {
                 const category = action.payload.category;
-                const itemIndex = state[category].items.findIndex((item: SavedItem) => item.id === action.payload.id);
-                if (itemIndex >= 0) state[category].items.splice(itemIndex, 1);
+                const itemArray = isSystemCategory(category) ? state[category].items : state.categories.find((c) => c.name === category)?.items;
+                console.log('DELETE', itemArray, action.payload.id);
+                const itemIndex = itemArray.findIndex((item: SavedItem) => item.id === action.payload.id);
+                if (itemIndex >= 0) itemArray.splice(itemIndex, 1);
                 state.status = 'idle';
 
             })
