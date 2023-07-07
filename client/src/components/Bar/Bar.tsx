@@ -85,7 +85,7 @@ const Bar = ({ category }: { category: SystemCategory }) => {
                 <RightArrow />
             </div>
             <Modal
-                className="saved-item-settings-modal"
+                className="modal saved-item-settings-modal"
                 open={modalsOpen[category.name] || false}>
                 <SavedItemsSettingsModal category={category} />
             </Modal>
