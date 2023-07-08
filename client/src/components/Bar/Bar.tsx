@@ -1,6 +1,6 @@
 import { SavedItem } from '../../models/SavedItem';
 import RoundItem from '../RoundItem/RoundItem';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { SystemCategory } from '../../models/Store';
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -22,68 +22,84 @@ const Bar = ({ category }: { category: SystemCategory }) => {
     const modalsOpen = useSelector(selectModalOpen);
     const [isOverflowing, setIsOverflowing] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
-    
     const openSettings = () => { dispatch(toggleSystemCategorySettings(category?.name)); };
-
-    const dockElement = document.querySelector('#mac-dock-' + category?.name);
+    
+    const dockElementRef = useRef<HTMLUListElement>(null);
+    // const dockElement = document.querySelector('#dock-items-' + category?.name);
       
     useEffect(() => {
+        const dockElement = dockElementRef.current;
         if (dockElement) {
             setIsOverflowing(dockElement.scrollWidth >= dockElement.clientWidth);
             setScrollPosition(dockElement.scrollLeft);
         }
-    }, [dockElement]);
+    }, [dockElementRef]);
     
     const LeftArrow = () => {
         const scrollLeft = () => {
+            const dockElement = dockElementRef.current;
             if (dockElement) {
-                dockElement.scrollLeft -= 100;
+                dockElement.scrollLeft = scrollPosition - 200;
                 setScrollPosition(dockElement.scrollLeft);
             }
         };
         const visible = () => isOverflowing && scrollPosition > 0;
-        if(visible()){
-            return (<div className="scroll-arrow left" onClick={scrollLeft}> &lt; </div>);
-        }
+        if(visible()) return (<div className="scroll-arrow left" onClick={scrollLeft}> &lt; </div>);
         return (<></>);
     };
     
     const RightArrow = () => { 
+        const dockElement = dockElementRef.current;
         const scrollRight = () => {
             if (dockElement) {
-                dockElement.scrollLeft += 100;
+                console.log(dockElement.scrollWidth);
+                console.log(dockElement.scrollLeft);
+                dockElement.scrollLeft = scrollPosition + 200;
+                console.log(dockElement.scrollLeft);
                 setScrollPosition(dockElement.scrollLeft);
             }
         };    
-        const visible = () => isOverflowing && scrollPosition < (( dockElement?.scrollWidth || 0) - ( dockElement?.clientWidth || 0));
-        if(visible()){
-            return (<div className="scroll-arrow right" onClick={scrollRight}> &gt; </div>);
-        }
+       
+        const visible = isOverflowing && scrollPosition < (( dockElement.scrollWidth || 0) - ( dockElement?.clientWidth || 0));
+        if(visible) return (<div className="scroll-arrow right" onClick={scrollRight}> &gt; </div>);
         return (<></>);
     };
 
+    const SettingsButton = () => {
+        return (
+            <IconButton 
+                onClick={openSettings}>
+                <SettingsIcon 
+                    sx={iconSx} />
+            </IconButton>
+        );
+    };
 
+    const VerticalTitle = () => <p className="vertical-text"> {category?.name?.toUpperCase()}</p>;
+
+    const RoundItems = () => {
+        return (
+            <ul ref={dockElementRef} id={'dock-items-' + category.name} className="dock-items">
+                {category.items?.map((item: SavedItem) => (
+                    <RoundItem
+                        item={item} 
+                        key={item.id}/>
+                     
+                ))}
+            </ul>   
+        );
+    };
     return (
         <>
-            <div className="outsideBarIShouldDeleteThis">
+       
+            <div id={'mac-dock-' + category.name} className="mac-dock">
+                <SettingsButton />
                 <LeftArrow />
-                <div id={'mac-dock-' + category.name} className="mac-dock">
-                    <ul className="dock-items">
-                        <IconButton 
-                            onClick={openSettings}>
-                            <SettingsIcon 
-                                sx={iconSx} />
-                        </IconButton>
-                        {category.items?.map((item: SavedItem) => (
-                            <RoundItem
-                                item={item} 
-                                key={item.id}/>
-                        ))}
-                        <p className="vertical-text"> {category?.name?.toUpperCase()}</p>
-                    </ul>               
-                </div>
+                <RoundItems />                          
                 <RightArrow />
+                <VerticalTitle />
             </div>
+        
             <Modal
                 className="modal saved-item-settings-modal"
                 open={modalsOpen[category.name] || false}>
