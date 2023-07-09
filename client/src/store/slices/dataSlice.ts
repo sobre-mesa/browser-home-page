@@ -63,7 +63,7 @@ export const fetchUserData = createAsyncThunk('data/fetchUserData',
 
 export const addSavedItem = createAsyncThunk('data/AddSavedItem',
     async (payload: { category: string, item: SavedItem }) => {
-        console.log('ADDSAVEDITEM', payload)
+        console.log('ADDSAVEDITEM', payload);
         await savedItemAPI.createSavedItem(payload.item);
         return payload;
     });
@@ -82,7 +82,7 @@ export const deleteSavedItem = createAsyncThunk('data/DeleteSavedItem',
 
 export const addCategory = createAsyncThunk('data/AddCategory',
     async (payload: { name: string, user: string }) => {
-        console.log('ADDCATEGORY', payload)
+        console.log('ADDCATEGORY', payload);
         const response = await categoryAPI.createCategory(payload);
         return response.payload; 
     });
@@ -98,7 +98,7 @@ export const deleteCategory = createAsyncThunk('data/DeleteCategory',
         await categoryAPI.deleteCategory(payload.id);
         return payload;
     });
-const isSystemCategory = (x: string) => x === 'Apps' || x === 'Channels';
+const isSystemCategory = (x: string) => x.toLowerCase() === 'apps' || x.toLowerCase() === 'channels';
 export const dataSlice = createSlice({
     name: 'data',
     initialState,
@@ -112,85 +112,93 @@ export const dataSlice = createSlice({
         builder
             //Init data
             .addCase(fetchUserData.pending, (state) => { state.status = 'loading'; })
-            .addCase(fetchUserData.fulfilled, (state, action) => {
-                state.user = action.payload.userId;
-                state.categories = action.payload.categories as StoreCategory[] || state;
-                state.apps = action.payload.apps;
-                state.channels = action.payload.channels;
-                state.status = 'idle';
-            })
+            .addCase(fetchUserData.fulfilled, 
+                (state, action) => {
+                    state.user = action.payload.userId;
+                    state.categories = action.payload.categories as StoreCategory[] || state;
+                    state.apps = action.payload.apps;
+                    state.channels = action.payload.channels;
+                    state.status = 'idle';
+                })
             .addCase(fetchUserData.rejected, (state) => { state.status = 'failed'; })
 
             //Add Item
             .addCase(addSavedItem.pending, (state) => { state.status = 'loading'; })
-            .addCase(addSavedItem.fulfilled, (state, action) => {
-                const category = state.categories.find((category: StoreCategory) => category.name === action.payload.category);
-                const name: string = action.payload.category?.toLowerCase() || '';
-                if (isSystemCategory(name)) state[name].items.push(action.payload.item);
-                if (category) category.items.push(action.payload.item);
-                state.status = 'idle';
-            })
+            .addCase(addSavedItem.fulfilled,
+                (state, action) => {
+                    const category = state.categories.find((category: StoreCategory) => category.name === action.payload.category);
+                    const name: string = action.payload.category?.toLowerCase() || '';
+                    if (isSystemCategory(name)) state[name].items.push(action.payload.item);
+                    if (category) category.items.push(action.payload.item);
+                    state.status = 'idle';
+                })
             .addCase(addSavedItem.rejected, (state) => { state.status = 'failed'; })
 
             //Update Item
             .addCase(updateSavedItem.pending, (state) => { state.status = 'loading';})
-            .addCase(updateSavedItem.fulfilled, (state, action) => {
-                const category = action.payload.category;
-                if (isSystemCategory(action.payload.category)) {
-                    const categoryItems = state[action.payload.category].items;
-                    const itemIndex = categoryItems.findIndex((item: SavedItem) => item.id === action.payload.id);
-                    if (itemIndex !== -1) {
-                        categoryItems[itemIndex] = action.payload.item;
-                    }
-                } else if (category) {
-                    const categoryItems = state.categories.find((c) => c.name === category)?.items;
-                    if (categoryItems) {
+            .addCase(updateSavedItem.fulfilled,
+                (state, action) => {
+                    const category = action.payload.category;
+                    if (isSystemCategory(action.payload.category)) {
+                        console.log('INNIT');
+                        const categoryItems = state[action.payload.category].items;
                         const itemIndex = categoryItems.findIndex((item: SavedItem) => item.id === action.payload.id);
                         if (itemIndex !== -1) {
                             categoryItems[itemIndex] = action.payload.item;
                         }
+                    } else if (category) {
+                        const categoryItems = state.categories.find((c) => c.name === category)?.items;
+                        if (categoryItems) {
+                            const itemIndex = categoryItems.findIndex((item: SavedItem) => item.id === action.payload.id);
+                            if (itemIndex !== -1) {
+                                categoryItems[itemIndex] = action.payload.item;
+                            }
+                        }
                     }
-                }
-                state.status = 'idle';
-            })
+                    state.status = 'idle';
+                })
             .addCase(updateSavedItem.rejected, (state) => { state.status = 'failed';})
 
             //Delete Item
             .addCase(deleteSavedItem.pending, (state) => { state.status = 'loading';})
-            .addCase(deleteSavedItem.fulfilled, (state, action) => {
-                const category = action.payload.category;
-                const itemArray = isSystemCategory(category) ? state[category].items : state.categories.find((c) => c.name === category)?.items;
-                console.log('DELETE', itemArray, action.payload.id);
-                const itemIndex = itemArray.findIndex((item: SavedItem) => item.id === action.payload.id);
-                if (itemIndex >= 0) itemArray.splice(itemIndex, 1);
-                state.status = 'idle';
+            .addCase(deleteSavedItem.fulfilled, 
+                (state, action) => {
+                    const category = action.payload.category;
+                    const itemArray = isSystemCategory(category) ? state[category].items : state.categories.find((c) => c.name === category)?.items;
+                    console.log('DELETE', itemArray, action.payload.id);
+                    const itemIndex = itemArray.findIndex((item: SavedItem) => item.id === action.payload.id);
+                    if (itemIndex >= 0) itemArray.splice(itemIndex, 1);
+                    state.status = 'idle';
 
-            })
+                })
             .addCase(deleteSavedItem.rejected, (state) => {state.status = 'failed';})
 
             //Add Category
             .addCase(addCategory.pending, (state) => {state.status = 'loading';})
-            .addCase(addCategory.fulfilled, (state, action) => {
-                state.categories.push(action.payload);
-                state.status = 'idle';
-            }).addCase(addCategory.rejected, (state) => {state.status = 'failed'; })
+            .addCase(addCategory.fulfilled,
+                (state, action) => {
+                    state.categories.push(action.payload);
+                    state.status = 'idle';
+                }).addCase(addCategory.rejected, (state) => {state.status = 'failed'; })
 
             //Delete Category
             .addCase(deleteCategory.pending, (state) => {state.status = 'loading'; })
-            .addCase(deleteCategory.fulfilled, (state, action) => {
-                const categoryIndex = state.categories.findIndex((category: StoreCategory) => category.id === action.payload.id);
-                if (categoryIndex >= 0) state.categories.splice(categoryIndex, 1);
-                state.status = 'idle';
-            })
+            .addCase(deleteCategory.fulfilled,
+                (state, action) => {
+                    const categoryIndex = state.categories.findIndex((category: StoreCategory) => category.id === action.payload.id);
+                    if (categoryIndex >= 0) state.categories.splice(categoryIndex, 1);
+                    state.status = 'idle';
+                })
             .addCase(deleteCategory.rejected, (state) => {state.status = 'failed'; })
 
             //Update Category
             .addCase(updateCategory.pending, (state) => {state.status = 'loading'; })
-            .addCase(updateCategory.fulfilled, (state, action) => {
-                const categoryIndex = state.categories.findIndex((category: StoreCategory) => category.id === action.payload.id);
-                if (categoryIndex >= 0) state.categories[categoryIndex].name = action.payload.name;
-                state.status = 'idle';
-            })
+            .addCase(updateCategory.fulfilled, 
+                (state, action) => {
+                    const categoryIndex = state.categories.findIndex((category: StoreCategory) => category.id === action.payload.id);
+                    if (categoryIndex >= 0) state.categories[categoryIndex].name = action.payload.name;
+                    state.status = 'idle';
+                })
             .addCase(updateCategory.rejected, (state) => { state.status = 'failed'; });
     },
 });
