@@ -18,7 +18,7 @@ const AddCategoryPopOver = ({categoryToEdit, anchorEl, setAnchorEl} : AddCategor
     const handleSubmit = () => {
         const payload = { name: inputValue, user };
         const action = isEditing ? updateCategory({...payload, id: categoryToEdit?.id}) : addCategory(payload);
-        dispatch(action);
+        dispatch(action as any);
         handleClose();
     };
 
