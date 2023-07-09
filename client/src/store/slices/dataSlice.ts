@@ -63,7 +63,6 @@ export const fetchUserData = createAsyncThunk('data/fetchUserData',
 
 export const addSavedItem = createAsyncThunk('data/AddSavedItem',
     async (payload: { category: string, item: SavedItem }) => {
-        console.log('ADDSAVEDITEM', payload);
         await savedItemAPI.createSavedItem(payload.item);
         return payload;
     });
@@ -82,7 +81,6 @@ export const deleteSavedItem = createAsyncThunk('data/DeleteSavedItem',
 
 export const addCategory = createAsyncThunk('data/AddCategory',
     async (payload: { name: string, user: string }) => {
-        console.log('ADDCATEGORY', payload);
         const response = await categoryAPI.createCategory(payload);
         return response.payload; 
     });
@@ -140,7 +138,6 @@ export const dataSlice = createSlice({
                 (state, action) => {
                     const category = action.payload.category;
                     if (isSystemCategory(action.payload.category)) {
-                        console.log('INNIT');
                         const categoryItems = state[action.payload.category].items;
                         const itemIndex = categoryItems.findIndex((item: SavedItem) => item.id === action.payload.id);
                         if (itemIndex !== -1) {
@@ -165,7 +162,6 @@ export const dataSlice = createSlice({
                 (state, action) => {
                     const category = action.payload.category;
                     const itemArray = isSystemCategory(category) ? state[category].items : state.categories.find((c) => c.name === category)?.items;
-                    console.log('DELETE', itemArray, action.payload.id);
                     const itemIndex = itemArray.findIndex((item: SavedItem) => item.id === action.payload.id);
                     if (itemIndex >= 0) itemArray.splice(itemIndex, 1);
                     state.status = 'idle';
