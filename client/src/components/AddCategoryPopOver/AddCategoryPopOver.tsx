@@ -61,6 +61,7 @@ const AddCategoryPopOver = ({categoryToEdit, anchorEl, setAnchorEl} : AddCategor
                         placeholder="Category name"
                         value={inputValue}
                         variant="standard"
+                        required
                     />
                     <IconButton 
                         aria-label="AddOrEdit"

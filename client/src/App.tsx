@@ -24,7 +24,7 @@ function Welcome() {
 
     const data = useAppSelector(selectData);
     const dispatch = useAppDispatch();
-    // console.log(user);
+
     useEffect(() => {
         dispatch(fetchUserData({userId: user?.id || ''}));
     }, [dispatch]);

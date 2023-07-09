@@ -125,16 +125,18 @@ function AddOrEditItemModal({open, handleClose, category, itemToEdit}: AddOrEdit
                             margin="normal"
                             label={field}
                             onChange={(e) => {
-                                if (field === 'Description') setDescription(e.target.value);
-                                else if (field === 'URL') setUrl(e.target.value);
+                                if (field === 'Description') setDescription(e.target.value.slice(0, 40));
+                                else if (field === 'URL') setUrl(e.target.value.slice(0, 40));
                                 else {
                                     setImage(e.target.value);
                                     setImageError(false);
                                 }
                             }}
                             onPaste={field === 'Image' ? handleImagePaste : undefined}
-                            value={field === 'Description' ? description : field === 'URL' ? url : image}
+                            value={field === 'Description' ? description.slice(0, 40) : field === 'URL' ? url.slice(0, 40) : image}
                             variant="standard"
+                            required // Mark the field as required
+                            inputProps={{ maxLength: 40 }} // Restrict the input to a maximum of 40 characters
                         />
                     ))}
                     <div className="submitButtonContainer">
