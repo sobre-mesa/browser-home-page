@@ -62,32 +62,34 @@ export const SavedItemsSettingsModal = ({ category }: { category: SystemCategory
     );
 
     return (
-        <Paper sx={paperstyle}>
-            <span className="saved-items-modal-title"> {category.name.toUpperCase()}</span>
-            <CloseButton />
-            <AddItemButton />
-            <AddItemModal
-                open={modalOpen}
-                handleClose={handleCloseModal}
-                category={category}
-                itemToEdit={itemToEdit}
-            />
-            <div className="saved-items-modal-grid">
-                {items?.length > 0 ?
-                    items.map((item) => (
-                        <SavedItemsSettingsItem
-                            category={category.name}
-                            key={item.id}
-                            item={item}
-                            onEdit={setItemToEdit}
-                            handleOpen={handleOpenEditModal} 
-                        />
-                    )) :
-                    <div className='saved-items-modal-empty'>
-                        <span className="saved-items-modal-empty-text">No items saved</span>
-                    </div>
-                }
-            </div>
-        </Paper>
+        <div>
+            <Paper sx={paperstyle}>
+                <span className="saved-items-modal-title"> {category.name.toUpperCase()}</span>
+                <CloseButton />
+                <AddItemButton />
+                <AddItemModal
+                    open={modalOpen}
+                    handleClose={handleCloseModal}
+                    category={category}
+                    itemToEdit={itemToEdit}
+                />
+                <div className="saved-items-modal-grid">
+                    {items?.length > 0 ?
+                        items.map((item) => (
+                            <SavedItemsSettingsItem
+                                category={category.name}
+                                key={item.id}
+                                item={item}
+                                onEdit={setItemToEdit}
+                                handleOpen={handleOpenEditModal} 
+                            />
+                        )) :
+                        <div className='saved-items-modal-empty'>
+                            <span className="saved-items-modal-empty-text">No items saved</span>
+                        </div>
+                    }
+                </div>
+            </Paper>
+        </div>
     );
 };

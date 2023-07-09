@@ -87,7 +87,9 @@ const Bar = ({ category }: { category: SystemCategory }) => {
             <Modal
                 className="modal saved-item-settings-modal"
                 open={modalsOpen[category.name] || false}>
-                <SavedItemsSettingsModal category={category} />
+                <div>
+                    <SavedItemsSettingsModal category={category} />
+                </div>
             </Modal>
         </>
     );
