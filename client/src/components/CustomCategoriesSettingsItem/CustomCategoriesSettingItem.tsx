@@ -25,7 +25,7 @@ function CustomCategoriesSettingItem({category, onClick, onDelete, onEdit} : Cus
                 <EditIcon className="custom-categories-settings-item-icon"
                     onClick={onEdit} />
                 <DeleteIcon className="custom-categories-settings-item-icon"
-                    onClick={(e) => setDeleteAnchorEl(e.currentTarget)} />
+                    onClick={(e) => setDeleteAnchorEl(e.currentTarget as any)} />
             </div>
             <DeleteCategoryPopOver
                 anchorEl={deleteAnchorEl}

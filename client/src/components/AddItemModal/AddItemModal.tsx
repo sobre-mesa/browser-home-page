@@ -135,8 +135,8 @@ function AddOrEditItemModal({open, handleClose, category, itemToEdit}: AddOrEdit
                             onPaste={field === 'Image' ? handleImagePaste : undefined}
                             value={field === 'Description' ? description.slice(0, 40) : field === 'URL' ? url.slice(0, 40) : image}
                             variant="standard"
-                            required // Mark the field as required
-                            inputProps={{ maxLength: 40 }} // Restrict the input to a maximum of 40 characters
+                            required 
+                            inputProps={{ maxLength: 40 }} 
                         />
                     ))}
                     <div className="submitButtonContainer">
