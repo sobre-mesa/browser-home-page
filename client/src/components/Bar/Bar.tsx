@@ -37,7 +37,7 @@ const Bar = ({ category }: { category: SystemCategory }) => {
     const LeftArrow = () => {
         const scrollLeft = () => {
             if (dockElement) {
-                dockElement.scrollLeft -= 100;
+                dockElement.scrollLeft -= 30;
                 setScrollPosition(dockElement.scrollLeft);
             }
         };
@@ -51,7 +51,7 @@ const Bar = ({ category }: { category: SystemCategory }) => {
     const RightArrow = () => { 
         const scrollRight = () => {
             if (dockElement) {
-                dockElement.scrollLeft += 100;
+                dockElement.scrollLeft += 30;
                 setScrollPosition(dockElement.scrollLeft);
             }
         };    
@@ -66,23 +66,23 @@ const Bar = ({ category }: { category: SystemCategory }) => {
     return (
         <>
             <div className="outsideBarIShouldDeleteThis">
+                <IconButton 
+                    onClick={openSettings}>
+                    <SettingsIcon 
+                        sx={iconSx} />
+                </IconButton>
                 <LeftArrow />
                 <div id={'mac-dock-' + category.name} className="mac-dock">
                     <ul className="dock-items">
-                        <IconButton 
-                            onClick={openSettings}>
-                            <SettingsIcon 
-                                sx={iconSx} />
-                        </IconButton>
                         {category.items?.map((item: SavedItem) => (
                             <RoundItem
                                 item={item} 
                                 key={item.id}/>
                         ))}
-                        <p className="vertical-text"> {category?.name?.toUpperCase()}</p>
                     </ul>               
                 </div>
                 <RightArrow />
+                <p className="vertical-text"> {category?.name?.toUpperCase()}</p>
             </div>
             <Modal
                 className="modal saved-item-settings-modal"
