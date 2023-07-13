@@ -11,35 +11,42 @@ console.log('💭💭💭💭')
 console.log('💭💭💭💭💭')
 app.listen(PORT);
 
-dotenv.config({ path: './config.env' });
+// dotenv.config({ path: './config.env' });
 
-mongoose.connect(process.env.DATABASE, {  
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
+console.log('test')
+try {
 
-}).then(con => { 
-  console.log('☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️')
-  console.log(`              `)
-  console.log('                 接続 ｃｏｎｎｅｃｔｅｄ 接続  ')
-  console.log(`                           port:${PORT}`)
-  console.log(`              `)
-  console.log(`              `)
-  console.log('DATABASE_PATH: ', process.env.DATABASE)
-  console.log(`              `)
-  console.log('☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️')
-  console.log(`              `)
-  console.log('                           Services  ')
-  console.log(`              `)
-  console.log(`              `)
-  console.log('savedItems: ');
-  console.log('/savedItems')
-  console.log('/savedItems/:id: ');
-  console.log(`              `)
-  console.log('categories:')
-  console.log('/categories')
-  console.log('/categories/:id: ');
-  console.log(`              `)
-  console.log('☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️ ')
-});
+  console.log(process.env.CONNECTIONSTRING)
+  mongoose.connect(process.env.CONNECTIONSTRING, {  
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
   
+  }).then(con => { 
+    console.log('☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️')
+    console.log(`              `)
+    console.log('                 接続 ｃｏｎｎｅｃｔｅｄ 接続  ')
+    console.log(`                           port:${PORT}`)
+    console.log(`              `)
+    console.log(`              `)
+    console.log('DATABASE_PATH: ', process.env.DATABASE)
+    console.log(`              `)
+    console.log('☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️')
+    console.log(`              `)
+    console.log('                           Services  ')
+    console.log(`              `)
+    console.log(`              `)
+    console.log('savedItems: ');
+    console.log('/savedItems')
+    console.log('/savedItems/:id: ');
+    console.log(`              `)
+    console.log('categories:')
+    console.log('/categories')
+    console.log('/categories/:id: ');
+    console.log(`              `)
+    console.log('☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️🏛 ☁️☁️ ')
+  });
+}
+catch(error){
+  console.log(error)
+}
